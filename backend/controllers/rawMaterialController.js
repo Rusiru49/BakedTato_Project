@@ -1,4 +1,4 @@
-import RawMaterials from '../model/rawMaterialModel.js';
+const RawMaterials = require('../models/rawMaterialModel');
 
 export const createRawMaterial = async (req, res) => {
     const { name, category, quantity, description, date } = req.body;

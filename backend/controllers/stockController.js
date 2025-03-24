@@ -1,4 +1,4 @@
-import StockSupplier from "../model/stockModel.js";
+const StockSupplier = require('../models/stockSupplierModel');
 
 export const addStock = async (req, res) => {
     const { name, category, unit, currentStock, date } = req.body;

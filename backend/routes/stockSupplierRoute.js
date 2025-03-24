@@ -1,5 +1,5 @@
-import express from 'express';
-import { addStock, deleteStock, getOneStock, getStock, updateStock } from '../controller/stockController.js';
+const express = require("express");
+const { addStock, deleteStock, getOneStock, getStock, updateStock } = require("../controllers/stockSupplierController");
 
 const route = express.Router();
 

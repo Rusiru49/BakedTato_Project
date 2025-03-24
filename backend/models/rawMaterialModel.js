@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import AutoIncrement from "mongoose-sequence";
+const mongoose = require('mongoose');
+const AutoIncrement = require('mongoose-sequence');
 
 const rawMaterialSchema = new mongoose.Schema({
     rawMaterialID:{

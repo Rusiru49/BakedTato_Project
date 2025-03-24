@@ -1,5 +1,11 @@
-import express from 'express';
-import { createRawMaterial,getRawMaterials,getOneRawMaterial,updateRawMaterial,deleteRawMaterial, getApprovedMaterials, getPendingRawMaterials } from '../controller/rawMaterialController.js';
+const express = require('express')
+const { createRawMaterial,
+    getRawMaterials,
+    getOneRawMaterial,
+    updateRawMaterial,
+    deleteRawMaterial,
+    getApprovedMaterials,
+    getPendingRawMaterials } = require('../controllers/rawMaterialController');
 
 const route = express.Router();
 
