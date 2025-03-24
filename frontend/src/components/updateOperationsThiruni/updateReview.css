@@ -1,0 +1,92 @@
+.createReview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 100%;
+    max-width: 700px;
+    padding: 40px;
+    padding-left: 40px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-left: 200px;
+}
+
+.createReviewForm {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.formGroup {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    margin-top: 0px;
+}
+
+.left-side {
+    width: 48%;
+}
+
+.right-side {
+    width: 35%;
+    margin-right: 10px;
+}
+
+.inputGroup {
+    margin-bottom: 20px;
+}
+
+.inputGroup label {
+    display: flex;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.inputGroup input, .inputGroup select, .inputGroup textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.button-container {
+    text-align: left;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.backButton {
+    text-decoration: none;
+    color: #333;
+    font-size: 24px;
+}
+
+.button {
+    width: 100%;
+    padding: 10px;
+    background-color: #5b738b;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #7b8a99;
+}
+
+h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: 600;
+}
+

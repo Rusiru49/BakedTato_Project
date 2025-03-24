@@ -2,10 +2,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const bodyParser = require('body-parser');
 const path = require("path");
 const multer = require("multer");
 const fs = require("fs");
 const routerL = require("./routes/loginRoutes");
+const route = require('./routes/rawMaterialRoute.js');
+const RawMaterials = require('./models/rawMaterialModel.js');
+const StockSupplier = require('./models/stockModel.js');
+const stockSupplierRoute = require('./routes/stockSupplierRoute.js');
 
 
 // Import routes
@@ -31,7 +36,7 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE"], // Allow these HTTP methods
   credentials: true, // Allow cookies and credentials
 }));
-
+app.use(bodyParser.json());
 app.use(express.json()); // Parse JSON request bodies
 
 app.post("/upload", upload.single("image"), (req, res) => {
@@ -43,12 +48,92 @@ app.post("/upload", upload.single("image"), (req, res) => {
   res.json({ imageUrl });
 });
 
+app.post('/api/createRawMaterial', async (req, res) => {
+  const { name, category, origin, description, date, status, hidden} = req.body;
+
+  try {
+      const newRawMaterial = new RawMaterials({
+          name,
+          category,
+          origin,
+          description,
+          date,
+          status:status || "Pending Approval",
+          hidden: hidden || true,
+          // status and hidden will use their default values
+      });
+
+      await newRawMaterial.save();
+      res.status(201).json({ msg: 'Raw material added successfully', rawMaterial: newRawMaterial });
+  } catch (error) {
+      console.error('Error saving raw material:', error);
+      res.status(500).json({ msg: 'Failed to add raw material', error: error.message });
+  }
+});
+
+app.post('/api/addStock', async (req, res) => {
+  try {
+    const { name, category, unit,currentStock, date } = req.body;
+
+    // Calculate remaining stock (initially same as current stock)
+    const remainingStock = currentStock;
+
+    const newStock = new StockSupplier({
+      name,
+      category,
+      unit,
+      currentStock,
+      remainingStock,
+      date,
+
+    });
+
+    await newStock.save();
+
+    res.status(201).json({ message: "Stock Added Successfully", data: newStock });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to add stock", error });
+  }
+});
+
+app.put('/api/updateStock/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { currentStock } = req.body;
+
+    // Find the existing stock item
+    const stockItem = await StockSupplier.findById(id);
+    if (!stockItem) {
+      return res.status(404).json({ message: "Stock item not found" });
+    }
+
+    // Calculate the difference between the new and old current stock
+    const stockDifference = currentStock - stockItem.currentStock;
+
+    // Update the remaining stock
+    const remainingStock = stockItem.remainingStock + stockDifference;
+
+    // Update the stock item
+    const updatedStock = await StockSupplier.findByIdAndUpdate(
+      id,
+      { currentStock, remainingStock },
+      { new: true }
+    );
+
+    res.status(200).json({ message: "Stock Updated Successfully", data: updatedStock });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to Update Stock", error });
+  }
+});
+
 
 // Routes
 app.use("/api/products", productRoutes);
 app.use(express.json())
 app.use("/uploads", express.static(uploadDir));
 app.use("/api", routerL);
+app.use("/api",route);
+app.use("/api",stockSupplierRoute);
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI, {
