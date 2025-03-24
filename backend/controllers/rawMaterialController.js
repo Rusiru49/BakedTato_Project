@@ -1,6 +1,6 @@
 const RawMaterials = require('../models/rawMaterialModel');
 
-export const createRawMaterial = async (req, res) => {
+exports.createRawMaterial = async (req, res) => {
     const { name, category, quantity, description, date } = req.body;
 
     if (!name || !category || !quantity || !description || !date) {
@@ -17,7 +17,7 @@ export const createRawMaterial = async (req, res) => {
     }
 }
 
-export const getRawMaterials = async(req,res)=>{
+exports.getRawMaterials = async(req,res)=>{
     try{
         const rawMaterials = await RawMaterials.find();
 
@@ -32,7 +32,7 @@ export const getRawMaterials = async(req,res)=>{
     }
 }
 
-export const getApprovedMaterials = async(req,res)=>{
+exports.getApprovedMaterials = async(req,res)=>{
     try{
         const approvedRawMaterials = await RawMaterials.find({ hidden: false});
 
@@ -47,7 +47,7 @@ export const getApprovedMaterials = async(req,res)=>{
     }
 }
 
-export const getPendingRawMaterials = async(req,res)=>{
+exports.getPendingRawMaterials = async(req,res)=>{
     try{
         const getPendingRawMaterials = await RawMaterials.find({ hidden: true });
 
@@ -62,7 +62,7 @@ export const getPendingRawMaterials = async(req,res)=>{
     }
 }
 
-export const getOneRawMaterial = async(req,res)=>{
+exports.getOneRawMaterial = async(req,res)=>{
     try {
         
         const rawMaterialID = req.params.id;
@@ -78,7 +78,7 @@ export const getOneRawMaterial = async(req,res)=>{
     }
 }
 
-export const updateRawMaterial = async(req,res)=>{
+exports.updateRawMaterial = async(req,res)=>{
 
     try {
         const rawMaterialID = req.params.id;
@@ -96,7 +96,7 @@ export const updateRawMaterial = async(req,res)=>{
     }
 }
 
-export const deleteRawMaterial = async(req,res)=>{
+exports.deleteRawMaterial = async(req,res)=>{
     try {
 
         const rawMaterialID = req.params.id;

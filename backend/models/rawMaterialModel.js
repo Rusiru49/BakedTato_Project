@@ -42,4 +42,4 @@ rawMaterialSchema.plugin(AutoIncrement(mongoose),{inc_field:"rawMaterialID"});
 
 const RawMaterials = mongoose.model("RawMaterials", rawMaterialSchema);
 
-export default RawMaterials;
+module.exports = RawMaterials;

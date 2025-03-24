@@ -1,6 +1,6 @@
 const StockSupplier = require('../models/stockModel');
 
-export const addStock = async (req, res) => {
+exports.addStock = async (req, res) => {
     const { name, category, unit, currentStock, date } = req.body;
 
     if (!name || !category || !unit || !currentStock || !date) {
@@ -17,7 +17,7 @@ export const addStock = async (req, res) => {
     }
 }
 
-export const getStock = async(req,res)=>{
+exports.getStock = async(req,res)=>{
     try{
         const stock = await StockSupplier.find();
 
@@ -32,7 +32,7 @@ export const getStock = async(req,res)=>{
     }
 }
 
-export const getOneStock = async(req,res)=>{
+exports.getOneStock = async(req,res)=>{
     try {
         
         const stockID = req.params.id;
@@ -49,7 +49,7 @@ export const getOneStock = async(req,res)=>{
 }
 
 
-export const updateStock = async(req,res)=>{
+exports.updateStock = async(req,res)=>{
 
     try {
         const stockID = req.params.id;
@@ -67,7 +67,7 @@ export const updateStock = async(req,res)=>{
     }
 }
 
-export const deleteStock = async(req,res)=>{
+exports.deleteStock = async(req,res)=>{
     try {
 
         const stockID = req.params.id;

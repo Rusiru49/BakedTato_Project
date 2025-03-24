@@ -37,4 +37,4 @@ stockSchemaSupplier.plugin(AutoIncrement(mongoose),{inc_field:"stockID"});
 
 const StockSupplier = mongoose.model("StockSupplier", stockSchemaSupplier);
 
-export default StockSupplier;
+module.exports = StockSupplier;

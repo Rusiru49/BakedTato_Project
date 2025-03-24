@@ -6,7 +6,7 @@ import ProductForm from "./components/ProductForm";
 import ProductDetails from "./components/ProductDetails";
 import AllUsers from "./Admin/AllUsers";
 import './App.css';
-import NavbarThiruni from './components/navbarThiruni';
+import NavbarThiruni from './components/navbarThiruni/navbar';
 import AddRawMaterial from './components/addOperationsThiruni/AddRawMaterial';
 import ApprovedRawMaterials from './components/ViewOperationsThiruni/viewApprovedRawMaterials'; 
 import PendingRawMaterials from './components/ViewOperationsThiruni/viewPendingRawMaterials';

@@ -7,14 +7,14 @@ const path = require("path");
 const multer = require("multer");
 const fs = require("fs");
 const routerL = require("./routes/loginRoutes");
-const route = require('./routes/rawMaterialRoute.js');
 const RawMaterials = require('./models/rawMaterialModel.js');
 const StockSupplier = require('./models/stockModel.js');
-const stockSupplierRoute = require('./routes/stockSupplierRoute.js');
 
 
 // Import routes
 const productRoutes = require("./routes/productRoutes");
+const route = require('./routes/rawMaterialRoute.js');
+const stockSupplierRoute = require('./routes/stockSupplierRoute.js');
 
 // Load environment variables
 dotenv.config();

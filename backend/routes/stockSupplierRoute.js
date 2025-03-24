@@ -1,5 +1,5 @@
 const express = require('express');
-const { addStock, deleteStock, getOneStock, getStock, updateStock } = require('../controller/stockController');
+const { addStock, deleteStock, getOneStock, getStock, updateStock } = require('../controllers/stockController');
 
 const route = express.Router();
 
@@ -10,4 +10,4 @@ route.put('/updateStock/:id',updateStock);
 route.delete('/deleteStock/:id',deleteStock);
 
 
-export default route;
+module.exports = route;
