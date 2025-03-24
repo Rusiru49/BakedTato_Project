@@ -5,6 +5,7 @@ const cors = require("cors");
 const path = require("path");
 const multer = require("multer");
 const fs = require("fs");
+const routerL = require("./routes/loginRoutes");
 
 // Import routes
 const productRoutes = require("./routes/productRoutes");
@@ -45,6 +46,7 @@ app.post("/upload", upload.single("image"), (req, res) => {
 app.use("/api/products", productRoutes);
 app.use(express.json())
 app.use("/uploads", express.static(uploadDir));
+app.use("/api", routerL);
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI, {
