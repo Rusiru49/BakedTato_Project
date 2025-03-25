@@ -87,7 +87,12 @@ const Navbar = () => {
 
       if (user.email === 'rusiruxz@gmail.com') {
         navigate('/showusers');
+      }else if(user.email === 'thiruniWije@gmail.com') {
+        navigate('/supplierHome')
+      }else{
+        navigate('/')
       }
+
 
       setopenlogin(false);
       window.location.reload();

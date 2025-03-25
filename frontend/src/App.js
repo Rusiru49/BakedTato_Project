@@ -1,5 +1,5 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ProductList from "./components/ProductList";
 import ProductForm from "./components/ProductForm";
@@ -13,128 +13,50 @@ import UpdateRawMaterials from './components/updateOperationsThiruni/updateRawMa
 import ManageStock from './components/addOperationsThiruni/ManageStockPage';
 import AddStock from './components/addOperationsThiruni/AddStock';
 
-
 function App() {
+
   const user = JSON.parse(localStorage.getItem('user'));
   const userMail = user ? user.email : null;
+
   const admin = userMail === 'rusiruxz@gmail.com';
   const supplier = userMail === 'thiruniWije@gmail.com';
 
-  const route = createBrowserRouter([
-    {
-      path: "/",
-      element: (
-        <>
-          <Navbar />
-          <ProductList />
-        </>
-      ),
-    },
-    
-    {
-      path: "/home",
-      element: (
-        <>
-          <NavbarThiruni />
-          <ApprovedRawMaterials />
-        </>
-      )
-    },
 
-    {
-      path: "/create",
-      element: (
-        <>
-          <Navbar />
-          <ProductForm />
-        </>
-      ),
-    },
-    {
-      path: "/edit/:id",
-      element: (
-        <>
-          <Navbar />
-          <ProductForm />
-        </>
-      ),
-    },
-    {
-      path: "/product/:id",
-      element: (
-        <>
-          <Navbar />
-          <ProductDetails />
-        </>
-      ),
-    },
-    {
-      path:"/add-raw-material",
-      element:(
-        <>
-          <NavbarThiruni/>
-          <AddRawMaterial/>
-        </>
-      )
-    },
-    {
-      path:"/raw-materials/pending",
-      element:(
-        <>
-          <NavbarThiruni/>
-          <PendingRawMaterials/>
-        </>
-      )
-    },
-    {
-      path:"/updateRawMaterials/:id",
-      element:(
-        <>
-          <NavbarThiruni/>
-          <UpdateRawMaterials/>
-        </>
-      )
-    },
-    {
-      path:"/manage-stock",
-      element:(
-        <>
-          <NavbarThiruni/>
-          <ManageStock/>
-        </>
-      )
-    },
-    {
-      path:"/add-stock",
-      element:(
-        <>
-          <NavbarThiruni/>
-          <AddStock/>
-        </>
-      )
-    }
-    
-  ]);
+  return (
+    <Router>
+      <Navbar />
+      <Routes>
 
-  if (admin) {
-    route.routes.push({
-      path: "/showusers",
-      element: (
-        <>
-          <Navbar />
-          <AllUsers />
-        </>
-      ),
-    });
-  }
+        {admin && (
+          <>
+            <Route path="/showusers" element={<AllUsers />} />
+            <Route path="/supplierHome" element={<><ApprovedRawMaterials /><NavbarThiruni/></>} />
+            <Route path="/add-raw-material" element={<><AddRawMaterial /><NavbarThiruni/></>} />
+            <Route path="/raw-materials/pending" element={<><PendingRawMaterials /><NavbarThiruni/></>} />
+            <Route path="/updateRawMaterials/:id" element={<><UpdateRawMaterials /><NavbarThiruni/></>} />
+            <Route path="/manage-stock" element={<><ManageStock /><NavbarThiruni/></>} />
+            <Route path="/add-stock" element={<><AddStock /><NavbarThiruni/></>} />
+          </>
+        )}
 
-  //return <RouterProvider router={route} />;
-  return(
-    <div className="App">
-      <RouterProvider router = {route}></RouterProvider>
-    </div>
-  )
+        {supplier && (
+          <>
+            <Route path="/supplierHome" element={<><ApprovedRawMaterials /><NavbarThiruni/></>} />
+            <Route path="/add-raw-material" element={<><AddRawMaterial /><NavbarThiruni/></>} />
+            <Route path="/raw-materials/pending" element={<><PendingRawMaterials /><NavbarThiruni/></>} />
+            <Route path="/updateRawMaterials/:id" element={<><UpdateRawMaterials /><NavbarThiruni/></>} />
+            <Route path="/manage-stock" element={<><ManageStock /><NavbarThiruni/></>} />
+            <Route path="/add-stock" element={<><AddStock /><NavbarThiruni/></>} />
+          </>
+        )}
 
+        <Route path="/" element={<ProductList />} />
+        <Route path="/create" element={<ProductForm />} />
+        <Route path="/edit/:id" element={<ProductForm />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
