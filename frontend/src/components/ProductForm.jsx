@@ -38,7 +38,7 @@ const ProductForm = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
 
-  // Validation state for each input
+  // Validation
   const [validation, setValidation] = useState({
     name: true,
     description: true,
@@ -62,13 +62,13 @@ const ProductForm = () => {
     }
   };
 
-  // Handle text input changes
+
   const handleChange = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
     validateField(e.target.name, e.target.value);
   };
 
-  // Validate fields in real time
+
   const validateField = (fieldName, value) => {
     let isValid = true;
 
@@ -98,7 +98,7 @@ const ProductForm = () => {
     setValidation((prev) => ({ ...prev, [fieldName]: isValid }));
   };
 
-  // Handle file selection
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
@@ -111,14 +111,14 @@ const ProductForm = () => {
     }
   };
 
-  // Handle form submission
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
     let imageUrl = "";
 
-    // Upload image if a new file is selected
+
     if (selectedFile) {
       const formData = new FormData();
       formData.append("image", selectedFile);
@@ -140,8 +140,6 @@ const ProductForm = () => {
     } else if (id) {
       imageUrl = product.image;
     }
-
-    // Save or update product
     try {
       if (id) {
         await updateProduct(id, { ...product, image: imageUrl });
@@ -162,9 +160,9 @@ const ProductForm = () => {
           align="center"
           gutterBottom
           sx={{
-            fontFamily: "'Roboto', sans-serif", // Font family
-            fontSize: "2rem", // Font size
-            fontWeight: "bold", // Font weight
+            fontFamily: "'Roboto', sans-serif",
+            fontSize: "2rem",
+            fontWeight: "bold",
           }}
         >
           {id ? "Edit Product" : "Create Product"}
@@ -267,7 +265,7 @@ const ProductForm = () => {
                 />
               </Grid>
 
-              {/* File Upload Section */}
+              {/* Image uploading */}
               <Grid item xs={12}>
                 <input
                   type="file"
@@ -290,7 +288,7 @@ const ProductForm = () => {
                 </label>
               </Grid>
 
-              {/* Image Preview */}
+              
               {previewImage && (
                 <Grid item xs={12}>
                   <Box sx={{ textAlign: "center", mt: 2 }}>
@@ -321,23 +319,23 @@ const ProductForm = () => {
               )}
             </Grid>
 
-            {/* Error Message */}
+            
             {error && (
               <Typography
                 color="error"
                 align="center"
                 sx={{
                   mt: 2,
-                  fontFamily: "'Roboto', sans-serif", // Font family for error text
-                  fontSize: "1rem", // Font size for error message
-                  fontWeight: "bold", // Bold error text
+                  fontFamily: "'Roboto', sans-serif",
+                  fontSize: "1rem",
+                  fontWeight: "bold",
                 }}
               >
                 {error}
               </Typography>
             )}
 
-            {/* Action Buttons */}
+          
             <Box
               sx={{
                 display: "flex",

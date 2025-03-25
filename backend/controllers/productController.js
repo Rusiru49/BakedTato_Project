@@ -1,6 +1,6 @@
 const { Product, validateProduct } = require("../models/product.js");
 
-// Get all products
+
 exports.getAllProducts = async (req, res) => {
   try {
     const products = await Product.find();
@@ -10,7 +10,7 @@ exports.getAllProducts = async (req, res) => {
   }
 };
 
-// Get product by ID
+
 exports.getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -21,7 +21,7 @@ exports.getProductById = async (req, res) => {
   }
 };
 
-// Create a new product
+
 exports.createProduct = async (req, res) => {
   const { name, description, price, stock, category, image } = req.body;
 
@@ -39,16 +39,16 @@ exports.createProduct = async (req, res) => {
   }
 };
 
-// Update product
+
 exports.updateProduct = async (req, res) => {
-  console.log("Request Body:", req.body);  // Log the body to check for _id field
+  console.log("Request Body:", req.body);  //
 
   const { error } = validateProduct(req.body);
   if (error) return res.status(400).json({ error: error.details[0].message });
 
-  // Remove the _id field if it exists in the request body
+
   const updatedData = { ...req.body };
-  delete updatedData._id;  // Remove _id field if present
+  delete updatedData._id;
 
   try {
     const updatedProduct = await Product.findByIdAndUpdate(req.params.id, updatedData, { new: true });
@@ -60,7 +60,7 @@ exports.updateProduct = async (req, res) => {
 };
 
 
-// Delete product
+
 exports.deleteProduct = async (req, res) => {
   try {
     const deletedProduct = await Product.findByIdAndDelete(req.params.id);

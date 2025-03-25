@@ -11,18 +11,17 @@ const RawMaterials = require('./models/rawMaterialModel.js');
 const StockSupplier = require('./models/stockModel.js');
 
 
-// Import routes
+// Routing Imporing
 const productRoutes = require("./routes/productRoutes");
 const route = require('./routes/rawMaterialRoute.js');
 const stockSupplierRoute = require('./routes/stockSupplierRoute.js');
 
-// Load environment variables
+
 dotenv.config();
 
-// Initialize Express app
 const app = express();
 
-// Ensure the uploads directory exists
+
 const uploadDir = path.join(__dirname, "uploads");
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
@@ -30,14 +29,15 @@ if (!fs.existsSync(uploadDir)) {
 
 const upload = multer({ dest: uploadDir });
 
+
 // Middleware
 app.use(cors({
-  origin: "http://localhost:3000", // Allow requests from the frontend
-  methods: ["GET", "POST", "PUT", "DELETE"], // Allow these HTTP methods
-  credentials: true, // Allow cookies and credentials
+  origin: "http://localhost:3000",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
 }));
 app.use(bodyParser.json());
-app.use(express.json()); // Parse JSON request bodies
+app.use(express.json());
 
 app.post("/upload", upload.single("image"), (req, res) => {
   if (!req.file) {
@@ -60,7 +60,6 @@ app.post('/api/createRawMaterial', async (req, res) => {
           date,
           status:status || "Pending Approval",
           hidden: hidden || true,
-          // status and hidden will use their default values
       });
 
       await newRawMaterial.save();
@@ -75,7 +74,6 @@ app.post('/api/addStock', async (req, res) => {
   try {
     const { name, category, unit,currentStock, date } = req.body;
 
-    // Calculate remaining stock (initially same as current stock)
     const remainingStock = currentStock;
 
     const newStock = new StockSupplier({
@@ -101,19 +99,14 @@ app.put('/api/updateStock/:id', async (req, res) => {
     const { id } = req.params;
     const { currentStock } = req.body;
 
-    // Find the existing stock item
     const stockItem = await StockSupplier.findById(id);
     if (!stockItem) {
       return res.status(404).json({ message: "Stock item not found" });
     }
 
-    // Calculate the difference between the new and old current stock
     const stockDifference = currentStock - stockItem.currentStock;
-
-    // Update the remaining stock
     const remainingStock = stockItem.remainingStock + stockDifference;
 
-    // Update the stock item
     const updatedStock = await StockSupplier.findByIdAndUpdate(
       id,
       { currentStock, remainingStock },
@@ -135,7 +128,8 @@ app.use("/api", routerL);
 app.use("/api",route);
 app.use("/api",stockSupplierRoute);
 
-// Database Connection
+
+// DB Connections
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -143,6 +137,7 @@ mongoose.connect(process.env.MONGO_URI, {
   .then(() => console.log("MongoDB connected"))
   .catch((error) => console.log("MongoDB connection error:", error));
 
-// Start Server
+
+// Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

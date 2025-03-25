@@ -88,11 +88,11 @@ const ProductList = () => {
           <TableBody>
             {products.map((product) => (
               <TableRow key={product._id} hover>
-                {/* Display the image */}
+                
                 <TableCell>
                   {product.image && (
                     <img
-                      src={product.image} // Assuming `product.image` contains the image URL
+                      src={product.image} //
                       alt={product.name}
                       style={{ width: 50, height: 50, objectFit: "cover" }}
                     />
@@ -133,7 +133,7 @@ const ProductList = () => {
         </Table>
       </TableContainer>
 
-      {/* Delete Confirmation Dialog */}
+      
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogTitle sx={{ fontFamily: "'Roboto', sans-serif", fontWeight: 600 }}>
           Confirm Deletion

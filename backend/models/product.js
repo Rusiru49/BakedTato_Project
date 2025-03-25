@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 
-// Define the product schema
+
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -30,15 +30,15 @@ const productSchema = new mongoose.Schema({
     required: [true, "Category is required"],
   },
   image: {
-    type: String, // Image URL
+    type: String,
     required: [true, "Product image is required"],
   },
 });
 
-// Create the Product model
+
 const Product = mongoose.model("product", productSchema);
 
-// Validation function using Joi
+
 const validateProduct = (data) => {
   const schema = Joi.object({
     name: Joi.string().min(3).max(100).required(),
