@@ -14,7 +14,7 @@ const ManageStock = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/getStock');
+        const response = await axios.get('http://localhost:5000/api/getStock');
         setStock(response.data);
       } catch (error) {
         console.error('Error fetching stock:', error);
@@ -42,11 +42,11 @@ const ManageStock = () => {
     const confirmDelete = window.confirm('Are you sure you want to delete this stock item?');
     if (confirmDelete) {
       try {
-        const deleteResponse = await axios.delete(`http://localhost:8000/api/deleteStock/${id}`);
+        const deleteResponse = await axios.delete(`http://localhost:5000/api/deleteStock/${id}`);
         toast.success(deleteResponse.data.msg, { position: 'top-right' });
 
         // Refresh the stock list after deletion
-        const response = await axios.get('http://localhost:8000/api/getStock');
+        const response = await axios.get('http://localhost:5000/api/getStock');
         setStock(response.data);
       } catch (error) {
         console.error('Error deleting stock:', error);

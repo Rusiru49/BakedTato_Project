@@ -89,7 +89,7 @@ const AddRawMaterial = () => {
         }
 
         try {
-            const response = await axios.post("http://localhost:8000/api/createRawMaterial", rawMaterial);
+            const response = await axios.post("http://localhost:5000/api/createRawMaterial", rawMaterial);
             toast.success(response.data.msg, { position: "top-right" });
             navigate('/raw-materials/pending');
         } catch (error) {

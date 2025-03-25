@@ -58,7 +58,7 @@ const UpdateRawMaterials = () => {
     };
 
     useEffect(() => {
-        axios.get(`http://localhost:8000/api/getOneRawMaterial/${id}`)
+        axios.get(`http://localhost:5000/api/getOneRawMaterial/${id}`)
             .then((response) => {
                 setRawMaterial(response.data);
                 setOriginalDate(new Date(response.data.date)); // Store the original date
@@ -111,7 +111,7 @@ const UpdateRawMaterials = () => {
             }
         }
         // Submit the form if everything is valid
-        await axios.put(`http://localhost:8000/api/updateRawMaterial/${id}`, rawMaterial)
+        await axios.put(`http://localhost:5000/api/updateRawMaterial/${id}`, rawMaterial)
             .then((response) => {
                 toast.success(response.data.msg, { position: "top-right" });
                 navigate('/raw-materials/pending');

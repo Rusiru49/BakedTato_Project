@@ -89,7 +89,7 @@ const AddStock = () => {
         }
 
         try {
-            const response = await axios.post("http://localhost:8000/api/addStock", stock);
+            const response = await axios.post("http://localhost:5000/api/addStock", stock);
             toast.success("Stock Added Successfully!", { position: "top-right" });
             navigate('/manage-stock');
         } catch (error) {

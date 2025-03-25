@@ -13,7 +13,7 @@ const PendingRawMaterials = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/raw-materials/pending");
+        const response = await axios.get("http://localhost:5000/api/raw-materials/pending");
         setRawMaterials(response.data); 
       } catch (error) {
         console.error("Error fetching raw materials:", error);
@@ -44,10 +44,10 @@ const PendingRawMaterials = () => {
     const confirmDelete = window.confirm('Are you sure you want to delete this raw material?');
     if (confirmDelete) {
       try {
-        const deleteResponse = await axios.delete(`http://localhost:8000/api/deleteRawMaterial/${id}`);
+        const deleteResponse = await axios.delete(`http://localhost:5000/api/deleteRawMaterial/${id}`);
         toast.success(deleteResponse.data.msg, { position: "top-right" });
 
-        const response = await axios.get("http://localhost:8000/api/raw-materials/pending");
+        const response = await axios.get("http://localhost:5000/api/raw-materials/pending");
         setRawMaterials(response.data);
        
         navigate("/raw-materials/pending");

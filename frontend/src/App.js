@@ -5,7 +5,6 @@ import ProductList from "./components/ProductList";
 import ProductForm from "./components/ProductForm";
 import ProductDetails from "./components/ProductDetails";
 import AllUsers from "./Admin/AllUsers";
-import './App.css';
 import NavbarThiruni from './components/navbarThiruni/navbar';
 import AddRawMaterial from './components/addOperationsThiruni/AddRawMaterial';
 import ApprovedRawMaterials from './components/ViewOperationsThiruni/viewApprovedRawMaterials'; 
@@ -19,6 +18,7 @@ function App() {
   const user = JSON.parse(localStorage.getItem('user'));
   const userMail = user ? user.email : null;
   const admin = userMail === 'rusiruxz@gmail.com';
+  const supplier = userMail === 'thiruniWije@gmail.com';
 
   const route = createBrowserRouter([
     {
@@ -30,6 +30,17 @@ function App() {
         </>
       ),
     },
+    
+    {
+      path: "/home",
+      element: (
+        <>
+          <NavbarThiruni />
+          <ApprovedRawMaterials />
+        </>
+      )
+    },
+
     {
       path: "/create",
       element: (
@@ -56,16 +67,6 @@ function App() {
           <ProductDetails />
         </>
       ),
-    },
-
-    {
-      path:"/home",
-      element:(
-        <>
-          <NavbarThiruni/>
-          <ApprovedRawMaterials/>
-        </>
-      ),    
     },
     {
       path:"/add-raw-material",
