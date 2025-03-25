@@ -100,7 +100,7 @@
 }
 
 .add-stock-button {
-  background-color: #52677d;
+  background-color: #D2691E;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -113,5 +113,5 @@
 }
 
 .add-stock-button:hover {
-  background-color: #305f71;
+  background-color: #e4833e;
 }
