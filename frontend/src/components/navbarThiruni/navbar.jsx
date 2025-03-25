@@ -21,9 +21,6 @@ const Navbar = () => {
         <li>
           <NavLink to="/notifications" activeClassName="active">Notifications</NavLink>
         </li>
-        <li>
-          <NavLink to="/profile" activeClassName="active">Profile</NavLink>
-        </li>
       </ul>
 
       <div className="navbar-footer">

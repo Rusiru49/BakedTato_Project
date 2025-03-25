@@ -71,7 +71,7 @@
 .button {
     width: 100%;
     padding: 10px;
-    background-color: #5b738b;
+    background-color: #D2691E;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -79,7 +79,7 @@
 }
 
 .button:hover {
-    background-color: #7b8a99;
+    background-color: #e18747;
 }
 
 h3 {
