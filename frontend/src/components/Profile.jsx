@@ -21,8 +21,8 @@ const Profile = () => {
             if (window.confirm('Are you sure ?')) {
                 localStorage.removeItem('token');
                 localStorage.removeItem('user');
-                window.location.reload();
                 navigate("/");
+                window.location.reload();
             }
         } catch (error) {
             console.error(error);

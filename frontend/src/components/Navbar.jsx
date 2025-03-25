@@ -15,7 +15,7 @@ const Navbar = () => {
   const location = useLocation();
   const [openlogin, setopenlogin] = useState(false);
 
-  const [error, setError] = useState('');
+  const [errorl, setError] = useState('');
   const [checkdata, setCheckdata] = useState({
     username: "",
     password: ""
@@ -28,6 +28,9 @@ const Navbar = () => {
   const [password, setpassword] = useState('');
   const [confpassword, setconfpassword] = useState('');
   const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage2, setErrorMessage2] = useState("");
+  const [usernamel, setunamel] = useState('');
+  const [passwordl, setpasswordl] = useState('');
 
 
   const token = localStorage.getItem('token');
@@ -47,6 +50,12 @@ const Navbar = () => {
     confpassword: Yup.string()
       .oneOf([Yup.ref('password'), undefined], 'Passwords must match') // Validate password confirmation
       .required('Please re-type password'), // Added required validation
+  });
+
+  const validateSchema2 = Yup.object().shape({
+    usernamel: Yup.string().required('Username is required'),
+    passwordl: Yup.string()
+      .required('Password is required')
   });
 
   const handleNext = async () => {
@@ -78,7 +87,11 @@ const Navbar = () => {
     e.preventDefault();
 
     try {
-      const { data: res } = await Axios.post('http://localhost:5000/api/checkLogin', checkdata);
+      await validateSchema2.validate({ usernamel, passwordl }, { abortEarly: false });
+      const { data: res } = await Axios.post('http://localhost:5000/api/checkLogin', {
+        username: usernamel,
+        password: passwordl
+      });
 
       const { token, user } = res;
 
@@ -87,8 +100,10 @@ const Navbar = () => {
 
       if (user.email === 'rusiruxz@gmail.com') {
         navigate('/showusers');
+
       }else if(user.email === 'thiruniWije@gmail.com') {
-        navigate('/supplierHome')
+        navigate('/supplierHome');
+
       }else{
         navigate('/')
       }
@@ -98,7 +113,13 @@ const Navbar = () => {
       window.location.reload();
     } catch (error) {
 
-      if (error.response &&
+      if (error instanceof Yup.ValidationError) {
+        const errors = {};
+        error.inner.forEach(err => {
+          errors[err.path] = err.message;
+        });
+        setErrorMessage2(errors);
+      } else if (error.response &&
         error.response.status >= 400 &&
         error.response.status <= 500) {
         setError(error.response.data.message)
@@ -288,21 +309,24 @@ const Navbar = () => {
                   label="Username"
                   variant="outlined"
                   name="username"
-                  value={checkdata.username}
-                  onChange={(e) => setCheckdata({ ...checkdata, username: e.target.value })}
+                  value={usernamel}
+                  onChange={(e) => setunamel(e.target.value)}
                   sx={{ mb: 2 }}
                   required
                 />
+                {errorMessage2.usernamel && <div style={{ color: 'red' }}>{errorMessage2.usernamel}</div>}
+
                 <TextField
                   fullWidth
                   label="Password"
                   variant="outlined"
                   type="password"
                   name="password"
-                  value={checkdata.password}
-                  onChange={(e) => setCheckdata({ ...checkdata, password: e.target.value })}
-                  required
+                  value={passwordl}
+                  onChange={(e) => setpasswordl(e.target.value)}                  required
                 />
+                {errorMessage2.passwordl && <div style={{ color: 'red' }}>{errorMessage2.passwordl}</div>}
+                {errorl && <Typography color="error">{errorl}</Typography>}
               </Box>
               <Grid container justifyContent="flex-end" sx={{ mt: 1 }}>
                 <Typography variant="body2">
@@ -340,6 +364,7 @@ const Navbar = () => {
                 sx={{ mb: 2 }}
               />
               {errorMessage.username && <div style={{ color: 'red' }}>{errorMessage.username}</div>}
+              {errorl && <Typography color="error">{errorl}</Typography>}
               <TextField
                 fullWidth
                 label="Email"
