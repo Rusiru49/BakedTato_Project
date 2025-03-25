@@ -165,7 +165,7 @@ const Navbar = () => {
     <AppBar
       position="sticky"
       sx={{
-        background: "linear-gradient(90deg, #8B4513, #D2691E)",
+        background: "linear-gradient(90deg, #FF5722, #FF5722)",
         boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
       }}
     >
@@ -185,7 +185,7 @@ const Navbar = () => {
 
         {/* Navigation Links */}
         <Box sx={{ display: "flex", gap: 2 }}>
-          <Link to="/" style={{ textDecoration: "none" }}>
+          <Link to="/viewProducts" style={{ textDecoration: "none" }}>
             <Button
               component={motion.button}
               whileHover={{ scale: 1.1 }}

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ProductList from "./components/ProductList";
 import ProductForm from "./components/ProductForm";
+import LandingPage from "./components/LandingPage";
 import ProductDetails from "./components/ProductDetails";
 import AllUsers from "./Admin/AllUsers";
 import NavbarThiruni from './components/navbarThiruni/navbar';
@@ -50,7 +51,8 @@ function App() {
           </>
         )}
 
-        <Route path="/" element={<ProductList />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/viewProducts" element={<ProductList />} />
         <Route path="/create" element={<ProductForm />} />
         <Route path="/edit/:id" element={<ProductForm />} />
         <Route path="/product/:id" element={<ProductDetails />} />
