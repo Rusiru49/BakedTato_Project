@@ -3,6 +3,9 @@ import { Box, Typography, Button, Container, Grid, Card, CardMedia, CardContent,
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import FreshIngrediants from '../assets/Ingredients.jpg'
+import Customize from '../assets/customize.jpg'
+import FastDel from '../assets/FastDel.jpg'
 
 
 const theme = createTheme({
@@ -63,17 +66,17 @@ const BakedTatoLandingPage = () => {
             {[{
               title: 'Fresh Ingredients',
               description: 'We use only the freshest potatoes and toppings sourced from local farms.',
-              image: 'https://via.placeholder.com/300',
+              image: FreshIngrediants,
             },
             {
               title: 'Customizable Options',
               description: 'Build your perfect baked potato with a variety of toppings and sauces.',
-              image: 'https://via.placeholder.com/300',
+              image: Customize,
             },
             {
               title: 'Fast Delivery',
               description: 'Get your baked potato delivered hot and fresh to your doorstep.',
-              image: 'https://via.placeholder.com/300',
+              image: FastDel,
             }].map((feature, index) => (
               <Grid item key={index} xs={12} sm={6} md={4}>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
