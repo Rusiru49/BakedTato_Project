@@ -86,7 +86,7 @@ const PendingRawMaterials = () => {
                     <button onClick={() => handleDelete(material._id, material.date)} className="actionButtonsDel">
                         <FontAwesomeIcon icon={faTrash} /> 
                     </button>
-    
+              
                     <Link to={`/updateRawMaterials/${material._id}`} className="actionButtonsUp">
                         <FontAwesomeIcon icon={faEdit} />
                     </Link>     
