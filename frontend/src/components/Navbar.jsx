@@ -3,7 +3,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { Button, Box, Dialog, DialogTitle, DialogContent, DialogActions, Grid, TextField, IconButton, Popover, Menu, MenuItem } from "@mui/material";
+import {
+  Button, Box, Dialog, DialogTitle, DialogContent, DialogActions, Grid,
+  TextField, IconButton, Popover
+} from "@mui/material";
 import { Home, AddCircle, Login } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { FaArrowLeft, FaTimes, FaUser } from "react-icons/fa";
@@ -14,12 +17,7 @@ import * as Yup from 'yup';
 const Navbar = () => {
   const location = useLocation();
   const [openlogin, setopenlogin] = useState(false);
-
   const [errorl, setError] = useState('');
-  const [checkdata, setCheckdata] = useState({
-    username: "",
-    password: ""
-  });
   const [anchorEl, setAnchorEl] = useState(null);
   const [step, setStep] = useState(1);
 
@@ -32,52 +30,31 @@ const Navbar = () => {
   const [usernamel, setunamel] = useState('');
   const [passwordl, setpasswordl] = useState('');
 
-
   const token = localStorage.getItem('token');
   const user = JSON.parse(localStorage.getItem('user'));
   const userMail = user ? user.email : null;
 
   const validateSchema = Yup.object().shape({
-    username: Yup.string().required('First name is required'),
-    email: Yup.string()
-      .email('Invalid email address') // Corrected error message
-      .required('Email is required'), // Added required validation
-    password: Yup.string()
-      .required('Password is required')
+    username: Yup.string().required('Username is required'),
+    email: Yup.string().email('Invalid email address').required('Email is required'),
+    password: Yup.string().required('Password is required')
       .min(6, 'Password must be at least 6 characters')
       .max(20, 'Password must be at most 20 characters')
       .matches(/[a-zA-Z]/, 'Password must contain letters'),
-    confpassword: Yup.string()
-      .oneOf([Yup.ref('password'), undefined], 'Passwords must match') // Validate password confirmation
-      .required('Please re-type password'), // Added required validation
+    confpassword: Yup.string().oneOf([Yup.ref('password'), undefined], 'Passwords must match')
+      .required('Please re-type password'),
   });
 
   const validateSchema2 = Yup.object().shape({
     usernamel: Yup.string().required('Username is required'),
-    passwordl: Yup.string()
-      .required('Password is required')
+    passwordl: Yup.string().required('Password is required')
   });
 
-  const handleNext = async () => {
-    try {
-      setStep(step + 1);
-    } catch (error) {
-      console.error("Unexpected error:", error);
-    }
-  };
+  const handleNext = () => setStep(step + 1);
+  const handleBack = () => setStep(step - 1);
 
-  const handleBack = () => {
-    setStep(step - 1);
-  };
-
-  const handleProfileClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
+  const handleProfileClick = (event) => setAnchorEl(event.currentTarget);
+  const handleClose = () => setAnchorEl(null);
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
@@ -85,7 +62,6 @@ const Navbar = () => {
 
   const checkUser = async (e) => {
     e.preventDefault();
-
     try {
       await validateSchema2.validate({ usernamel, passwordl }, { abortEarly: false });
       const { data: res } = await Axios.post('http://localhost:5000/api/checkLogin', {
@@ -94,38 +70,29 @@ const Navbar = () => {
       });
 
       const { token, user } = res;
-
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
 
       if (user.email === 'rusiruxz@gmail.com') {
         navigate('/showusers');
-
-      }else if(user.email === 'thiruniWije@gmail.com') {
+      } else if (user.email === 'thiruniWije@gmail.com') {
         navigate('/supplierHome');
-
-      }else{
-        navigate('/')
+      } else {
+        navigate('/');
       }
-
 
       setopenlogin(false);
       window.location.reload();
     } catch (error) {
-
       if (error instanceof Yup.ValidationError) {
         const errors = {};
-        error.inner.forEach(err => {
-          errors[err.path] = err.message;
-        });
+        error.inner.forEach(err => { errors[err.path] = err.message; });
         setErrorMessage2(errors);
-      } else if (error.response &&
-        error.response.status >= 400 &&
-        error.response.status <= 500) {
+      } else if (error.response && error.response.status >= 400 && error.response.status <= 500) {
         setError(error.response.data.message)
       }
     }
-  }
+  };
 
   const adduser = async () => {
     try {
@@ -134,10 +101,9 @@ const Navbar = () => {
         email: email,
         username: username,
         password: password
-      })
+      });
 
-      console.log('Singup success', response.data);
-
+      console.log('Signup success', response.data);
       setemail('');
       setuname('');
       setpassword('');
@@ -146,18 +112,13 @@ const Navbar = () => {
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errors = {};
-        error.inner.forEach(err => {
-          errors[err.path] = err.message;
-        });
+        error.inner.forEach(err => { errors[err.path] = err.message; });
         setErrorMessage(errors);
-      } else if (error.response &&
-        error.response.status >= 400 &&
-        error.response.status <= 500) {
+      } else if (error.response && error.response.status >= 400 && error.response.status <= 500) {
         setError(error.response.data.message)
       }
     }
-
-  }
+  };
 
   const admin = userMail === 'rusiruxz@gmail.com';
 
@@ -170,161 +131,111 @@ const Navbar = () => {
       }}
     >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        {/* Brand Name */}
-        <Typography
-          variant="h5"
-          sx={{
-            fontWeight: 600,
-            color: "#FFD700",
-            letterSpacing: 1,
-            fontFamily: "Poppins, sans-serif",
-          }}
-        >
+        <Typography variant="h5" sx={{
+          fontWeight: 600, color: "#FFD700", letterSpacing: 1,
+          fontFamily: "Poppins, sans-serif"
+        }}>
           BAKEDTATO Management
         </Typography>
 
-        {/* Navigation Links */}
         <Box sx={{ display: "flex", gap: 2 }}>
           <Link to="/viewProducts" style={{ textDecoration: "none" }}>
-            <Button
-              component={motion.button}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+            <Button component={motion.button}
+              whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
               startIcon={<Home />}
               sx={{
                 color: location.pathname === "/" ? "#FFD700" : "#fff",
                 fontWeight: 500,
-                transition: "0.3s",
-                "&:hover": {
-                  backgroundColor: "rgba(255, 215, 0, 0.1)",
-                },
-              }}
-            >
+                "&:hover": { backgroundColor: "rgba(255, 215, 0, 0.1)" },
+              }}>
               View Products
             </Button>
           </Link>
 
           <Link to="/create" style={{ textDecoration: "none" }}>
-            <Button
-              component={motion.button}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+            <Button component={motion.button}
+              whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
               startIcon={<AddCircle />}
               sx={{
                 color: location.pathname === "/create" ? "#FFD700" : "#fff",
                 fontWeight: 500,
-                transition: "0.3s",
-                "&:hover": {
-                  backgroundColor: "rgba(210, 105, 30, 0.1)",
-                },
-              }}
-            >
+                "&:hover": { backgroundColor: "rgba(210, 105, 30, 0.1)" },
+              }}>
               Create Product
             </Button>
           </Link>
+
+          {/* NEW View Charts Button */}
+          <Link to="/salescharts" style={{ textDecoration: "none" }}>
+            <Button component={motion.button}
+              whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
+              sx={{
+                color: location.pathname === "/salescharts" ? "#FFD700" : "#fff",
+                fontWeight: 500,
+                "&:hover": { backgroundColor: "rgba(255, 215, 0, 0.1)" },
+              }}>
+              View Charts
+            </Button>
+          </Link>
+
           {admin && (
-            <>
-              <Link to="/showusers" style={{ textDecoration: "none" }}>
-                <Button
-                  component={motion.button}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  startIcon={<FaUser />}
-                  sx={{
-                    color: 'black',
-                    fontWeight: 500,
-                    transition: "0.3s",
-                    "&:hover": {
-                      backgroundColor: "rgba(255, 215, 0, 0.1)",
-                    },
-                  }}
-                >
-                  Manage users
-                </Button>
-              </Link>
-            </>
+            <Link to="/showusers" style={{ textDecoration: "none" }}>
+              <Button component={motion.button}
+                whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
+                startIcon={<FaUser />}
+                sx={{
+                  color: 'black',
+                  fontWeight: 500,
+                  "&:hover": { backgroundColor: "rgba(255, 215, 0, 0.1)" },
+                }}>
+                Manage users
+              </Button>
+            </Link>
           )}
 
           {user ? (
-            <>
-              <Link style={{ textDecoration: "none" }}>
-                <Button
-                  component={motion.button}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  startIcon={<FaUser />}
-                  sx={{
-                    color: 'black',
-                    fontWeight: 500,
-                    transition: "0.3s",
-                    "&:hover": {
-                      backgroundColor: "rgba(255, 215, 0, 0.1)",
-                    },
-                  }}
-                  onClick={handleProfileClick}
-                >
-                  {user.username}
-                </Button>
-              </Link>
-            </>
+            <Button component={motion.button}
+              whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
+              startIcon={<FaUser />}
+              onClick={handleProfileClick}
+              sx={{
+                color: 'black',
+                fontWeight: 500,
+                "&:hover": { backgroundColor: "rgba(255, 215, 0, 0.1)" },
+              }}>
+              {user.username}
+            </Button>
           ) : (
-            <>
-              <Link style={{ textDecoration: "none" }}>
-                <Button
-                  component={motion.button}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  startIcon={<Login />}
-                  sx={{
-                    color: 'black',
-                    fontWeight: 500,
-                    transition: "0.3s",
-                    "&:hover": {
-                      backgroundColor: "rgba(255, 215, 0, 0.1)",
-                    },
-                  }}
-                  onClick={() => setopenlogin(true)}
-                >
-                  Login
-                </Button>
-              </Link></>
+            <Button component={motion.button}
+              whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
+              startIcon={<Login />}
+              onClick={() => setopenlogin(true)}
+              sx={{
+                color: 'black',
+                fontWeight: 500,
+                "&:hover": { backgroundColor: "rgba(255, 215, 0, 0.1)" },
+              }}>
+              Login
+            </Button>
           )}
-
         </Box>
       </Toolbar>
 
+      {/* Login/Register Dialog */}
       <Dialog open={openlogin} onClose={() => setopenlogin(false)} fullWidth>
         {step === 1 && (
           <>
-            <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <DialogTitle sx={{ display: "flex", justifyContent: "space-between" }}>
               Login
-              <IconButton onClick={() => setopenlogin(false)}>
-                <FaTimes />
-              </IconButton>
+              <IconButton onClick={() => setopenlogin(false)}><FaTimes /></IconButton>
             </DialogTitle>
             <DialogContent>
               <Box sx={{ mt: 2 }}>
-                <TextField
-                  fullWidth
-                  label="Username"
-                  variant="outlined"
-                  name="username"
-                  value={usernamel}
-                  onChange={(e) => setunamel(e.target.value)}
-                  sx={{ mb: 2 }}
-                  required
-                />
+                <TextField fullWidth label="Username" value={usernamel}
+                  onChange={(e) => setunamel(e.target.value)} sx={{ mb: 2 }} />
                 {errorMessage2.usernamel && <div style={{ color: 'red' }}>{errorMessage2.usernamel}</div>}
-
-                <TextField
-                  fullWidth
-                  label="Password"
-                  variant="outlined"
-                  type="password"
-                  name="password"
-                  value={passwordl}
-                  onChange={(e) => setpasswordl(e.target.value)}                  required
-                />
+                <TextField fullWidth label="Password" type="password" value={passwordl}
+                  onChange={(e) => setpasswordl(e.target.value)} />
                 {errorMessage2.passwordl && <div style={{ color: 'red' }}>{errorMessage2.passwordl}</div>}
                 {errorl && <Typography color="error">{errorl}</Typography>}
               </Box>
@@ -338,89 +249,46 @@ const Navbar = () => {
               </Grid>
             </DialogContent>
             <DialogActions>
-              <Button variant="contained" color="primary" onClick={checkUser} >
-                Login
-              </Button>
+              <Button variant="contained" color="primary" onClick={checkUser}>Login</Button>
             </DialogActions>
           </>
         )}
+
         {step === 2 && (
           <>
-            <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <IconButton onClick={handleBack}>
-                <FaArrowLeft />
-              </IconButton>
+            <DialogTitle sx={{ display: "flex", justifyContent: "space-between" }}>
+              <IconButton onClick={handleBack}><FaArrowLeft /></IconButton>
               Sign up Form
-
             </DialogTitle>
             <DialogContent>
-              <TextField
-                fullWidth
-                label="Username"
-                variant="outlined"
-                name="username"
-                value={username}
-                onChange={(e) => setuname(e.target.value)}
-                sx={{ mb: 2 }}
-              />
+              <TextField fullWidth label="Username" value={username}
+                onChange={(e) => setuname(e.target.value)} sx={{ mb: 2 }} />
               {errorMessage.username && <div style={{ color: 'red' }}>{errorMessage.username}</div>}
-              {errorl && <Typography color="error">{errorl}</Typography>}
-              <TextField
-                fullWidth
-                label="Email"
-                variant="outlined"
-                name="email"
-                type="email"
-                value={email}
-                onChange={(e) => setemail(e.target.value)}
-                sx={{ mb: 2 }}
-              />
+              <TextField fullWidth label="Email" type="email" value={email}
+                onChange={(e) => setemail(e.target.value)} sx={{ mb: 2 }} />
               {errorMessage.email && <div style={{ color: 'red' }}>{errorMessage.email}</div>}
-              <TextField
-                fullWidth
-                label="Password"
-                variant="outlined"
-                type="password"
-                name="password"
-                value={password}
-                onChange={(e) => setpassword(e.target.value)}
-                sx={{ mb: 2 }}
-              />
+              <TextField fullWidth label="Password" type="password" value={password}
+                onChange={(e) => setpassword(e.target.value)} sx={{ mb: 2 }} />
               {errorMessage.password && <div style={{ color: 'red' }}>{errorMessage.password}</div>}
-              <TextField
-                fullWidth
-                label="Confirm Password"
-                variant="outlined"
-                type="password"
-                name="confirmPassword"
-                value={confpassword}
-                onChange={(e) => setconfpassword(e.target.value)}
-                sx={{ mb: 2 }}
-              />
+              <TextField fullWidth label="Confirm Password" type="password" value={confpassword}
+                onChange={(e) => setconfpassword(e.target.value)} sx={{ mb: 2 }} />
               {errorMessage.confpassword && <div style={{ color: 'red' }}>{errorMessage.confpassword}</div>}
             </DialogContent>
             <DialogActions>
-              <Button variant="contained" color="primary" onClick={adduser} >
-                Register
-              </Button>
+              <Button variant="contained" color="primary" onClick={adduser}>Register</Button>
             </DialogActions>
           </>
         )}
       </Dialog>
+
+      {/* Profile Popover */}
       <Popover
         id={id}
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
-        className="poppover"
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'center' }}
       >
         <Profile />
       </Popover>
