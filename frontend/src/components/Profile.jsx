@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Card, CardContent, Typography, Box, Dialog, DialogTitle, IconButton, DialogContent, TextField, DialogActions } from "@mui/material";
 import { FaUserCircle, FaSignOutAlt, FaTrash, FaEdit, FaTimes } from "react-icons/fa";
 import Axios from 'axios';
+import { signOut } from 'firebase/auth';
+import { auth } from '../services/firebase';
 
 
 const Profile = () => {
@@ -19,6 +21,7 @@ const Profile = () => {
     const signOutUser = async () => {
         try {
             if (window.confirm('Are you sure ?')) {
+                await signOut(auth);
                 localStorage.removeItem('token');
                 localStorage.removeItem('user');
                 navigate("/");
@@ -80,7 +83,7 @@ const Profile = () => {
             >
                 <CardContent>
 
-                    <FaUserCircle size={60} style={{ marginBottom: 10 }} />
+                    { user.photoURL ? <img src={user.photoURL} width={50} height={50} style={{borderRadius:'50'}}/> : <FaUserCircle size={60} style={{ marginBottom: 10 }} />}
 
 
                     <Typography variant="h5" sx={{ fontWeight: 600 }}>
@@ -96,6 +99,7 @@ const Profile = () => {
                             variant="contained"
                             startIcon={<FaEdit />}
                             onClick={() => setopen(true)}
+                            disabled={!!user.displayName}
                             sx={{ backgroundColor: "#FFD700", color: "#000", fontWeight: 600 }}
                         >
                             Update Account
@@ -105,6 +109,7 @@ const Profile = () => {
                             variant="contained"
                             startIcon={<FaTrash />}
                             onClick={deleteUser}
+                            disabled={!!user.displayName}
                             sx={{ backgroundColor: "red", color: "#fff", fontWeight: 600 }}
                         >
                             Delete Account

@@ -9,5 +9,4 @@ routerL.get('/users', loginControlller.getUser);
 routerL.post('/updateuser', loginControlller.updateUser);
 routerL.post('/deleteUser', loginControlller.deleteUser);
 
-
 module.exports = routerL;

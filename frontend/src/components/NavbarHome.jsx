@@ -7,7 +7,7 @@ import {
   Button, Box, Dialog, DialogTitle, DialogContent, DialogActions, Grid,
   TextField, IconButton, Popover
 } from "@mui/material";
-import { Home, AddCircle, Login } from "@mui/icons-material";
+import { Login } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { FaArrowLeft, FaTimes, FaUser } from "react-icons/fa";
 import Axios from "axios";
@@ -140,45 +140,6 @@ const Navbar = () => {
         </Typography>
 
         <Box sx={{ display: "flex", gap: 2 }}>
-          <Link to="/viewProducts" style={{ textDecoration: "none" }}>
-            <Button component={motion.button}
-              whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
-              startIcon={<Home />}
-              sx={{
-                color: location.pathname === "/" ? "#FFD700" : "#fff",
-                fontWeight: 500,
-                "&:hover": { backgroundColor: "rgba(255, 215, 0, 0.1)" },
-              }}>
-              View Products
-            </Button>
-          </Link>
-
-          <Link to="/create" style={{ textDecoration: "none" }}>
-            <Button component={motion.button}
-              whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
-              startIcon={<AddCircle />}
-              sx={{
-                color: location.pathname === "/create" ? "#FFD700" : "#fff",
-                fontWeight: 500,
-                "&:hover": { backgroundColor: "rgba(210, 105, 30, 0.1)" },
-              }}>
-              Create Product
-            </Button>
-          </Link>
-
-          {/* NEW View Charts Button */}
-          <Link to="/salescharts" style={{ textDecoration: "none" }}>
-            <Button component={motion.button}
-              whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
-              sx={{
-                color: location.pathname === "/salescharts" ? "#FFD700" : "#fff",
-                fontWeight: 500,
-                "&:hover": { backgroundColor: "rgba(255, 215, 0, 0.1)" },
-              }}>
-              View Charts
-            </Button>
-          </Link>
-
           {admin && (
             <Link to="/showusers" style={{ textDecoration: "none" }}>
               <Button component={motion.button}
@@ -241,14 +202,13 @@ const Navbar = () => {
                 {errorl && <Typography color="error">{errorl}</Typography>}
               </Box>
               <Grid container justifyContent="flex-end" sx={{ mt: 1 ,gap:'43%'}}>
-              <LoginG/>
+                <LoginG/>
                 <Typography variant="body2" >
                   Don't have an account?{" "}
                   <Link onClick={handleNext} style={{ color: "#D2691E", fontWeight: 600 }}>
                     Register here
                   </Link>
                 </Typography>
-                
               </Grid>
             </DialogContent>
             <DialogActions>
