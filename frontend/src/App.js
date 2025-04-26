@@ -1,24 +1,23 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { default as AllUsers, default as UsersPage } from "./Admin/AllUsers";
+import AddRawMaterial from "./components/addOperationsThiruni/AddRawMaterial";
+import AddStock from "./components/addOperationsThiruni/AddStock";
+import ManageStock from "./components/addOperationsThiruni/ManageStockPage";
+import AdminDashboard from "./components/AdminDashboard";
+import ProductsPage from "./components/BreakdownChart";
+import LandingPage from "./components/LandingPage";
 import Navbar from "./components/Navbar";
 import NavbarHome from "./components/NavbarHome";
-import ProductList from "./components/ProductList";
-import ProductForm from "./components/ProductForm";
-import LandingPage from "./components/LandingPage";
-import ProductDetails from "./components/ProductDetails";
-import AllUsers from "./Admin/AllUsers";
 import NavbarThiruni from "./components/navbarThiruni/navbar";
-import AddRawMaterial from "./components/addOperationsThiruni/AddRawMaterial";
+import ProductDetails from "./components/ProductDetails";
+import ProductForm from "./components/ProductForm";
+import ProductList from "./components/ProductList";
+import Sidebar from "./components/Sidebar";
+import UpdateRawMaterials from "./components/updateOperationsThiruni/updateRawMaterials";
 import ApprovedRawMaterials from "./components/ViewOperationsThiruni/viewApprovedRawMaterials";
 import PendingRawMaterials from "./components/ViewOperationsThiruni/viewPendingRawMaterials";
-import UpdateRawMaterials from "./components/updateOperationsThiruni/updateRawMaterials";
-import ManageStock from "./components/addOperationsThiruni/ManageStockPage";
-import AddStock from "./components/addOperationsThiruni/AddStock";
-import AdminDashboard from "./components/AdminDashboard";
-import BreakdownChart from "./components/BreakdownChart";
-import ProductsPage from "./components/BreakdownChart";
-import UsersPage from "./Admin/AllUsers";
-import Sidebar from "./components/Sidebar";
+import Orders from "./pages/Orders";
 
 function App() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -145,6 +144,8 @@ function App() {
                 />
               </>
             )}
+
+            {(user || admin) && <Route path="/orders" element={<Orders />} />}
 
             {/* Public Routes */}
             <Route path="/" element={<LandingPage />} />

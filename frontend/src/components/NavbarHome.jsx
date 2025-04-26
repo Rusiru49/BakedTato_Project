@@ -1,30 +1,29 @@
-import React, { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Login } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  IconButton,
+  Popover,
+  TextField,
+} from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import {
-  Button,
-  Box,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Grid,
-  TextField,
-  IconButton,
-  Popover,
-} from "@mui/material";
-import { Login } from "@mui/icons-material";
-import { motion } from "framer-motion";
-import { FaArrowLeft, FaTimes, FaUser } from "react-icons/fa";
 import Axios from "axios";
-import Profile from "./Profile";
+import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { FaArrowLeft, FaTimes, FaUser } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import LoginG from "./googlelogin";
+import Profile from "./Profile";
 
 const Navbar = () => {
-  const location = useLocation();
   const [openlogin, setopenlogin] = useState(false);
   const [errorl, setError] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
@@ -39,7 +38,6 @@ const Navbar = () => {
   const [usernamel, setunamel] = useState("");
   const [passwordl, setpasswordl] = useState("");
 
-  const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
   const userMail = user ? user.email : null;
 

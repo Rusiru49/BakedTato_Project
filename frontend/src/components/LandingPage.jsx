@@ -1,22 +1,23 @@
-import React from "react";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {
   Box,
-  Typography,
   Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
   Container,
   Grid,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
   IconButton,
+  Typography,
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import FreshIngrediants from "../assets/Ingredients.jpg";
+import React from "react";
 import Customize from "../assets/customize.jpg";
 import FastDel from "../assets/FastDel.jpg";
+import FreshIngrediants from "../assets/Ingredients.jpg";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme({
   palette: {
@@ -47,6 +48,14 @@ const theme = createTheme({
 });
 
 const BakedTatoLandingPage = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const navigate = useNavigate();
+
+  const handleOrderClick = () => {
+    navigate("/orders");
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ backgroundColor: "background.default", minHeight: "100vh" }}>
@@ -89,6 +98,25 @@ const BakedTatoLandingPage = () => {
               fluffy on the inside, and loaded with flavor.
             </Typography>
           </motion.div>
+
+          {user && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 1.3 }}
+            >
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                onClick={handleOrderClick}
+              >
+                <Typography variant="h6" color="white">
+                  Order Now
+                </Typography>
+              </Button>
+            </motion.div>
+          )}
         </Box>
 
         <Container sx={{ py: 8 }} id="learn-more">

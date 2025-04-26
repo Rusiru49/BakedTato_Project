@@ -39,7 +39,6 @@ const Navbar = () => {
   const [usernamel, setunamel] = useState("");
   const [passwordl, setpasswordl] = useState("");
 
-  const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
   const userMail = user ? user.email : null;
 
