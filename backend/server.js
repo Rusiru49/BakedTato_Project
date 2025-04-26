@@ -6,11 +6,12 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const multer = require("multer");
 const fs = require("fs");
-const routerL = require("./routes/loginRoutes");
+
 const RawMaterials = require("./models/rawMaterialModel.js");
 const StockSupplier = require("./models/stockModel.js");
 
 // Routing Imporing
+const routerL = require("./routes/loginRoutes");
 const productRoutes = require("./routes/productRoutes");
 const route = require("./routes/rawMaterialRoute.js");
 const stockSupplierRoute = require("./routes/stockSupplierRoute.js");
