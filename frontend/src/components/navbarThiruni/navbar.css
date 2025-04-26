@@ -1,10 +1,10 @@
 .navbar {
   width: 250px;
   height: 100vh;
-  background: #D2691E;
+  background: #d2691e;
   padding-top: 30px;
   position: fixed;
-  left: 0; 
+  left: 0;
   top: 0;
   display: flex;
   flex-direction: column;
@@ -33,16 +33,14 @@
   transition: 0.3s;
 }
 
-
 .navbar ul li a:hover {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 5px;
 }
 
-
 .navbar ul li a.active {
   text-decoration: underline;
-  text-decoration-color: white;;
+  text-decoration-color: white;
   font-weight: bold;
 }
 

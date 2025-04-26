@@ -1,4 +1,4 @@
-import { Card, CardContent, Typography } from '@mui/material';
+import { Card, CardContent, Typography } from "@mui/material";
 
 const DashboardCard = ({ title, value }) => (
   <Card sx={{ minWidth: 200, m: 1 }}>

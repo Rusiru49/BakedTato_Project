@@ -8,8 +8,10 @@ const ApprovedRawMaterials = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/raw-materials/approved");
-        setRawMaterials(response.data); 
+        const response = await axios.get(
+          "http://localhost:5000/api/raw-materials/approved",
+        );
+        setRawMaterials(response.data);
       } catch (error) {
         console.error("Error fetching raw materials:", error);
       }
@@ -23,7 +25,9 @@ const ApprovedRawMaterials = () => {
       <table className="raw-materials-table">
         <thead>
           <tr>
-            <th colSpan="6" className="table-heading">Available Raw Materials</th>
+            <th colSpan="6" className="table-heading">
+              Available Raw Materials
+            </th>
           </tr>
           <tr>
             <th>Name</th>

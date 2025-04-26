@@ -22,7 +22,10 @@ export const createProduct = async (product) => {
     const response = await axios.post(PRODUCT_URL, product);
     return response.data;
   } catch (error) {
-    console.error("Error creating product:", error.response?.data?.error || error.message);
+    console.error(
+      "Error creating product:",
+      error.response?.data?.error || error.message,
+    );
     throw new Error(error.response?.data?.error || "Failed to create product");
   }
 };
@@ -33,7 +36,10 @@ export const updateProduct = async (id, product) => {
     const response = await axios.put(`${PRODUCT_URL}/${id}`, updatedProduct);
     return response.data;
   } catch (error) {
-    console.error("Error updating product:", error.response?.data?.error || error.message);
+    console.error(
+      "Error updating product:",
+      error.response?.data?.error || error.message,
+    );
     throw new Error(error.response?.data?.error || "Failed to update product");
   }
 };
@@ -55,7 +61,7 @@ export const fetchOrders = async () => {
 };
 
 export const fetchSuppliers = async () => {
-  const response = await axios.get('/api/suppliers');
+  const response = await axios.get("/api/suppliers");
   return response.data;
 };
 
@@ -75,7 +81,11 @@ export const exportSalesPDF = async () => {
 
   doc.text("Recent Orders:", 20, 80);
   orders.forEach((order, i) => {
-    doc.text(`${i + 1}. ${order.customerName} - Rs. ${order.amount}`, 20, 90 + i * 10);
+    doc.text(
+      `${i + 1}. ${order.customerName} - Rs. ${order.amount}`,
+      20,
+      90 + i * 10,
+    );
   });
 
   doc.save("bakedtato-sales-report.pdf");

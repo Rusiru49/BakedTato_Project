@@ -20,7 +20,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import { Edit, Delete, PictureAsPdf  } from "@mui/icons-material";
+import { Edit, Delete, PictureAsPdf } from "@mui/icons-material";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -51,58 +51,61 @@ const ProductList = () => {
 
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
-    
+
     // Title
     doc.setFontSize(18);
     doc.text("Product List", 14, 22);
-    
+
     // Table data
     const headers = ["Name", "Description", "Price (Rs.)", "Stock"];
-    const data = products.map(product => [
+    const data = products.map((product) => [
       product.name,
       product.description,
       product.price,
-      product.stock
+      product.stock,
     ]);
-  
+
     // Using autoTable with new syntax
     autoTable(doc, {
       head: [headers],
       body: data,
       startY: 30,
-      theme: 'grid',
+      theme: "grid",
       headStyles: {
         fillColor: [63, 81, 181],
         textColor: 255,
-        fontStyle: 'bold'
+        fontStyle: "bold",
       },
       styles: {
         font: "helvetica",
         fontSize: 10,
         cellPadding: 3,
-        overflow: 'linebreak'
+        overflow: "linebreak",
       },
       columnStyles: {
-        0: { cellWidth: 'auto' },
-        1: { cellWidth: 'auto' },
-        2: { cellWidth: 'auto' },
-        3: { cellWidth: 'auto' }
-      }
+        0: { cellWidth: "auto" },
+        1: { cellWidth: "auto" },
+        2: { cellWidth: "auto" },
+        3: { cellWidth: "auto" },
+      },
     });
-  
+
     doc.save("product_list.pdf");
   };
-  
 
   return (
-      <Paper sx={{ padding: 3, margin: "auto", maxWidth: 900 }}>
-        <Typography 
-          variant="h5" 
-          align="center" 
-          gutterBottom 
-          sx={{ fontFamily: "'Roboto', sans-serif", fontSize: "24px", fontWeight: 700 }}
-        >
-          Product List
+    <Paper sx={{ padding: 3, margin: "auto", maxWidth: 900 }}>
+      <Typography
+        variant="h5"
+        align="center"
+        gutterBottom
+        sx={{
+          fontFamily: "'Roboto', sans-serif",
+          fontSize: "24px",
+          fontWeight: 700,
+        }}
+      >
+        Product List
       </Typography>
 
       <Button
@@ -110,42 +113,75 @@ const ProductList = () => {
         color="secondary"
         onClick={handleDownloadPDF}
         startIcon={<PictureAsPdf />}
-        sx={{ 
-          mb: 2, 
-          fontFamily: "'Roboto', sans-serif", 
-          textTransform: 'none', 
+        sx={{
+          mb: 2,
+          fontFamily: "'Roboto', sans-serif",
+          textTransform: "none",
           fontWeight: 600,
           backgroundColor: "#FFA726",
           "&:hover": {
             backgroundColor: "#FB8C00",
           },
-         }}
+        }}
       >
         Download
       </Button>
-
 
       <TableContainer component={Paper} sx={{ boxShadow: 3, borderRadius: 2 }}>
         <Table>
           <TableHead>
             <TableRow sx={{ backgroundColor: "#f5f5f5" }}>
-              <TableCell sx={{ fontFamily: "'Roboto', sans-serif", fontSize: "16px", fontWeight: 600 }}>
+              <TableCell
+                sx={{
+                  fontFamily: "'Roboto', sans-serif",
+                  fontSize: "16px",
+                  fontWeight: 600,
+                }}
+              >
                 Image
               </TableCell>
-              <TableCell sx={{ fontFamily: "'Roboto', sans-serif", fontSize: "16px", fontWeight: 600 }}>
+              <TableCell
+                sx={{
+                  fontFamily: "'Roboto', sans-serif",
+                  fontSize: "16px",
+                  fontWeight: 600,
+                }}
+              >
                 Name
               </TableCell>
-              <TableCell sx={{ fontFamily: "'Roboto', sans-serif", fontSize: "16px", fontWeight: 600 }}>
+              <TableCell
+                sx={{
+                  fontFamily: "'Roboto', sans-serif",
+                  fontSize: "16px",
+                  fontWeight: 600,
+                }}
+              >
                 Description
               </TableCell>
-              <TableCell sx={{ fontFamily: "'Roboto', sans-serif", fontSize: "16px", fontWeight: 600 }}>
+              <TableCell
+                sx={{
+                  fontFamily: "'Roboto', sans-serif",
+                  fontSize: "16px",
+                  fontWeight: 600,
+                }}
+              >
                 Price (Rs.)
               </TableCell>
-              <TableCell sx={{ fontFamily: "'Roboto', sans-serif", fontSize: "16px", fontWeight: 600 }}>
+              <TableCell
+                sx={{
+                  fontFamily: "'Roboto', sans-serif",
+                  fontSize: "16px",
+                  fontWeight: 600,
+                }}
+              >
                 Stock
               </TableCell>
-              <TableCell 
-                sx={{ fontFamily: "'Roboto', sans-serif", fontSize: "16px", fontWeight: 600 }} 
+              <TableCell
+                sx={{
+                  fontFamily: "'Roboto', sans-serif",
+                  fontSize: "16px",
+                  fontWeight: 600,
+                }}
                 align="center"
               >
                 Actions
@@ -155,7 +191,6 @@ const ProductList = () => {
           <TableBody>
             {products.map((product) => (
               <TableRow key={product._id} hover>
-                
                 <TableCell>
                   {product.image && (
                     <img
@@ -165,30 +200,38 @@ const ProductList = () => {
                     />
                   )}
                 </TableCell>
-                <TableCell sx={{ fontFamily: "'Roboto', sans-serif", fontSize: "14px" }}>
+                <TableCell
+                  sx={{ fontFamily: "'Roboto', sans-serif", fontSize: "14px" }}
+                >
                   {product.name}
                 </TableCell>
-                <TableCell sx={{ fontFamily: "'Roboto', sans-serif", fontSize: "14px" }}>
+                <TableCell
+                  sx={{ fontFamily: "'Roboto', sans-serif", fontSize: "14px" }}
+                >
                   {product.description}
                 </TableCell>
-                <TableCell sx={{ fontFamily: "'Roboto', sans-serif", fontSize: "14px" }}>
+                <TableCell
+                  sx={{ fontFamily: "'Roboto', sans-serif", fontSize: "14px" }}
+                >
                   {product.price}
                 </TableCell>
-                <TableCell sx={{ fontFamily: "'Roboto', sans-serif", fontSize: "14px" }}>
+                <TableCell
+                  sx={{ fontFamily: "'Roboto', sans-serif", fontSize: "14px" }}
+                >
                   {product.stock}
                 </TableCell>
                 <TableCell align="center">
-                  <IconButton 
-                    component={Link} 
-                    to={`/edit/${product._id}`} 
+                  <IconButton
+                    component={Link}
+                    to={`/edit/${product._id}`}
                     color="primary"
                     sx={{ fontSize: "18px" }}
                   >
                     <Edit />
                   </IconButton>
-                  <IconButton 
-                    onClick={() => handleOpenDialog(product._id)} 
-                    color="error" 
+                  <IconButton
+                    onClick={() => handleOpenDialog(product._id)}
+                    color="error"
                     sx={{ fontSize: "18px" }}
                   >
                     <Delete />
@@ -200,26 +243,30 @@ const ProductList = () => {
         </Table>
       </TableContainer>
 
-      
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-        <DialogTitle sx={{ fontFamily: "'Roboto', sans-serif", fontWeight: 600 }}>
+        <DialogTitle
+          sx={{ fontFamily: "'Roboto', sans-serif", fontWeight: 600 }}
+        >
           Confirm Deletion
         </DialogTitle>
         <DialogContent>
-          <DialogContentText sx={{ fontFamily: "'Roboto', sans-serif", fontSize: "14px" }}>
-            Are you sure you want to delete this product? This action cannot be undone.
+          <DialogContentText
+            sx={{ fontFamily: "'Roboto', sans-serif", fontSize: "14px" }}
+          >
+            Are you sure you want to delete this product? This action cannot be
+            undone.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button 
-            onClick={() => setOpenDialog(false)} 
+          <Button
+            onClick={() => setOpenDialog(false)}
             color="primary"
             sx={{ fontFamily: "'Roboto', sans-serif" }}
           >
             Cancel
           </Button>
-          <Button 
-            onClick={handleDeleteConfirm} 
+          <Button
+            onClick={handleDeleteConfirm}
             color="error"
             sx={{ fontFamily: "'Roboto', sans-serif" }}
           >

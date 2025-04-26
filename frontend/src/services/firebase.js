@@ -13,7 +13,7 @@ const firebaseConfig = {
   storageBucket: "itpproject-e931a.firebasestorage.app",
   messagingSenderId: "951595850840",
   appId: "1:951595850840:web:f5e403cb6e174b2b627e2d",
-  measurementId: "G-XW9MSY8G20"
+  measurementId: "G-XW9MSY8G20",
 };
 
 // Initialize Firebase

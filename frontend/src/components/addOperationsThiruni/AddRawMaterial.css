@@ -1,92 +1,93 @@
 .createReview {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f4;
 }
 
 .container {
-    width: 100%;
-    max-width: 700px;
-    padding: 40px;
-    padding-left: 40px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-left: 200px;
+  width: 100%;
+  max-width: 700px;
+  padding: 40px;
+  padding-left: 40px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-left: 200px;
 }
 
 .createReviewForm {
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
 }
 
 .formGroup {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    margin-top: 0px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  margin-top: 0px;
 }
 
 .left-side {
-    width: 48%;
+  width: 48%;
 }
 
 .right-side {
-    width: 35%;
-    margin-right: 10px;
+  width: 35%;
+  margin-right: 10px;
 }
 
 .inputGroup {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 }
 
 .inputGroup label {
-    display: flex;
-    margin-bottom: 10px;
-    font-weight: bold;
+  display: flex;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
-.inputGroup input, .inputGroup select, .inputGroup textarea {
-    width: 50%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.inputGroup input,
+.inputGroup select,
+.inputGroup textarea {
+  width: 50%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .button-container {
-    text-align: left;
-    margin-bottom: 20px;
-    padding: 10px;
+  text-align: left;
+  margin-bottom: 20px;
+  padding: 10px;
 }
 
 .backButton {
-    text-decoration: none;
-    color: #333;
-    font-size: 24px;
+  text-decoration: none;
+  color: #333;
+  font-size: 24px;
 }
 
 .button {
-    width: 100%;
-    padding: 10px;
-    background-color: #D2691E;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  width: 100%;
+  padding: 10px;
+  background-color: #d2691e;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .button:hover {
-    background-color: #e18747;
+  background-color: #e18747;
 }
 
 h3 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 30px; /* Reduced margin */
-    font-size: 24px;
-    font-weight: 600;
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px; /* Reduced margin */
+  font-size: 24px;
+  font-weight: 600;
 }
-

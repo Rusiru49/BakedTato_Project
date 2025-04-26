@@ -13,8 +13,10 @@ const PendingRawMaterials = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/raw-materials/pending");
-        setRawMaterials(response.data); 
+        const response = await axios.get(
+          "http://localhost:5000/api/raw-materials/pending",
+        );
+        setRawMaterials(response.data);
       } catch (error) {
         console.error("Error fetching raw materials:", error);
       }
@@ -24,40 +26,47 @@ const PendingRawMaterials = () => {
   }, []);
 
   //this function checks if the time difference is less than 24 hrs and returns true if time < 24
-  const isDeletionAllowed = (dateCreated)=>{
+  const isDeletionAllowed = (dateCreated) => {
     const now = new Date();
     const creationTime = new Date(dateCreated);
     const timeDifference = now - creationTime;
     const hoursDifference = timeDifference / (1000 * 60 * 60);
 
     return hoursDifference < 24;
-  }
+  };
 
-  
-  const handleDelete = async (id, dateCreated) =>{
+  const handleDelete = async (id, dateCreated) => {
     //if false this is skipped and if true toast error is displayed
-    if(!isDeletionAllowed(dateCreated)){
-      toast.error("Deletion is only allowed within 24 hours of creation.", { position: "top-right" });
+    if (!isDeletionAllowed(dateCreated)) {
+      toast.error("Deletion is only allowed within 24 hours of creation.", {
+        position: "top-right",
+      });
       return;
     }
 
-    const confirmDelete = window.confirm('Are you sure you want to delete this raw material?');
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this raw material?",
+    );
     if (confirmDelete) {
       try {
-        const deleteResponse = await axios.delete(`http://localhost:5000/api/deleteRawMaterial/${id}`);
+        const deleteResponse = await axios.delete(
+          `http://localhost:5000/api/deleteRawMaterial/${id}`,
+        );
         toast.success(deleteResponse.data.msg, { position: "top-right" });
 
-        const response = await axios.get("http://localhost:5000/api/raw-materials/pending");
+        const response = await axios.get(
+          "http://localhost:5000/api/raw-materials/pending",
+        );
         setRawMaterials(response.data);
-       
+
         navigate("/raw-materials/pending");
       } catch (error) {
         console.error("Error deleting raw material:", error);
         toast.error("Error deleting raw material", { position: "top-right" });
       }
     }
-  }
-  
+  };
+
   return (
     <div className="raw-materials-container">
       <table className="raw-materials-table">
@@ -83,13 +92,19 @@ const PendingRawMaterials = () => {
                 <td>{material.date}</td>
                 <td>{material.status}</td>
                 <td>
-                    <button onClick={() => handleDelete(material._id, material.date)} className="actionButtonsDel">
-                        <FontAwesomeIcon icon={faTrash} /> 
-                    </button>
-              
-                    <Link to={`/updateRawMaterials/${material._id}`} className="actionButtonsUp">
-                        <FontAwesomeIcon icon={faEdit} />
-                    </Link>     
+                  <button
+                    onClick={() => handleDelete(material._id, material.date)}
+                    className="actionButtonsDel"
+                  >
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
+
+                  <Link
+                    to={`/updateRawMaterials/${material._id}`}
+                    className="actionButtonsUp"
+                  >
+                    <FontAwesomeIcon icon={faEdit} />
+                  </Link>
                 </td>
               </tr>
             ))

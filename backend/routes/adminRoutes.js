@@ -1,11 +1,11 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
 // GET: Dashboard statistics
-router.get('/dashboard-stats', async (req, res) => {
+router.get("/dashboard-stats", async (req, res) => {
   try {
     const totalSales = await Order.aggregate([
-      { $group: { _id: null, total: { $sum: '$amount' } } },
+      { $group: { _id: null, total: { $sum: "$amount" } } },
     ]);
     const totalProducts = await Product.countDocuments();
     const totalOrders = await Order.countDocuments();
@@ -16,17 +16,17 @@ router.get('/dashboard-stats', async (req, res) => {
       totalOrders,
     });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch dashboard data' });
+    res.status(500).json({ error: "Failed to fetch dashboard data" });
   }
 });
 
 // GET: Best sellers (optional)
-router.get('/best-sellers', async (req, res) => {
+router.get("/best-sellers", async (req, res) => {
   try {
     const bestSellers = await Product.find().sort({ sold: -1 }).limit(5);
     res.json(bestSellers);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch best sellers' });
+    res.status(500).json({ error: "Failed to fetch best sellers" });
   }
 });
 

@@ -1,15 +1,22 @@
 const express = require("express");
 const route = express.Router();
 
-const { createRawMaterial,getRawMaterials,getOneRawMaterial,updateRawMaterial,deleteRawMaterial, getApprovedMaterials, getPendingRawMaterials } = require('../controllers/rawMaterialController');
+const {
+  createRawMaterial,
+  getRawMaterials,
+  getOneRawMaterial,
+  updateRawMaterial,
+  deleteRawMaterial,
+  getApprovedMaterials,
+  getPendingRawMaterials,
+} = require("../controllers/rawMaterialController");
 
-
-route.post('/createRawMaterial',createRawMaterial);
-route.get('/getRawMaterials',getRawMaterials);
-route.get('/raw-materials/approved',getApprovedMaterials);
-route.get('/raw-materials/pending',getPendingRawMaterials);
-route.get('/getOneRawMaterial/:id',getOneRawMaterial);
-route.put('/updateRawMaterial/:id',updateRawMaterial);
-route.delete('/deleteRawMaterial/:id',deleteRawMaterial);
+route.post("/createRawMaterial", createRawMaterial);
+route.get("/getRawMaterials", getRawMaterials);
+route.get("/raw-materials/approved", getApprovedMaterials);
+route.get("/raw-materials/pending", getPendingRawMaterials);
+route.get("/getOneRawMaterial/:id", getOneRawMaterial);
+route.put("/updateRawMaterial/:id", updateRawMaterial);
+route.delete("/deleteRawMaterial/:id", deleteRawMaterial);
 
 module.exports = route;

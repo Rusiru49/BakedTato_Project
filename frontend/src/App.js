@@ -7,32 +7,32 @@ import ProductForm from "./components/ProductForm";
 import LandingPage from "./components/LandingPage";
 import ProductDetails from "./components/ProductDetails";
 import AllUsers from "./Admin/AllUsers";
-import NavbarThiruni from './components/navbarThiruni/navbar';
-import AddRawMaterial from './components/addOperationsThiruni/AddRawMaterial';
-import ApprovedRawMaterials from './components/ViewOperationsThiruni/viewApprovedRawMaterials'; 
-import PendingRawMaterials from './components/ViewOperationsThiruni/viewPendingRawMaterials';
-import UpdateRawMaterials from './components/updateOperationsThiruni/updateRawMaterials';
-import ManageStock from './components/addOperationsThiruni/ManageStockPage';
-import AddStock from './components/addOperationsThiruni/AddStock';
-import AdminDashboard from './components/AdminDashboard';
+import NavbarThiruni from "./components/navbarThiruni/navbar";
+import AddRawMaterial from "./components/addOperationsThiruni/AddRawMaterial";
+import ApprovedRawMaterials from "./components/ViewOperationsThiruni/viewApprovedRawMaterials";
+import PendingRawMaterials from "./components/ViewOperationsThiruni/viewPendingRawMaterials";
+import UpdateRawMaterials from "./components/updateOperationsThiruni/updateRawMaterials";
+import ManageStock from "./components/addOperationsThiruni/ManageStockPage";
+import AddStock from "./components/addOperationsThiruni/AddStock";
+import AdminDashboard from "./components/AdminDashboard";
 import BreakdownChart from "./components/BreakdownChart";
-import ProductsPage from './components/BreakdownChart';
-import UsersPage from './Admin/AllUsers';
-import Sidebar from './components/Sidebar';
+import ProductsPage from "./components/BreakdownChart";
+import UsersPage from "./Admin/AllUsers";
+import Sidebar from "./components/Sidebar";
 
 function App() {
-  const user = JSON.parse(localStorage.getItem('user'));
+  const user = JSON.parse(localStorage.getItem("user"));
   const userMail = user ? user.email : null;
 
-  const admin = userMail === 'rus@gmail.com';
-  const supplier = userMail === 'thiruniWije@gmail.com';
+  const admin = userMail === "rus@gmail.com";
+  const supplier = userMail === "thiruniWije@gmail.com";
 
   return (
     <Router>
       {/* Navbar */}
       {admin ? <Navbar /> : <NavbarHome />}
 
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: "flex" }}>
         {/* Sidebar only for Admin */}
         {admin && <Sidebar />}
 
@@ -47,22 +47,102 @@ function App() {
               <>
                 <Route path="/dashboard" element={<AdminDashboard />} />
                 <Route path="/showusers" element={<AllUsers />} />
-                <Route path="/supplierHome" element={<><ApprovedRawMaterials /><NavbarThiruni /></>} />
-                <Route path="/add-raw-material" element={<><AddRawMaterial /><NavbarThiruni /></>} />
-                <Route path="/raw-materials/pending" element={<><PendingRawMaterials /><NavbarThiruni /></>} />
-                <Route path="/updateRawMaterials/:id" element={<><UpdateRawMaterials /><NavbarThiruni /></>} />
-                <Route path="/manage-stock" element={<><ManageStock /><NavbarThiruni /></>} />
-                <Route path="/add-stock" element={<><AddStock /><NavbarThiruni /></>} />
+                <Route
+                  path="/supplierHome"
+                  element={
+                    <>
+                      <ApprovedRawMaterials />
+                      <NavbarThiruni />
+                    </>
+                  }
+                />
+                <Route
+                  path="/add-raw-material"
+                  element={
+                    <>
+                      <AddRawMaterial />
+                      <NavbarThiruni />
+                    </>
+                  }
+                />
+                <Route
+                  path="/raw-materials/pending"
+                  element={
+                    <>
+                      <PendingRawMaterials />
+                      <NavbarThiruni />
+                    </>
+                  }
+                />
+                <Route
+                  path="/updateRawMaterials/:id"
+                  element={
+                    <>
+                      <UpdateRawMaterials />
+                      <NavbarThiruni />
+                    </>
+                  }
+                />
+                <Route
+                  path="/manage-stock"
+                  element={
+                    <>
+                      <ManageStock />
+                      <NavbarThiruni />
+                    </>
+                  }
+                />
+                <Route
+                  path="/add-stock"
+                  element={
+                    <>
+                      <AddStock />
+                      <NavbarThiruni />
+                    </>
+                  }
+                />
               </>
             )}
 
             {/* Supplier Routes */}
             {supplier && !admin && (
               <>
-                <Route path="/supplierHome" element={<><ApprovedRawMaterials /><NavbarThiruni /></>} />
-                <Route path="/add-raw-material" element={<><AddRawMaterial /><NavbarThiruni /></>} />
-                <Route path="/raw-materials/pending" element={<><PendingRawMaterials /><NavbarThiruni /></>} />
-                <Route path="/updateRawMaterials/:id" element={<><UpdateRawMaterials /><NavbarThiruni /></>} />
+                <Route
+                  path="/supplierHome"
+                  element={
+                    <>
+                      <ApprovedRawMaterials />
+                      <NavbarThiruni />
+                    </>
+                  }
+                />
+                <Route
+                  path="/add-raw-material"
+                  element={
+                    <>
+                      <AddRawMaterial />
+                      <NavbarThiruni />
+                    </>
+                  }
+                />
+                <Route
+                  path="/raw-materials/pending"
+                  element={
+                    <>
+                      <PendingRawMaterials />
+                      <NavbarThiruni />
+                    </>
+                  }
+                />
+                <Route
+                  path="/updateRawMaterials/:id"
+                  element={
+                    <>
+                      <UpdateRawMaterials />
+                      <NavbarThiruni />
+                    </>
+                  }
+                />
               </>
             )}
 

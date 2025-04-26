@@ -22,7 +22,12 @@ import {
   FileDownload as ExportIcon,
   Dashboard as DashboardIcon,
 } from "@mui/icons-material";
-import { fetchDashboardData, fetchOrders, fetchSuppliers, exportSalesPDF } from "../services/api";
+import {
+  fetchDashboardData,
+  fetchOrders,
+  fetchSuppliers,
+  exportSalesPDF,
+} from "../services/api";
 import DashboardCard from "../components/DashboardCard";
 
 const AdminDashboard = () => {
@@ -31,7 +36,7 @@ const AdminDashboard = () => {
     totalSales: 0,
     totalOrders: 0,
     newOrders: 0,
-    totalSuppliers: 0
+    totalSuppliers: 0,
   });
   const [recentOrders, setRecentOrders] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
@@ -42,12 +47,12 @@ const AdminDashboard = () => {
         const [stats, orders, suppliersData] = await Promise.all([
           fetchDashboardData(),
           fetchOrders(),
-          fetchSuppliers()
+          fetchSuppliers(),
         ]);
-        
+
         setDashboardStats({
           ...stats,
-          totalSuppliers: suppliersData.length
+          totalSuppliers: suppliersData.length,
         });
         setRecentOrders(orders.slice(0, 5));
         setSuppliers(suppliersData.slice(0, 5));
@@ -70,7 +75,7 @@ const AdminDashboard = () => {
   };
 
   return (
-    <Box sx={{ p: 3, width: '100%' }}>
+    <Box sx={{ p: 3, width: "100%" }}>
       <CssBaseline />
 
       {/* Dashboard Cards */}
@@ -113,8 +118,10 @@ const AdminDashboard = () => {
       <Grid container spacing={3} sx={{ mt: 2 }}>
         {/* Recent Orders Table */}
         <Grid item xs={12} md={6}>
-          <Paper sx={{ p: 3, borderRadius: 3, height: '100%' }}>
-            <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
+          <Paper sx={{ p: 3, borderRadius: 3, height: "100%" }}>
+            <Box
+              sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}
+            >
               <Typography variant="h6">Recent Orders</Typography>
               <Button
                 variant="outlined"
@@ -141,11 +148,14 @@ const AdminDashboard = () => {
                       <TableCell>{order.customerName}</TableCell>
                       <TableCell>Rs. {order.amount.toLocaleString()}</TableCell>
                       <TableCell>
-                        <Chip 
+                        <Chip
                           label={order.status}
                           color={
-                            order.status === "Completed" ? "success" :
-                            order.status === "Pending" ? "warning" : "error"
+                            order.status === "Completed"
+                              ? "success"
+                              : order.status === "Pending"
+                                ? "warning"
+                                : "error"
                           }
                           size="small"
                         />
@@ -160,8 +170,10 @@ const AdminDashboard = () => {
 
         {/* Top Suppliers Table */}
         <Grid item xs={12} md={6}>
-          <Paper sx={{ p: 3, borderRadius: 3, height: '100%' }}>
-            <Typography variant="h6" sx={{ mb: 3 }}>Top Suppliers</Typography>
+          <Paper sx={{ p: 3, borderRadius: 3, height: "100%" }}>
+            <Typography variant="h6" sx={{ mb: 3 }}>
+              Top Suppliers
+            </Typography>
             <TableContainer>
               <Table>
                 <TableHead>
@@ -176,9 +188,9 @@ const AdminDashboard = () => {
                   {suppliers.map((supplier) => (
                     <TableRow key={supplier.id}>
                       <TableCell>
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                          <Avatar 
-                            src={supplier.image} 
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                          <Avatar
+                            src={supplier.image}
                             sx={{ width: 32, height: 32, mr: 2 }}
                           >
                             {supplier.name.charAt(0)}
@@ -187,13 +199,16 @@ const AdminDashboard = () => {
                         </Box>
                       </TableCell>
                       <TableCell>{supplier.contact}</TableCell>
-                      <TableCell>{supplier.items.join(', ')}</TableCell>
+                      <TableCell>{supplier.items.join(", ")}</TableCell>
                       <TableCell>
-                        <Chip 
-                          label={supplier.status} 
+                        <Chip
+                          label={supplier.status}
                           color={
-                            supplier.status === "Active" ? "success" :
-                            supplier.status === "On Hold" ? "warning" : "error"
+                            supplier.status === "Active"
+                              ? "success"
+                              : supplier.status === "On Hold"
+                                ? "warning"
+                                : "error"
                           }
                           size="small"
                         />

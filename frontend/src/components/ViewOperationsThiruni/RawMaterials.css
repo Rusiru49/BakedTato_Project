@@ -32,17 +32,18 @@
 .raw-materials-table tbody tr:last-child td:last-child {
   border-bottom-right-radius: 12px;
   white-space: nowrap;
-  width: 150px; 
+  width: 150px;
 }
 
-.raw-materials-table th, .raw-materials-table td {
+.raw-materials-table th,
+.raw-materials-table td {
   padding: 12px;
   font-size: 16px;
   text-align: center;
 }
 
 .raw-materials-table thead {
-  background: #D2691E;
+  background: #d2691e;
   color: white;
 }
 
@@ -55,9 +56,8 @@
   color: #555;
 }
 
-
 .table-heading {
-  background: #D2691E;
+  background: #d2691e;
   color: white;
   font-size: 30px;
   font-weight: bold;
@@ -66,22 +66,21 @@
 }
 
 .actionButtonsDel {
-  background-color: #ff4d4d; 
+  background-color: #ff4d4d;
   color: white;
   border: none;
   padding: 5px 10px;
   border-radius: 4px;
   cursor: pointer;
-  margin-right: 10px; 
+  margin-right: 10px;
 }
 
 .actionButtonsDel:hover {
-  background-color: #cc0000; 
+  background-color: #cc0000;
 }
 
-
 .actionButtonsUp {
-  background-color: #4CAF50; 
+  background-color: #4caf50;
   border: none;
   padding: 5px 10px;
   border-radius: 4px;
@@ -90,7 +89,7 @@
 }
 
 .actionButtonsUp:hover {
-  background-color: #45a049; 
+  background-color: #45a049;
 }
 
 .add-stock-button-container {
@@ -100,7 +99,7 @@
 }
 
 .add-stock-button {
-  background-color: #D2691E;
+  background-color: #d2691e;
   color: white;
   border: none;
   padding: 10px 20px;

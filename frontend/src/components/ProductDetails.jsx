@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getProductById } from "../services/api";
-import { Typography, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -37,18 +46,24 @@ const ProductDetails = () => {
       <Typography>Stock: {product.stock}</Typography>
       <Typography>Category: {product.category}</Typography>
       <img src={product.image} alt={product.name} style={{ width: "100%" }} />
-      
-      
-      <Button variant="contained" color="primary" onClick={handleOpenUpdateDialog}>
+
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleOpenUpdateDialog}
+      >
         Edit
       </Button>
 
-      
-      <Dialog open={openUpdateDialog} onClose={() => setOpenUpdateDialog(false)}>
+      <Dialog
+        open={openUpdateDialog}
+        onClose={() => setOpenUpdateDialog(false)}
+      >
         <DialogTitle>Ready to Update</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            You can now update this product. Do you want to proceed to the update page?
+            You can now update this product. Do you want to proceed to the
+            update page?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

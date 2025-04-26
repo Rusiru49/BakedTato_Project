@@ -62,12 +62,10 @@ const ProductForm = () => {
     }
   };
 
-
   const handleChange = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
     validateField(e.target.name, e.target.value);
   };
-
 
   const validateField = (fieldName, value) => {
     let isValid = true;
@@ -98,7 +96,6 @@ const ProductForm = () => {
     setValidation((prev) => ({ ...prev, [fieldName]: isValid }));
   };
 
-
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
@@ -111,13 +108,11 @@ const ProductForm = () => {
     }
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
     let imageUrl = "";
-
 
     if (selectedFile) {
       const formData = new FormData();
@@ -196,20 +191,22 @@ const ProductForm = () => {
                   required
                   variant="outlined"
                   error={!validation.category}
-                  helperText={!validation.category ? "Category is required" : ""}
+                  helperText={
+                    !validation.category ? "Category is required" : ""
+                  }
                   InputProps={{
-                  startAdornment: <Category />,
+                    startAdornment: <Category />,
                   }}
                   select
                   SelectProps={{
-                  native: true,
-                }}
-              >
-                    <option value="">Select a Category</option>
-                    <option value="Baked Potato">Baked Potato</option>
-                    <option value="Vegetarian">Vegetarian</option>
-                    <option value="Non-Vegetarian">Non-Vegetarian</option>
-                    <option value="Specialty">Specialty</option>
+                    native: true,
+                  }}
+                >
+                  <option value="">Select a Category</option>
+                  <option value="Baked Potato">Baked Potato</option>
+                  <option value="Vegetarian">Vegetarian</option>
+                  <option value="Non-Vegetarian">Non-Vegetarian</option>
+                  <option value="Specialty">Specialty</option>
                 </TextField>
               </Grid>
 
@@ -224,7 +221,9 @@ const ProductForm = () => {
                   rows={3}
                   variant="outlined"
                   error={!validation.description}
-                  helperText={!validation.description ? "Description is required" : ""}
+                  helperText={
+                    !validation.description ? "Description is required" : ""
+                  }
                   InputProps={{
                     startAdornment: <Description />,
                   }}
@@ -277,7 +276,10 @@ const ProductForm = () => {
                 <label htmlFor="upload-image">
                   <Button
                     variant="contained"
-                    sx={{ backgroundColor: "#E3A008", "&:hover": { backgroundColor: "#D18F07" } }}
+                    sx={{
+                      backgroundColor: "#E3A008",
+                      "&:hover": { backgroundColor: "#D18F07" },
+                    }}
                     color="primary"
                     fullWidth
                     component="span"
@@ -288,7 +290,6 @@ const ProductForm = () => {
                 </label>
               </Grid>
 
-              
               {previewImage && (
                 <Grid item xs={12}>
                   <Box sx={{ textAlign: "center", mt: 2 }}>
@@ -319,7 +320,6 @@ const ProductForm = () => {
               )}
             </Grid>
 
-            
             {error && (
               <Typography
                 color="error"
@@ -335,7 +335,6 @@ const ProductForm = () => {
               </Typography>
             )}
 
-          
             <Box
               sx={{
                 display: "flex",
@@ -344,9 +343,15 @@ const ProductForm = () => {
                 mt: 3,
               }}
             >
-              <Button type="submit" variant="contained"
-                sx={{ backgroundColor: "#8B4513", "&:hover": { backgroundColor: "#7A3E10" } }}
-              disabled={!Object.values(validation).every(Boolean)}>
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  backgroundColor: "#8B4513",
+                  "&:hover": { backgroundColor: "#7A3E10" },
+                }}
+                disabled={!Object.values(validation).every(Boolean)}
+              >
                 {id ? "Update Product" : "Create Product"}
               </Button>
               <Button

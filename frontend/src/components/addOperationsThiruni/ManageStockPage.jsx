@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import '../ViewOperationsThiruni/RawMaterials.css';
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "../ViewOperationsThiruni/RawMaterials.css";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const ManageStock = () => {
   const [stock, setStock] = useState([]);
   const navigate = useNavigate();
@@ -13,10 +13,10 @@ const ManageStock = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/getStock');
+        const response = await axios.get("http://localhost:5000/api/getStock");
         setStock(response.data);
       } catch (error) {
-        console.error('Error fetching stock:', error);
+        console.error("Error fetching stock:", error);
       }
     };
 
@@ -34,22 +34,28 @@ const ManageStock = () => {
 
   const handleDelete = async (id, dateCreated) => {
     if (!isDeletionAllowed(dateCreated)) {
-      toast.error('Deletion is only allowed within 24 hours of creation.', { position: 'top-right' });
+      toast.error("Deletion is only allowed within 24 hours of creation.", {
+        position: "top-right",
+      });
       return;
     }
 
-    const confirmDelete = window.confirm('Are you sure you want to delete this stock item?');
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this stock item?",
+    );
     if (confirmDelete) {
       try {
-        const deleteResponse = await axios.delete(`http://localhost:5000/api/deleteStock/${id}`);
-        toast.success(deleteResponse.data.msg, { position: 'top-right' });
+        const deleteResponse = await axios.delete(
+          `http://localhost:5000/api/deleteStock/${id}`,
+        );
+        toast.success(deleteResponse.data.msg, { position: "top-right" });
 
         // Refresh the stock list after deletion
-        const response = await axios.get('http://localhost:5000/api/getStock');
+        const response = await axios.get("http://localhost:5000/api/getStock");
         setStock(response.data);
       } catch (error) {
-        console.error('Error deleting stock:', error);
-        toast.error('Error deleting stock', { position: 'top-right' });
+        console.error("Error deleting stock:", error);
+        toast.error("Error deleting stock", { position: "top-right" });
       }
     }
   };
@@ -86,11 +92,17 @@ const ManageStock = () => {
                   <td>{stock.date}</td>
                   <td>{stock.remainingStock}</td>
                   <td>
-                    <button onClick={() => handleDelete(stock._id, stock.date)} className="actionButtonsDel">
+                    <button
+                      onClick={() => handleDelete(stock._id, stock.date)}
+                      className="actionButtonsDel"
+                    >
                       <FontAwesomeIcon icon={faTrash} />
                     </button>
 
-                    <Link to={`/updateStock/${stock._id}`} className="actionButtonsUp">
+                    <Link
+                      to={`/updateStock/${stock._id}`}
+                      className="actionButtonsUp"
+                    >
                       <FontAwesomeIcon icon={faEdit} />
                     </Link>
                   </td>
