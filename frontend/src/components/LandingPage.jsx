@@ -56,6 +56,10 @@ const BakedTatoLandingPage = () => {
     navigate("/orders");
   };
 
+  const handleProductClick = () => {
+    navigate("/buyproducts");
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ backgroundColor: "background.default", minHeight: "100vh" }}>
@@ -101,10 +105,11 @@ const BakedTatoLandingPage = () => {
 
           {user && (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1.3 }}
-            >
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1.3 }}
+          >
+            <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', mt: 4 }}>
               <Button
                 variant="contained"
                 color="primary"
@@ -115,7 +120,18 @@ const BakedTatoLandingPage = () => {
                   Order Now
                 </Typography>
               </Button>
-            </motion.div>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                onClick={handleProductClick}
+              >
+                <Typography variant="h6" color="white">
+                  Buy Now
+                </Typography>
+              </Button>
+            </Box>
+          </motion.div>          
           )}
         </Box>
 
@@ -173,7 +189,11 @@ const BakedTatoLandingPage = () => {
                       <Typography>{feature.description}</Typography>
                     </CardContent>
                     <CardActions sx={{ justifyContent: "flex-end" }}>
-                      <Button size="small" color="primary">
+                      <Button size="small" color="primary" onClick={() => {
+                        if (feature.title === "Fresh Ingredients") navigate("/fresh-ingredients");
+                        else if (feature.title === "Customizable Options") navigate("/customize-options");
+                        else if (feature.title === "Fast Delivery") navigate("/fast-delivery");
+                      }}>
                         Learn More
                       </Button>
                     </CardActions>

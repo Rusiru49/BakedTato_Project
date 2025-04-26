@@ -18,6 +18,11 @@ import UpdateRawMaterials from "./components/updateOperationsThiruni/updateRawMa
 import ApprovedRawMaterials from "./components/ViewOperationsThiruni/viewApprovedRawMaterials";
 import PendingRawMaterials from "./components/ViewOperationsThiruni/viewPendingRawMaterials";
 import Orders from "./pages/Orders";
+import FreshIngredients from "./components/FreshIngredients";
+import CustomizeOptions from "./components/CustomizeOptions";
+import FastDelivery from "./components/FastDelivery";
+import BuyProductPage from "./components/BuyProduct"
+
 
 function App() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -146,6 +151,11 @@ function App() {
             )}
 
             {(user || admin) && <Route path="/orders" element={<Orders />} />}
+            {(user || admin) && <Route path="/buyproducts" element={<BuyProductPage />} />}
+
+            <Route path="/fresh-ingredients" element={<FreshIngredients />} />
+            <Route path="/customize-options" element={<CustomizeOptions />} />
+            <Route path="/fast-delivery" element={<FastDelivery />} />
 
             {/* Public Routes */}
             <Route path="/" element={<LandingPage />} />
