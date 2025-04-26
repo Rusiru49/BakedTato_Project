@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
 import { getAllProducts, deleteProduct } from "../services/api";
 import { Link } from "react-router-dom";
 import {
@@ -18,7 +20,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import { Edit, Delete } from "@mui/icons-material";
+import { Edit, Delete, PictureAsPdf  } from "@mui/icons-material";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -47,16 +49,81 @@ const ProductList = () => {
     setOpenDialog(true);
   };
 
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF();
+    
+    // Title
+    doc.setFontSize(18);
+    doc.text("Product List", 14, 22);
+    
+    // Table data
+    const headers = ["Name", "Description", "Price (Rs.)", "Stock"];
+    const data = products.map(product => [
+      product.name,
+      product.description,
+      product.price,
+      product.stock
+    ]);
+  
+    // Using autoTable with new syntax
+    autoTable(doc, {
+      head: [headers],
+      body: data,
+      startY: 30,
+      theme: 'grid',
+      headStyles: {
+        fillColor: [63, 81, 181],
+        textColor: 255,
+        fontStyle: 'bold'
+      },
+      styles: {
+        font: "helvetica",
+        fontSize: 10,
+        cellPadding: 3,
+        overflow: 'linebreak'
+      },
+      columnStyles: {
+        0: { cellWidth: 'auto' },
+        1: { cellWidth: 'auto' },
+        2: { cellWidth: 'auto' },
+        3: { cellWidth: 'auto' }
+      }
+    });
+  
+    doc.save("product_list.pdf");
+  };
+  
+
   return (
-    <Paper sx={{ padding: 3, margin: "auto", maxWidth: 900 }}>
-      <Typography 
-        variant="h5" 
-        align="center" 
-        gutterBottom 
-        sx={{ fontFamily: "'Roboto', sans-serif", fontSize: "24px", fontWeight: 700 }}
-      >
-        Product List
+      <Paper sx={{ padding: 3, margin: "auto", maxWidth: 900 }}>
+        <Typography 
+          variant="h5" 
+          align="center" 
+          gutterBottom 
+          sx={{ fontFamily: "'Roboto', sans-serif", fontSize: "24px", fontWeight: 700 }}
+        >
+          Product List
       </Typography>
+
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={handleDownloadPDF}
+        startIcon={<PictureAsPdf />}
+        sx={{ 
+          mb: 2, 
+          fontFamily: "'Roboto', sans-serif", 
+          textTransform: 'none', 
+          fontWeight: 600,
+          backgroundColor: "#FFA726",
+          "&:hover": {
+            backgroundColor: "#FB8C00",
+          },
+         }}
+      >
+        Download
+      </Button>
+
 
       <TableContainer component={Paper} sx={{ boxShadow: 3, borderRadius: 2 }}>
         <Table>

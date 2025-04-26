@@ -166,19 +166,6 @@ const Navbar = () => {
             </Button>
           </Link>
 
-          {/* NEW View Charts Button */}
-          <Link to="/salescharts" style={{ textDecoration: "none" }}>
-            <Button component={motion.button}
-              whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
-              sx={{
-                color: location.pathname === "/salescharts" ? "#FFD700" : "#fff",
-                fontWeight: 500,
-                "&:hover": { backgroundColor: "rgba(255, 215, 0, 0.1)" },
-              }}>
-              View Charts
-            </Button>
-          </Link>
-
           {admin && (
             <Link to="/showusers" style={{ textDecoration: "none" }}>
               <Button component={motion.button}

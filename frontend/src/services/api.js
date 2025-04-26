@@ -54,6 +54,11 @@ export const fetchOrders = async () => {
   return response.data;
 };
 
+export const fetchSuppliers = async () => {
+  const response = await axios.get('/api/suppliers');
+  return response.data;
+};
+
 // Generate and download PDF report
 export const exportSalesPDF = async () => {
   const stats = await fetchDashboardData();
