@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Container,
@@ -7,136 +7,165 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Button,
+  ThemeProvider,
+  createTheme,
 } from "@mui/material";
+import axios from "axios";
 
-const dishes = [
-  {
-    name: "Classic Baked Potato",
-    description: "Fluffy inside, crispy outside — topped with butter and fresh herbs.",
-    image: "https://source.unsplash.com/400x300/?bakedpotato,classic",
+const theme = createTheme({
+  palette: {
+    mode: "dark",
+    primary: {
+      main: "#FF5722",
+    },
+    secondary: {
+      main: "#4CAF50",
+    },
+    background: {
+      default: "#121212",
+      paper: "#1E1E1E",
+    },
   },
-  {
-    name: "Cheesy Bacon Potato",
-    description: "Loaded with gooey cheese, crispy bacon bits, and green onions.",
-    image: "https://source.unsplash.com/400x300/?bakedpotato,cheese",
+  typography: {
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    h1: {
+      fontWeight: 700,
+      fontSize: "3.5rem",
+      letterSpacing: "-0.5px",
+    },
+    h4: {
+      fontWeight: 600,
+      fontSize: "2.5rem",
+    },
   },
-  {
-    name: "Veggie Delight Potato",
-    description: "Stuffed with sautéed veggies, mushrooms, and vegan cheese.",
-    image: "https://source.unsplash.com/400x300/?bakedpotato,vegetarian",
-  },
-  {
-    name: "Spicy Tex-Mex Potato",
-    description: "Topped with spicy beans, jalapeños, salsa, and sour cream.",
-    image: "https://source.unsplash.com/400x300/?bakedpotato,spicy",
-  },
-  {
-    name: "BBQ Pulled Pork Potato",
-    description: "Tender BBQ pulled pork piled high over a buttery baked potato.",
-    image: "https://source.unsplash.com/400x300/?bakedpotato,bbq",
-  },
-];
+});
 
-const OurDishes = () => {
+const BuyProduct = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    // Fetch all products from backend
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/products");
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Error fetching products", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
-    <Box
-      sx={{
-        py: 10,
-        backgroundColor: "#fff7ec",
-      }}
-    >
-      <Container>
-        <Typography
-          variant="h3"
-          component="h2"
-          align="center"
-          gutterBottom
-          sx={{ 
-            fontWeight: "bold", 
-            color: "#5c3d1e",
-            letterSpacing: 1,
-          }}
-        >
-          Our Baked Potato Dishes
-        </Typography>
+    <ThemeProvider theme={theme}>
+      <Box
+        sx={{
+          py: 10,
+          backgroundColor: "background.default",
+          minHeight: "100vh",
+        }}
+      >
+        <Container>
+          <Typography
+            variant="h3"
+            component="h2"
+            align="center"
+            gutterBottom
+            sx={{
+              fontWeight: "bold",
+              color: "primary.main",
+              letterSpacing: 1,
+            }}
+          >
+            Buy Our Products
+          </Typography>
 
-        <Typography
-          variant="h6"
-          align="center"
-          color="#a66b2d"
-          paragraph
-          sx={{ 
-            fontStyle: "italic", 
-            mb: 8,
-            fontSize: { xs: '1rem', md: '1.25rem' },
-          }}
-        >
-          Freshly baked, fully loaded, crafted with love! 🥔✨
-        </Typography>
-
-        <Grid container spacing={4}>
-          {dishes.map((dish, index) => (
-            <Grid item key={index} xs={12} sm={6} md={4}>
-              <Card
-                sx={{
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  borderRadius: 4,
-                  boxShadow: 3,
-                  bgcolor: "#fffaf3",
-                  transition: "all 0.3s ease",
-                  "&:hover": {
-                    transform: "translateY(-8px)",
-                    boxShadow: 6,
-                  },
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  height="220"
-                  image={dish.image}
-                  alt={dish.name}
+          <Grid container spacing={4} sx={{ mt: 5 }}>
+            {products.map((product) => (
+              <Grid item key={product._id} xs={12} sm={6} md={4}>
+                <Card
                   sx={{
-                    borderTopLeftRadius: 16,
-                    borderTopRightRadius: 16,
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    borderRadius: 4,
+                    boxShadow: 3,
+                    bgcolor: "background.paper",
                     transition: "all 0.3s ease",
                     "&:hover": {
-                      opacity: 0.9,
+                      transform: "translateY(-8px)",
+                      boxShadow: 6,
                     },
                   }}
-                />
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography
-                    variant="h6"
-                    component="div"
+                >
+                  <CardMedia
+                    component="img"
+                    height="220"
+                    image={product.image}
+                    alt={product.name}
                     sx={{
-                      color: "#7b4f21",
-                      fontWeight: "bold",
-                      fontSize: "1.25rem",
-                      mb: 1,
+                      borderTopLeftRadius: 16,
+                      borderTopRightRadius: 16,
+                      objectFit: "cover",
                     }}
-                  >
-                    {dish.name}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{
-                      fontSize: "0.95rem",
-                      lineHeight: 1.6,
-                    }}
-                  >
-                    {dish.description}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-    </Box>
+                  />
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography
+                      variant="h6"
+                      component="div"
+                      sx={{
+                        color: "primary.main",
+                        fontWeight: "bold",
+                        fontSize: "1.25rem",
+                        mb: 1,
+                      }}
+                    >
+                      {product.name}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{
+                        fontSize: "0.95rem",
+                        mb: 2,
+                      }}
+                    >
+                      {product.description}
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        color: "secondary.main",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Rs. {product.price}
+                    </Typography>
+
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      sx={{
+                        mt: 2,
+                        backgroundColor: "primary.main",
+                        "&:hover": {
+                          backgroundColor: "#e64a19",
+                        },
+                      }}
+                    >
+                      ADD TO CART
+                    </Button>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
+    </ThemeProvider>
   );
 };
 
-export default OurDishes;
+export default BuyProduct;

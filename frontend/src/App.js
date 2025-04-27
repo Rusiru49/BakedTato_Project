@@ -5,7 +5,7 @@ import AddRawMaterial from "./components/addOperationsThiruni/AddRawMaterial";
 import AddStock from "./components/addOperationsThiruni/AddStock";
 import ManageStock from "./components/addOperationsThiruni/ManageStockPage";
 import AdminDashboard from "./components/AdminDashboard";
-import ProductsPage from "./components/BreakdownChart";
+import ProductAnalysis from "./components/ProductAnalysis";
 import LandingPage from "./components/LandingPage";
 import Navbar from "./components/Navbar";
 import NavbarHome from "./components/NavbarHome";
@@ -44,7 +44,7 @@ function App() {
         <div style={{ flex: 1 }}>
           <Routes>
             <Route path="/users" element={<UsersPage />} />
-            <Route path="/products" element={<ProductsPage />} />
+            <Route path="/products" element={< ProductAnalysis/>} />
 
             {/* Admin Routes */}
             {admin && (

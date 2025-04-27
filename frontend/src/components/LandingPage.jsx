@@ -57,7 +57,7 @@ const BakedTatoLandingPage = () => {
   };
 
   const handleProductClick = () => {
-    navigate("/buyproducts");
+    navigate("/buyProducts");
   }
 
   return (

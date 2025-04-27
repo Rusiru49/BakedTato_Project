@@ -141,7 +141,7 @@ const ProductForm = () => {
       } else {
         await createProduct({ ...product, image: imageUrl });
       }
-      navigate("/");
+      navigate("/viewProducts");
     } catch (error) {
       setError("Failed to save product.");
     }
