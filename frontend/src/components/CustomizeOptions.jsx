@@ -6,7 +6,7 @@ const CustomizeOptions = () => {
     <Box
       sx={{
         py: 10,
-        backgroundColor: "#fff7ec", // Very light creamy background
+        backgroundColor: "#fff7ec",
       }}
     >
       <Container maxWidth="md">
@@ -17,7 +17,7 @@ const CustomizeOptions = () => {
             gutterBottom
             sx={{
               fontWeight: "bold",
-              color: "#7b4f21", // Deep brown, matching FreshIngredients heading
+              color: "#7b4f21",
             }}
           >
             Customizable Options
@@ -26,7 +26,7 @@ const CustomizeOptions = () => {
             variant="h6"
             paragraph
             sx={{
-              color: "#a66b2d", // Warm golden-brown
+              color: "#a66b2d",
               mt: 2,
               fontStyle: "italic",
             }}
@@ -39,7 +39,7 @@ const CustomizeOptions = () => {
               maxWidth: "700px",
               margin: "0 auto",
               mt: 3,
-              color: "#5c3d1e", // Deep earthy body text
+              color: "#5c3d1e",
               lineHeight: 1.8,
             }}
           >

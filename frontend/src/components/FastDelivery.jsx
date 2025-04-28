@@ -6,7 +6,7 @@ const FastDelivery = () => {
     <Box
       sx={{
         py: 10,
-        backgroundColor: "#fef5e7", // Very soft peach background for energy
+        backgroundColor: "#fef5e7",
       }}
     >
       <Container maxWidth="md">
@@ -17,7 +17,7 @@ const FastDelivery = () => {
             gutterBottom
             sx={{
               fontWeight: "bold",
-              color: "#7b4f21", // Deep brown heading
+              color: "#7b4f21",
             }}
           >
             Fast Delivery
@@ -26,7 +26,7 @@ const FastDelivery = () => {
             variant="h6"
             paragraph
             sx={{
-              color: "#a66b2d", // Warm golden subheading
+              color: "#a66b2d",
               mt: 2,
               fontStyle: "italic",
             }}
@@ -39,7 +39,7 @@ const FastDelivery = () => {
               maxWidth: "700px",
               margin: "0 auto",
               mt: 3,
-              color: "#5c3d1e", // Rich earthy body text
+              color: "#5c3d1e",
               lineHeight: 1.8,
             }}
           >

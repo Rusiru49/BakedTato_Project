@@ -147,6 +147,15 @@ function App() {
                     </>
                   }
                 />
+                <Route
+                  path="/manage-stock"
+                  element={
+                    <>
+                      <ManageStock />
+                      <NavbarThiruni />
+                    </>
+                  }
+                />
               </>
             )}
 

@@ -1,14 +1,14 @@
 import React from "react";
-import { Box, Typography, Container, useTheme } from "@mui/material";
+import { Box, Typography, Container } from "@mui/material";
 
 const FreshIngredients = () => {
-  const theme = useTheme();
+  //const theme = useTheme();
 
   return (
     <Box
       sx={{
         py: 10,
-        backgroundColor: "#f8f1e4", // Soft warm beige background
+        backgroundColor: "#f8f1e4",
       }}
     >
       <Container maxWidth="md">
@@ -19,7 +19,7 @@ const FreshIngredients = () => {
             gutterBottom
             sx={{
               fontWeight: "bold",
-              color: "#7b4f21", // Rich brown color for heading
+              color: "#7b4f21",
             }}
           >
             Fresh Ingredients
@@ -28,7 +28,7 @@ const FreshIngredients = () => {
             variant="h6"
             paragraph
             sx={{
-              color: "#a66b2d", // Warm golden-brown
+              color: "#a66b2d",
               mt: 2,
               fontStyle: "italic",
             }}
@@ -41,7 +41,7 @@ const FreshIngredients = () => {
               maxWidth: "700px",
               margin: "0 auto",
               mt: 3,
-              color: "#5c3d1e", // Deep earthy tone for body text
+              color: "#5c3d1e",
               lineHeight: 1.8,
             }}
           >
