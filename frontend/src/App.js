@@ -22,6 +22,7 @@ import FreshIngredients from "./components/FreshIngredients";
 import CustomizeOptions from "./components/CustomizeOptions";
 import FastDelivery from "./components/FastDelivery";
 import BuyProductPage from "./components/BuyProduct"
+import UpdateStock from "./components/updateOperationsThiruni/updateStock";
 
 
 function App() {
@@ -152,6 +153,24 @@ function App() {
                   element={
                     <>
                       <ManageStock />
+                      <NavbarThiruni />
+                    </>
+                  }
+                />
+                <Route
+                  path="/add-stock"
+                  element={
+                    <>
+                      <AddStock />
+                      <NavbarThiruni />
+                    </>
+                  }
+                />
+                <Route
+                  path="/update-stock/:id"
+                  element={
+                    <>
+                      <UpdateStock />
                       <NavbarThiruni />
                     </>
                   }

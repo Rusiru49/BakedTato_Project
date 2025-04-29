@@ -1,60 +1,76 @@
-.navbar {
+.sidebar {
   width: 250px;
   height: 100vh;
-  background: #d2691e;
-  padding-top: 30px;
+  background-color: #080504; 
+  padding: 150px 0;
   position: fixed;
   left: 0;
   top: 0;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-  justify-content: space-between;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
+  font-family: 'Poppins', sans-serif;
 }
 
-.navbar ul {
+.sidebar-links-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.sidebar-links {
   list-style: none;
   padding: 0;
   width: 100%;
-  text-align: center;
 }
 
-.navbar ul li {
-  padding: 30px 0;
+.sidebar-links li {
+  width: 100%;
+  padding: 15px 20px; 
 }
 
-.navbar ul li a {
+.sidebar-links li a {
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  gap: 12px;
   text-decoration: none;
   color: white;
-  font-size: 18px;
-  padding: 10px;
-  display: block;
+  font-size: 16px;
+  font-weight: 500;
   transition: 0.3s;
+  border-radius: 8px;
+  padding: 10px 0;  
 }
 
-.navbar ul li a:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 5px;
+
+.sidebar-links li a:hover {
+  background-color: #1a1a19;
+  color: #ff5722;
 }
 
-.navbar ul li a.active {
-  text-decoration: underline;
-  text-decoration-color: white;
-  font-weight: bold;
+.sidebar-links li a.active {
+  color: #ff5722;
+  font-weight: 600;
 }
 
-.navbar-footer {
-  text-align: center;
-  color: white;
-  padding-bottom: 70px;
+
+.sidebar-links li + li {
+  border-top: 1px solid white;  
 }
 
-.bakedtato {
-  font-size: 20px;
-  font-weight: bold;
+.icon {
+  font-size: 18px;
+  color: inherit;
 }
 
-.supplier-dashboard {
-  font-size: 15px;
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
 }

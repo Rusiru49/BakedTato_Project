@@ -4,7 +4,7 @@ import DatePicker from "react-date-picker";
 import toast from "react-hot-toast";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
-import "./updateReview.css";
+import "./update.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHandPointLeft } from "@fortawesome/free-solid-svg-icons";

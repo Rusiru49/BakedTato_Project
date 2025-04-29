@@ -4,8 +4,8 @@ import "../ViewOperationsThiruni/RawMaterials.css";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-hot-toast"; 
+
 const ManageStock = () => {
   const [stock, setStock] = useState([]);
   const navigate = useNavigate();
@@ -41,18 +41,19 @@ const ManageStock = () => {
     }
 
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this stock item?",
+      "Are you sure you want to delete this stock item?"
     );
     if (confirmDelete) {
       try {
         const deleteResponse = await axios.delete(
-          `http://localhost:5000/api/deleteStock/${id}`,
+          `http://localhost:5000/api/deleteStock/${id}`
         );
         toast.success(deleteResponse.data.msg, { position: "top-right" });
 
-        // Refresh the stock list after deletion
         const response = await axios.get("http://localhost:5000/api/getStock");
         setStock(response.data);
+
+        navigate("/manage-stock"); 
       } catch (error) {
         console.error("Error deleting stock:", error);
         toast.error("Error deleting stock", { position: "top-right" });
@@ -83,24 +84,24 @@ const ManageStock = () => {
           </thead>
           <tbody>
             {stock.length > 0 ? (
-              stock.map((stock) => (
-                <tr key={stock.stockID}>
-                  <td>{stock.name}</td>
-                  <td>{stock.category}</td>
-                  <td>{stock.unit}</td>
-                  <td>{stock.currentStock}</td>
-                  <td>{stock.date}</td>
-                  <td>{stock.remainingStock}</td>
+              stock.map((item) => (
+                <tr key={item.stockID}>
+                  <td>{item.name}</td>
+                  <td>{item.category}</td>
+                  <td>{item.unit}</td>
+                  <td>{item.currentStock}</td>
+                  <td>{item.date}</td>
+                  <td>{item.remainingStock}</td>
                   <td>
                     <button
-                      onClick={() => handleDelete(stock._id, stock.date)}
+                      onClick={() => handleDelete(item._id, item.date)}
                       className="actionButtonsDel"
                     >
                       <FontAwesomeIcon icon={faTrash} />
                     </button>
 
                     <Link
-                      to={`/updateStock/${stock._id}`}
+                      to={`/update-stock/${item._id}`}
                       className="actionButtonsUp"
                     >
                       <FontAwesomeIcon icon={faEdit} />
