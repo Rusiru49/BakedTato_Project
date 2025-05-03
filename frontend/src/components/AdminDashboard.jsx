@@ -15,6 +15,7 @@ import {
   CssBaseline,
   Avatar,
 } from "@mui/material";
+
 import {
   Inventory as ProductsIcon,
   Receipt as OrdersIcon,
@@ -22,12 +23,15 @@ import {
   FileDownload as ExportIcon,
   Dashboard as DashboardIcon,
 } from "@mui/icons-material";
+
 import {
   fetchDashboardData,
   fetchOrders,
   fetchSuppliers,
   exportSalesPDF,
+  productCount,
 } from "../services/api";
+
 import DashboardCard from "../components/DashboardCard";
 
 const AdminDashboard = () => {
@@ -49,11 +53,17 @@ const AdminDashboard = () => {
           fetchOrders(),
           fetchSuppliers(),
         ]);
-
+  
+        const totalProducts = await productCount();
+        console.log("Fetched total products:", totalProducts); // DEBUG
+  
         setDashboardStats({
           ...stats,
+          totalProducts,
           totalSuppliers: suppliersData.length,
+          newOrders: orders.filter((o) => o.status === "Pending").length,
         });
+  
         setRecentOrders(orders.slice(0, 5));
         setSuppliers(suppliersData.slice(0, 5));
       } catch (error) {
@@ -63,7 +73,8 @@ const AdminDashboard = () => {
     };
     loadData();
   }, []);
-
+  
+  
   const handleExport = async () => {
     try {
       await exportSalesPDF();

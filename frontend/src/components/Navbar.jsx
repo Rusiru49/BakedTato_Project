@@ -168,7 +168,7 @@ const Navbar = () => {
           variant="h5"
           sx={{
             fontWeight: 600,
-            color: "#FFD700",
+            color: "#00000",
             letterSpacing: 1,
             fontFamily: "Poppins, sans-serif",
           }}

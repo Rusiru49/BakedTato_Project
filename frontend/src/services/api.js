@@ -49,6 +49,18 @@ export const deleteProduct = async (id) => {
   return response.data;
 };
 
+export const productCount = async () => {
+  try {
+    const response = await axios.get(`${PRODUCT_URL}/count`);
+    console.log("Product count response:", response.data);
+    return response.data.total;
+  } catch (error) {
+    console.error("Error fetching product count:", error.message);
+    throw new Error("Failed to fetch product count");
+  }
+};
+
+
 // Admin Dashboard APIs
 export const fetchDashboardData = async () => {
   const response = await axios.get(`${DASHBOARD_URL}/dashboard-stats`);

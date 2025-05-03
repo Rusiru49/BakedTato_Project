@@ -1,19 +1,20 @@
 const express = require("express");
+const Product = require("../models/product");
 const router = express.Router();
 
 // GET: Dashboard statistics
 router.get("/dashboard-stats", async (req, res) => {
   try {
-    const totalSales = await Order.aggregate([
-      { $group: { _id: null, total: { $sum: "$amount" } } },
-    ]);
+    //const totalSales = await Order.aggregate([
+      //{ $group: { _id: null, total: { $sum: "$amount" } } },
+    //]);
     const totalProducts = await Product.countDocuments();
-    const totalOrders = await Order.countDocuments();
+    //const totalOrders = await Order.countDocuments();
 
     res.json({
-      totalSales: totalSales[0]?.total || 0,
+      //totalSales: totalSales[0]?.total || 0,
       totalProducts,
-      totalOrders,
+      //totalOrders,
     });
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch dashboard data" });
