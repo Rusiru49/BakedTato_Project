@@ -23,6 +23,7 @@ import CustomizeOptions from "./components/CustomizeOptions";
 import FastDelivery from "./components/FastDelivery";
 import BuyProductPage from "./components/BuyProduct"
 import UpdateStock from "./components/updateOperationsThiruni/updateStock";
+import AdminRawStockView from "./components/adminTasks_Supplier/rawMaterial_Stock";
 
 
 function App() {
@@ -106,6 +107,15 @@ function App() {
                     </>
                   }
                 />
+                <Route
+                  path="/rawmaterial-stock-view-admin"
+                  element={
+                    <>
+                      <AdminRawStockView/>
+                    </>
+                  }
+                />
+
               </>
             )}
 

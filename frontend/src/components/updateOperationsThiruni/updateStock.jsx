@@ -6,7 +6,7 @@ import 'react-calendar/dist/Calendar.css';
 import "./update.css";
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHandPointLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -103,15 +103,15 @@ const UpdateStock = () => {
     };
 
     return (
-        <div className='createReview'>
-            <div className='container'>
+        <div className='createFormRaw'>
+            <div className='formContainer'>
                 <div className='button-container'>
-                    <Link to="/manage-stock" className='backButton'>
-                        <FontAwesomeIcon icon={faHandPointLeft} />
+                    <Link to="/manage-stock" className='backBtn'>
+                        <FontAwesomeIcon icon={faArrowLeft} />
                     </Link>
                 </div>
 
-                <h3>Update Stock</h3>
+                <h3 className='h3'> Update Stock</h3>
 
                 {!isEditable && (
                     <p style={{ color: 'red', textAlign: 'center' }}>
@@ -210,7 +210,7 @@ const UpdateStock = () => {
                         </div>
                     </div>
 
-                    <button type='submit' className="button" disabled={!isEditable}>
+                    <button type='submit' className="Submitbutton" disabled={!isEditable}>
                         Update Stock
                     </button>
                 </form>

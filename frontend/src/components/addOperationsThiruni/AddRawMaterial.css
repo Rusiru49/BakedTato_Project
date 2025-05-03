@@ -1,20 +1,21 @@
-.createReview {
+.createFormRaw {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f4f4f4;
+  background-color: #ffffff;
 }
 
-.container {
+.formContainer {
   width: 100%;
   max-width: 700px;
   padding: 40px;
   padding-left: 40px;
-  background-color: #fff;
+  background-color: white;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-left: 200px;
+  padding-bottom: 100px;
 }
 
 .createReviewForm {
@@ -47,6 +48,10 @@
   display: flex;
   margin-bottom: 10px;
   font-weight: bold;
+  color: rgb(17, 15, 15);
+  font-family: sans-serif;
+  font-size: 18px;
+  
 }
 
 .inputGroup input,
@@ -54,9 +59,18 @@
 .inputGroup textarea {
   width: 50%;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #ec5725; 
   border-radius: 4px;
+  font-size: 16px;
+  outline: none;
 }
+
+.inputGroup input:focus,
+.inputGroup select:focus,
+.inputGroup textarea:focus {
+  border-color: #ec5725; /* Keep the same orange on focus */
+}
+
 
 .button-container {
   text-align: left;
@@ -64,30 +78,97 @@
   padding: 10px;
 }
 
-.backButton {
+.backBtn {
   text-decoration: none;
-  color: #333;
+  color: #040404;
   font-size: 24px;
 }
 
-.button {
+.Submitbutton {
   width: 100%;
   padding: 10px;
-  background-color: #d2691e;
-  color: #fff;
-  border: none;
+  background-color: #ec5725;
+  color: #ffffff;
+  border: 3px solid #ec5725; 
+  font-size: 16px;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.button:hover {
-  background-color: #e18747;
+
+.Submitbutton:hover {
+  background-color: #ec5725e8;
 }
 
-h3 {
+.h3 {
   text-align: center;
-  color: #333;
-  margin-bottom: 30px; /* Reduced margin */
+  color: #000000;
+  margin-bottom: 30px;
   font-size: 24px;
   font-weight: 600;
+}
+
+/* Date Picker */
+.react-date-picker {
+  width: 100%;
+}
+
+.react-date-picker__wrapper {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 20px;
+  background-color: #fff;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  transition: border-color 0.3s;
+}
+
+.react-date-picker__wrapper:focus-within {
+  border-color: #4a90e2;
+}
+
+.react-date-picker__inputGroup {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.react-date-picker__inputGroup input {
+  padding: 5px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  width: 100%;
+  background-color: white;
+  color: black;
+}
+
+.react-date-picker__inputGroup input:invalid {
+  box-shadow: none;
+}
+
+
+.react-date-picker__inputGroup input:empty::before {
+  content: 'dd/mm/yyyy';
+  color: #000000;
+}
+
+.react-date-picker__calendar-button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  margin-left: 8px;
+}
+
+.react-date-picker__calendar-button svg {
+  height: 18px;
+  width: 18px;
+  color: #555;
+}
+
+.react-date-picker__clear-button {
+  display: none !important;
 }

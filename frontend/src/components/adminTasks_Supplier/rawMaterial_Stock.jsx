@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./RawMaterials.css";
+import "../ViewOperationsThiruni/RawMaterials.css";
 import {
   Chart as ChartJS,
   BarElement,
@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-const ApprovedRawMaterials = () => {
+const AdminRawStockView = () => {
   const [rawMaterials, setRawMaterials] = useState([]);
   const [stock, setStock] = useState([]);
 
@@ -145,4 +145,4 @@ const ApprovedRawMaterials = () => {
   );
 };
 
-export default ApprovedRawMaterials;
+export default AdminRawStockView;

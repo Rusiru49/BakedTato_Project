@@ -4,10 +4,10 @@ import DatePicker from "react-date-picker";
 import toast from "react-hot-toast";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
-import "./update.css";
+import "../addOperationsThiruni/AddRawMaterial.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHandPointLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const UpdateRawMaterials = () => {
   const navigate = useNavigate();
@@ -124,19 +124,19 @@ const UpdateRawMaterials = () => {
   };
 
   return (
-    <div className="createReview">
-      <div className="container">
+    <div className="createFormRaw">
+      <div className="formContainer">
         <div className="button-container">
           <Link to="/raw-materials/pending" className="backButton">
-            <FontAwesomeIcon icon={faHandPointLeft} />
+            <FontAwesomeIcon icon={faArrowLeft} />
           </Link>
         </div>
 
-        <h3>Update Raw Material</h3>
+        <h3 className="h3">Update Raw Material</h3>
 
         {!isEditable && (
           <p
-            style={{ color: "red", textAlign: "center", marginBottom: "20px" }}
+            style={{ color: "red", textAlign: "center", marginBottom: "30px" }}
           >
             Editing is not allowed after 24 hours of creation!
           </p>
@@ -252,7 +252,7 @@ const UpdateRawMaterials = () => {
             </div>
           </div>
 
-          <button type="submit" className="button" disabled={!isEditable}>
+          <button type="submit" className="Submitbutton" disabled={!isEditable}>
             Update Raw Material
           </button>
         </form>

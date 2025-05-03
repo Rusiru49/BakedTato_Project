@@ -38,12 +38,12 @@
 .raw-materials-table th,
 .raw-materials-table td {
   padding: 12px;
-  font-size: 16px;
+  font-size: 17px;
   text-align: center;
 }
 
 .raw-materials-table thead {
-  background: #d2691e;
+  background: #ff5722;
   color: white;
 }
 
@@ -57,7 +57,7 @@
 }
 
 .table-heading {
-  background: #d2691e;
+  background: #ff5722;
   color: white;
   font-size: 30px;
   font-weight: bold;
@@ -99,7 +99,7 @@
 }
 
 .add-stock-button {
-  background-color: #d2691e;
+  background-color: #ff5722;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -113,4 +113,46 @@
 
 .add-stock-button:hover {
   background-color: #e4833e;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px 0 10px;
+  padding: 0 20px;
+}
+
+.stock-overview-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #000000;
+  text-align: center;
+  margin-left: 50px;
+  flex-grow: 1;
+}
+
+.stock-overview-title-stock {
+  font-size: 22px;
+  font-weight: 600;
+  color: #000000;
+  text-align: center;
+  margin-left: 250px;
+  flex-grow: 1;
+}
+.view-stock-btn {
+  background-color: #020202;
+  border: 1px solid #504d4c;
+  color: white;
+  padding: 8px 16px;
+  font-size: 17px;
+  border-radius: 4px;
+  margin-right: 110px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+
+.view-stock-btn:hover {
+  background-color: #d1501f;
 }

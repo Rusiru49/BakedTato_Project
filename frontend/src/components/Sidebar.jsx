@@ -109,8 +109,8 @@ const Sidebar = () => {
         {/* Suppliers */}
         <ListItemButton
           component={Link}
-          to="/suppliers"
-          selected={location.pathname === "/suppliers"}
+          to="/rawmaterial-stock-view-admin"
+          selected={location.pathname === "/rawmaterial-stock-view-admin"}
           sx={{
             "&.Mui-selected": {
               backgroundColor: "rgba(255,255,255,0.15)",
