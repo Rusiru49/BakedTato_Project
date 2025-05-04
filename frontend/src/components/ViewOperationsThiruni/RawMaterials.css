@@ -8,7 +8,8 @@
 
 .raw-materials-table {
   width: 90%;
-  margin: 20px auto;
+  margin: 40px auto;
+  margin-left: 150px;
   border-collapse: separate;
   border-spacing: 0;
   background: #fff;
@@ -121,23 +122,24 @@
   align-items: center;
   margin: 30px 0 10px;
   padding: 0 20px;
+  margin-left: 80px;
 }
 
 .stock-overview-title {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 600;
   color: #000000;
   text-align: center;
-  margin-left: 50px;
+  margin-left: 150px;
   flex-grow: 1;
 }
 
-.stock-overview-title-stock {
-  font-size: 22px;
+.stock-overview-title-Stock {
+  font-size: 24px;
   font-weight: 600;
   color: #000000;
   text-align: center;
-  margin-left: 250px;
+  margin-left: 400px;
   flex-grow: 1;
 }
 .view-stock-btn {

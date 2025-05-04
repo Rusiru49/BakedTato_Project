@@ -131,7 +131,7 @@ const ApprovedRawMaterials = () => {
       <div style={{ marginTop: "40px" }}>
         
         <div className="chart-header">
-          <h3 className="stock-overview-title-stock">Stock Overview</h3>
+          <h3 className="stock-overview-title-Stock">Stock Overview</h3>
             <Link to="/manage-stock">
               <button className="view-stock-btn">View Detailed Stock</button>
             </Link>

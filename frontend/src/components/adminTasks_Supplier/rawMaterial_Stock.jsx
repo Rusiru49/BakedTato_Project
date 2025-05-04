@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../ViewOperationsThiruni/RawMaterials.css";
+import "./rawMaterial_Stock.css";
 import {
   Chart as ChartJS,
   BarElement,
@@ -70,7 +70,7 @@ const AdminRawStockView = () => {
           (cat) => categoryColors[cat] || "#ccc"
         ),
         borderRadius: 4,
-        barThickness: 35, 
+        barThickness: 35,
       },
     ],
   };
@@ -95,9 +95,23 @@ const AdminRawStockView = () => {
 
   return (
     <div className="raw-materials-container">
-      <h3 className="stock-overview-title">Availabe Raw Materials</h3>
 
-      <table className="raw-materials-table">
+      <div className="button-wrapper1">
+        <div className="button-group-right">
+          <Link to="/">
+            <button className="view-stock-btn">Raw Material Approvals</button>
+          </Link>
+          <Link to="/">
+            <button className="view-stock-btn">Provide Stock Updates</button>
+          </Link>
+        </div>
+      </div>
+
+      <div className="chart-header">
+        <h3 className="stock-overview-title-stock">Approved Raw Materials</h3>
+      </div>
+
+      <table className="raw-materials-table-admin">
         <thead>
           <tr>
             <th>Name</th>
@@ -129,12 +143,8 @@ const AdminRawStockView = () => {
       </table>
 
       <div style={{ marginTop: "40px" }}>
-        
         <div className="chart-header">
           <h3 className="stock-overview-title-stock">Stock Overview</h3>
-            <Link to="/manage-stock">
-              <button className="view-stock-btn">View Detailed Stock</button>
-            </Link>
         </div>
 
         <div style={{ height: "300px", width: "60%", margin: "0 auto" }}>
