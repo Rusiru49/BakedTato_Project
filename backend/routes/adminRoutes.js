@@ -1,9 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Product = require("../models/product");
-// const Order = require("../models/order"); // Uncomment if you want to use orders
+// const Order = require("../models/order");
 
-// GET: Dashboard statistics
 router.get("/dashboard-stats", async (req, res) => {
   try {
     const totalProducts = await Product.countDocuments();
@@ -16,8 +15,8 @@ router.get("/dashboard-stats", async (req, res) => {
 
     res.json({
       totalProducts,
-      // totalOrders,
-      // totalSales: totalSales[0]?.total || 0,
+      totalOrders: 0,
+      totalSales: 0,
     });
   } catch (error) {
     console.error("Dashboard stats error:", error);
@@ -25,7 +24,6 @@ router.get("/dashboard-stats", async (req, res) => {
   }
 });
 
-// GET: Best sellers
 router.get("/best-sellers", async (req, res) => {
   try {
     const bestSellers = await Product.find().sort({ sold: -1 }).limit(5);

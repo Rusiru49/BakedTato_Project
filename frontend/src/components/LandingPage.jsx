@@ -56,10 +56,6 @@ const BakedTatoLandingPage = () => {
     navigate("/orders");
   };
 
-  const handleProductClick = () => {
-    navigate("/buyProducts");
-  }
-
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ backgroundColor: "background.default", minHeight: "100vh" }}>
@@ -118,16 +114,6 @@ const BakedTatoLandingPage = () => {
               >
                 <Typography variant="h6" color="white">
                   Order Now
-                </Typography>
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                onClick={handleProductClick}
-              >
-                <Typography variant="h6" color="white">
-                  Buy Now
                 </Typography>
               </Button>
             </Box>

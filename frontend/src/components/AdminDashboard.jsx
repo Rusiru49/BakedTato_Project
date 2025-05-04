@@ -1,180 +1,164 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Typography,
-  Button,
-  Grid,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Chip,
-  CssBaseline,
+import { getAllProducts } from "../services/api";
+import ProductBarChart from "../components/ProductBarChart";
+import { 
+  Box, 
+  Typography, 
+  Paper, 
+  Grid, 
+  Card, 
+  CardContent,
+  Divider,
+  Stack
 } from "@mui/material";
+
 import {
-  FileDownload as ExportIcon,
-  People as PeopleIcon,
-  ShoppingCart as ShoppingCartIcon,
-  Category as CategoryIcon,
-  Inventory2 as InventoryIcon,
+  Inventory as InventoryIcon,
+  AttachMoney as PriceIcon,
+  Assessment as AnalyticsIcon,
 } from "@mui/icons-material";
 
-import {
-  fetchDashboardData,
-  fetchOrders,
-  exportSalesPDF,
-  productCount,
-  fetchUserCount,
-  fetchStockByCategory,
-} from "../services/api";
-
-import DashboardCard from "../components/DashboardCard";
-
 const AdminDashboard = () => {
-  const [dashboardStats, setDashboardStats] = useState({
-    totalProducts: 0,
-    totalOrders: 0,
-  });
-
-  const [userCount, setUserCount] = useState(0);
-  const [stockByCategory, setStockByCategory] = useState([]);
-  const [recentOrders, setRecentOrders] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        const [stats, orders, users, stock, productStats] = await Promise.all([
-          fetchDashboardData(),
-          fetchOrders(),
-          fetchUserCount(),
-          fetchStockByCategory(),
-          productCount(),
-        ]);
-
-        setDashboardStats({
-          totalProducts: productStats.count,
-          totalOrders: stats.totalOrders,
-        });
-
-        setUserCount(users.count);
-        setStockByCategory(stock);
-        setRecentOrders(orders.slice(0, 5));
-      } catch (error) {
-        console.error("Dashboard load error", error);
-        alert("Failed to load dashboard data.");
-      }
-    };
-
-    loadData();
+    fetchProducts();
   }, []);
 
-  const handleExport = async () => {
+  const fetchProducts = async () => {
     try {
-      await exportSalesPDF();
-      alert("Sales report exported!");
+      setIsLoading(true);
+      const data = await getAllProducts();
+      setProducts(data);
     } catch (error) {
-      console.error("Export failed", error);
-      alert("Failed to export report.");
+      console.error("Error fetching products:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
+  const totalProducts = products.length;
+  const totalStock = products.reduce((sum, product) => sum + product.stock, 0);
+  const averagePrice = totalProducts > 0 
+    ? (products.reduce((sum, product) => sum + product.price, 0) / totalProducts).toFixed(2)
+    : 0;
+
   return (
-    <Box sx={{ p: 3, width: "100%" }}>
-      <CssBaseline />
+    <Paper sx={{ padding: 3, margin: "auto", maxWidth: 1200, minHeight: "80vh" }}>
+      <Typography
+        variant="h4"
+        sx={{
+          mb: 3,
+          fontFamily: "'Roboto', sans-serif",
+          fontWeight: 600,
+          color: "text.primary",
+        }}
+      >
+        Admin Dashboard
+      </Typography>
 
-      {/* Dashboard Cards */}
-      <Grid container spacing={2} sx={{ mb: 3 }}>
+      <Grid container spacing={3} sx={{ mb: 4 }}>
         <Grid item xs={12} sm={6} md={3}>
-          <DashboardCard
-            title="Total Users"
-            value={userCount}
-            color="#4CAF50"
-            icon={<PeopleIcon fontSize="large" />}
-          />
+          <Card sx={{ height: '100%', boxShadow: 3 }}>
+            <CardContent>
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <InventoryIcon color="primary" fontSize="large" />
+                <Box>
+                  <Typography variant="h6" color="text.secondary">
+                    Total Products
+                  </Typography>
+                  <Typography variant="h4">
+                    {totalProducts}
+                  </Typography>
+                </Box>
+              </Stack>
+            </CardContent>
+          </Card>
         </Grid>
+
         <Grid item xs={12} sm={6} md={3}>
-          <DashboardCard
-            title="Total Products"
-            value={dashboardStats.totalProducts}
-            color="#FF5722"
-            icon={<InventoryIcon fontSize="large" />}
-          />
+          <Card sx={{ height: '100%', boxShadow: 3 }}>
+            <CardContent>
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <InventoryIcon color="success" fontSize="large" />
+                <Box>
+                  <Typography variant="h6" color="text.secondary">
+                    Total Stock
+                  </Typography>
+                  <Typography variant="h4">
+                    {totalStock}
+                  </Typography>
+                </Box>
+              </Stack>
+            </CardContent>
+          </Card>
         </Grid>
+
         <Grid item xs={12} sm={6} md={3}>
-          <DashboardCard
-            title="Total Orders"
-            value={dashboardStats.totalOrders}
-            color="#2196F3"
-            icon={<ShoppingCartIcon fontSize="large" />}
-          />
+          <Card sx={{ height: '100%', boxShadow: 3 }}>
+            <CardContent>
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <PriceIcon color="warning" fontSize="large" />
+                <Box>
+                  <Typography variant="h6" color="text.secondary">
+                    Avg. Price
+                  </Typography>
+                  <Typography variant="h4">
+                    Rs. {averagePrice}
+                  </Typography>
+                </Box>
+              </Stack>
+            </CardContent>
+          </Card>
         </Grid>
-        {stockByCategory.map((cat) => (
-          <Grid item xs={12} sm={6} md={3} key={cat.name}>
-            <DashboardCard
-              title={`${cat.name} Stock`}
-              value={cat.count}
-              color="#9C27B0"
-              icon={<CategoryIcon fontSize="large" />}
-            />
-          </Grid>
-        ))}
+
+        <Grid item xs={12} sm={6} md={3}>
+          <Card sx={{ height: '100%', boxShadow: 3 }}>
+            <CardContent>
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <AnalyticsIcon color="info" fontSize="large" />
+                <Box>
+                  <Typography variant="h6" color="text.secondary">
+                    Low Stock Items
+                  </Typography>
+                  <Typography variant="h4">
+                    {products.filter(p => p.stock < 10).length}
+                  </Typography>
+                </Box>
+              </Stack>
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
 
-      {/* Recent Orders Table */}
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Paper sx={{ p: 3, borderRadius: 3 }}>
-            <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
-              <Typography variant="h6">Recent Orders</Typography>
-              <Button
-                variant="outlined"
-                startIcon={<ExportIcon />}
-                onClick={handleExport}
-              >
-                Export Report
-              </Button>
-            </Box>
-            <TableContainer>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Order ID</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell>Amount</TableCell>
-                    <TableCell>Status</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {recentOrders.map((order) => (
-                    <TableRow key={order.id}>
-                      <TableCell>#{order.id}</TableCell>
-                      <TableCell>{order.customerName}</TableCell>
-                      <TableCell>Rs. {order.amount.toLocaleString()}</TableCell>
-                      <TableCell>
-                        <Chip
-                          label={order.status}
-                          color={
-                            order.status === "Completed"
-                              ? "success"
-                              : order.status === "Pending"
-                              ? "warning"
-                              : "error"
-                          }
-                          size="small"
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Paper>
-        </Grid>
-      </Grid>
-    </Box>
+      <Divider sx={{ my: 3 }} />
+
+      <Typography
+        variant="h5"
+        sx={{
+          mb: 2,
+          fontFamily: "'Roboto', sans-serif",
+          fontWeight: 600,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 1
+        }}
+      >
+        <AnalyticsIcon fontSize="large" color="primary" />
+        Product Analytics
+      </Typography>
+
+      <Box sx={{ mb: 4 }}>
+        {isLoading ? (
+          <Typography>Loading chart data...</Typography>
+        ) : products.length > 0 ? (
+          <ProductBarChart products={products} />
+        ) : (
+          <Typography>No product data available</Typography>
+        )}
+      </Box>
+    </Paper>
   );
 };
 

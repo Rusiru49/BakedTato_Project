@@ -172,7 +172,7 @@ const Navbar = () => {
             fontFamily: "Poppins, sans-serif",
           }}
         >
-          BAKEDTATO Management
+          BAKEDTATO
         </Typography>
 
         <Box sx={{ display: "flex", gap: 2 }}>

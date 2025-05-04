@@ -6,16 +6,15 @@ const {
   updateProduct,
   deleteProduct,
   getStockByCategory,
-  countTotalProducts, // Ensure this is imported
+  countTotalProducts,
 } = require("../controllers/productController");
 
 const router = express.Router();
 
-// Define routes
 router.get("/", getAllProducts);
 router.get("/stock-by-category", getStockByCategory);
 router.get("/:id", getProductById);
-router.get("/count", countTotalProducts); // Added count route
+router.get("/count", countTotalProducts);
 router.post("/", createProduct);
 router.put("/:id", updateProduct);
 router.delete("/:id", deleteProduct);

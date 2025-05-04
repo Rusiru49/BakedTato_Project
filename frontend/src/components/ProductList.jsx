@@ -114,7 +114,6 @@ const ProductList = () => {
         Download
       </Button>
 
-      {/* Card View for Total Products Count */}
       <Card sx={{ mb: 3, backgroundColor: "#FFCC80", borderRadius: 2 }}>
         <CardContent>
           <Box display="flex" alignItems="center" gap={1}>

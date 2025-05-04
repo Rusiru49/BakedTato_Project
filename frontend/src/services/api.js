@@ -1,11 +1,7 @@
 import axios from "axios";
 import jsPDF from "jspdf";
 
-// Base URLs
 const PRODUCT_URL = "http://localhost:5000/api/products";
-const DASHBOARD_URL = "http://localhost:5000/api/admin";
-const ORDERS_URL = "http://localhost:5000/api/orders";
-const USERS_URL = "http://localhost:5000/api/showUsers";
 
 // --- Product APIs ---
 export const getAllProducts = async () => {
@@ -46,51 +42,35 @@ export const deleteProduct = async (id) => {
 
 export const productCount = async () => {
   try {
-    const response = await axios.get(`${PRODUCT_URL}/count`);
-    return { count: response.data.total };
+    const response = await axios.get('/api/products/count');
+    return response.data;
   } catch (error) {
-    console.error("Error fetching product count:", error.message);
-    throw new Error("Failed to fetch product count");
+    console.error("Error fetching product count:", error);
+    return { total: 0 };
   }
 };
 
-// --- Admin Dashboard APIs ---
+//Admin Dashboard APIs
 export const fetchDashboardData = async () => {
-  const response = await axios.get(`${DASHBOARD_URL}/dashboard-stats`);
-  return response.data;
-};
-
-export const fetchOrders = async () => {
-  const response = await axios.get(`${ORDERS_URL}/recent`);
-  return response.data;
-};
-
-export const fetchUserCount = async () => {
   try {
-    const response = await axios.get(`${USERS_URL}/count`);
-    return { count: response.data.total };
+    const response = await axios.get('/api/admin/dashboard-stats');
+    return response.data;
   } catch (error) {
-    console.error("Error fetching user count:", error.message);
-    throw new Error("Failed to fetch user count");
+    console.error("Error fetching dashboard data:", error);
+    return { totalProducts: 0, totalOrders: 0 };
   }
 };
 
-export const fetchStockByCategory = async () => {
-  try {
-    const response = await axios.get(`${PRODUCT_URL}/stock-by-category`);
-    return response.data.categories; // assuming backend returns { categories: [ { name, count }, ... ] }
-  } catch (error) {
-    console.error("Error fetching stock by category:", error.message);
-    throw new Error("Failed to fetch stock by category");
-  }
-};
+export const fetchUserCount = async () => ({ count: 0 });
+
+export const fetchOrders = async () => ([]);
 
 export const fetchSuppliers = async () => {
   const response = await axios.get("/api/suppliers");
   return response.data;
 };
 
-// --- Export PDF ---
+//Export PDF
 export const exportSalesPDF = async () => {
   const stats = await fetchDashboardData();
   const orders = await fetchOrders();

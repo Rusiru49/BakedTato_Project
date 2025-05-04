@@ -84,7 +84,6 @@ exports.deleteProduct = async (req, res) => {
   }
 };
 
-// 🔹 NEW: Group product stock count by category
 exports.getStockByCategory = async (req, res) => {
   try {
     const result = await Product.aggregate([
