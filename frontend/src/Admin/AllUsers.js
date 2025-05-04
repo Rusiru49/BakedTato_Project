@@ -9,6 +9,10 @@ import {
   TableRow,
   Paper,
   Button,
+  Card,
+  CardContent,
+  Typography,
+  Grid,
 } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import jsPDF from "jspdf";
@@ -112,94 +116,110 @@ const AllUsers = () => {
   };
 
   return (
-    <>
-      <Button
-        variant="outlined"
-        color="primary"
-        size="small"
-        startIcon={<FaFilePdf />}
-        onClick={() => genAllpdf(users)}
-        sx={{
-          mt: 2,
-          mb: 1,
-          ml: "auto",
-          display: "block",
-          textTransform: "none",
-          fontWeight: "bold",
-          fontSize: "0.8rem",
-          px: 2,
-          py: 0.5,
-          marginRight: "25%",
-          marginTop: "2%",
-        }}
-      >
-        Export All as PDF
-      </Button>
-      <TableContainer
-        component={Paper}
-        sx={{
-          maxWidth: 800,
-          margin: "auto",
-          mt: 5,
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
-        }}
-      >
-        <Table>
-          {/* Table Head */}
-          <TableHead>
-            <TableRow sx={{ backgroundColor: "#D2691E" }}>
-              <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>
-                User ID
-              </TableCell>
-              <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>
-                Username
-              </TableCell>
-              <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>
-                Email
-              </TableCell>
-              <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>
-                Actions
-              </TableCell>
-            </TableRow>
-          </TableHead>
+    <Grid container spacing={3} justifyContent="center" sx={{ mt: 4 }}>
+      {/* Total Users Card */}
+      <Grid item xs={12} sm={8} md={6}>
+        <Card sx={{ textAlign: "center", boxShadow: 3 }}>
+          <CardContent>
+            <Typography variant="h5" component="div">
+              Total Users
+            </Typography>
+            <Typography variant="h4" color="text.secondary" sx={{ fontWeight: "bold" }}>
+              {users.length}
+            </Typography>
+          </CardContent>
+        </Card>
+      </Grid>
 
-          {/* Table Body */}
-          <TableBody>
-            {users.length > 0 ? (
-              users.map((user) => (
-                <TableRow key={user._id}>
-                  <TableCell>{user._id}</TableCell>
-                  <TableCell>{user.username}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>
-                    <Button
-                      variant="contained"
-                      color="error"
-                      startIcon={<Delete />}
-                      onClick={() => deleteUser(user._id)}
-                    >
-                      Delete
-                    </Button>
-                    <Button
-                      color="error"
-                      startIcon={<FaFilePdf />}
-                      style={{ marginLeft: "5px" }}
-                      onClick={() => genpdf(user)}
-                    />
-                  </TableCell>
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={4} align="center">
-                  No Users Found
+      {/* Export PDF Button */}
+      <Grid item xs={12} sm={8} md={6}>
+        <Button
+          variant="outlined"
+          color="primary"
+          size="small"
+          startIcon={<FaFilePdf />}
+          onClick={() => genAllpdf(users)}
+          sx={{
+            width: "100%",
+            textTransform: "none",
+            fontWeight: "bold",
+            fontSize: "0.8rem",
+            px: 2,
+            py: 0.5,
+            marginTop: "20px",
+          }}
+        >
+          Export All as PDF
+        </Button>
+      </Grid>
+
+      {/* Users Table */}
+      <Grid item xs={12}>
+        <TableContainer
+          component={Paper}
+          sx={{
+            maxWidth: 1000,
+            margin: "auto",
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+          }}
+        >
+          <Table>
+            {/* Table Head */}
+            <TableHead>
+              <TableRow sx={{ backgroundColor: "#D2691E" }}>
+                <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>
+                  User ID
+                </TableCell>
+                <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>
+                  Username
+                </TableCell>
+                <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>
+                  Email
+                </TableCell>
+                <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>
+                  Actions
                 </TableCell>
               </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </>
+            </TableHead>
+
+            {/* Table Body */}
+            <TableBody>
+              {users.length > 0 ? (
+                users.map((user) => (
+                  <TableRow key={user._id}>
+                    <TableCell>{user._id}</TableCell>
+                    <TableCell>{user.username}</TableCell>
+                    <TableCell>{user.email}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant="contained"
+                        color="error"
+                        startIcon={<Delete />}
+                        onClick={() => deleteUser(user._id)}
+                      >
+                        Delete
+                      </Button>
+                      <Button
+                        color="error"
+                        startIcon={<FaFilePdf />}
+                        style={{ marginLeft: "5px" }}
+                        onClick={() => genpdf(user)}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={4} align="center">
+                    No Users Found
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Grid>
+    </Grid>
   );
 };
 

@@ -9,6 +9,15 @@ exports.getAllProducts = async (req, res) => {
   }
 };
 
+exports.countTotalProducts = async (req, res) => {
+  try {
+    const total = await Product.countDocuments();
+    res.status(200).json({ total });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to count products" });
+  }
+};
+
 exports.getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -44,8 +53,6 @@ exports.createProduct = async (req, res) => {
 };
 
 exports.updateProduct = async (req, res) => {
-  console.log("Request Body:", req.body); //
-
   const { error } = validateProduct(req.body);
   if (error) return res.status(400).json({ error: error.details[0].message });
 
@@ -77,11 +84,28 @@ exports.deleteProduct = async (req, res) => {
   }
 };
 
-exports.countTotalProducts = async(req, res) => {
+// 🔹 NEW: Group product stock count by category
+exports.getStockByCategory = async (req, res) => {
   try {
-    const count = await Product.countDocuments();
-    res.json({ count });
+    const result = await Product.aggregate([
+      {
+        $group: {
+          _id: "$category",
+          totalStock: { $sum: "$stock" },
+        },
+      },
+      {
+        $project: {
+          category: "$_id",
+          count: "$totalStock",
+          _id: 0,
+        },
+      },
+    ]);
+
+    res.status(200).json({ categories: result });
   } catch (error) {
-    res.status(500).json({ error: "Failed to count products" });
+    console.error("Error fetching stock by category:", error);
+    res.status(500).json({ error: "Failed to fetch stock by category" });
   }
-}
+};

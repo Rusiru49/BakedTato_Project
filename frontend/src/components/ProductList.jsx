@@ -19,8 +19,12 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Box,
+  Card,
+  CardContent,
 } from "@mui/material";
 import { Edit, Delete, PictureAsPdf } from "@mui/icons-material";
+import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -51,12 +55,9 @@ const ProductList = () => {
 
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
-
-    // Title
     doc.setFontSize(18);
     doc.text("Product List", 14, 22);
 
-    // Table data
     const headers = ["Name", "Description", "Price (Rs.)", "Stock"];
     const data = products.map((product) => [
       product.name,
@@ -65,7 +66,6 @@ const ProductList = () => {
       product.stock,
     ]);
 
-    // Using autoTable with new syntax
     autoTable(doc, {
       head: [headers],
       body: data,
@@ -95,19 +95,6 @@ const ProductList = () => {
 
   return (
     <Paper sx={{ padding: 3, margin: "auto", maxWidth: 900 }}>
-      <Typography
-        variant="h5"
-        align="center"
-        gutterBottom
-        sx={{
-          fontFamily: "'Roboto', sans-serif",
-          fontSize: "24px",
-          fontWeight: 700,
-        }}
-      >
-        Product List
-      </Typography>
-
       <Button
         variant="contained"
         color="secondary"
@@ -126,6 +113,34 @@ const ProductList = () => {
       >
         Download
       </Button>
+
+      {/* Card View for Total Products Count */}
+      <Card sx={{ mb: 3, backgroundColor: "#FFCC80", borderRadius: 2 }}>
+        <CardContent>
+          <Box display="flex" alignItems="center" gap={1}>
+            <Inventory2OutlinedIcon sx={{ color: 'primary.main' }} />
+            <Typography
+              variant="h6"
+              sx={{
+                fontFamily: "'Roboto', sans-serif",
+                fontWeight: 600,
+                color: 'text.secondary',
+              }}
+            >
+              Total Products:&nbsp;
+              <Typography
+                component="span"
+                sx={{
+                  fontWeight: 'bold',
+                  color: 'text.primary',
+                }}
+              >
+                {products.length}
+              </Typography>
+            </Typography>
+          </Box>
+        </CardContent>
+      </Card>
 
       <TableContainer component={Paper} sx={{ boxShadow: 3, borderRadius: 2 }}>
         <Table>
@@ -194,7 +209,7 @@ const ProductList = () => {
                 <TableCell>
                   {product.image && (
                     <img
-                      src={product.image} //
+                      src={product.image}
                       alt={product.name}
                       style={{ width: 50, height: 50, objectFit: "cover" }}
                     />

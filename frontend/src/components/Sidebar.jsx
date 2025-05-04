@@ -6,6 +6,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Divider,
 } from "@mui/material";
 import {
   Dashboard,
@@ -17,12 +18,19 @@ import {
 const Sidebar = () => {
   const location = useLocation();
 
+  const navItems = [
+    { text: "Dashboard", icon: <Dashboard />, path: "/dashboard" },
+    { text: "Users", icon: <People />, path: "/showUsers" },
+    { text: "Products", icon: <Inventory />, path: "/products" },
+    { text: "Suppliers", icon: <LocalShipping />, path: "/rawmaterial-stock-view-admin" },
+  ];
+
   return (
     <Box
       sx={{
         width: 240,
-        height: "120vh",
-        backgroundColor: "#FF5722", // Primary color for sidebar background
+        height: "150vh",
+        backgroundColor: "#FF5722",
         color: "white",
         paddingTop: 4,
         paddingLeft: 2,
@@ -30,106 +38,33 @@ const Sidebar = () => {
         boxShadow: "2px 0 5px rgba(0, 0, 0, 0.15)",
       }}
     >
+      <Divider sx={{ backgroundColor: "rgba(255,255,255,0.2)", mb: 2 }} />
       <List>
-        {/* Dashboard */}
-        <ListItemButton
-          component={Link}
-          to="/dashboard"
-          selected={location.pathname === "/dashboard"}
-          sx={{
-            "&.Mui-selected": {
-              backgroundColor: "rgba(255,255,255,0.15)",
-            },
-            color: "white",
-            mb: 1.5,
-            borderRadius: 1,
-            paddingLeft: 2,
-            paddingRight: 2,
-            ":hover": {
-              backgroundColor: "rgba(255, 255, 255, 0.1)",
-            },
-          }}
-        >
-          <ListItemIcon sx={{ color: "inherit" }}>
-            <Dashboard />
-          </ListItemIcon>
-          <ListItemText primary="Dashboard" />
-        </ListItemButton>
-
-        {/* Users */}
-        <ListItemButton
-          component={Link}
-          to="/showUsers"
-          selected={location.pathname === "/showUsers"}
-          sx={{
-            "&.Mui-selected": {
-              backgroundColor: "rgba(255,255,255,0.15)",
-            },
-            color: "white",
-            mb: 1.5,
-            borderRadius: 1,
-            paddingLeft: 2,
-            paddingRight: 2,
-            ":hover": {
-              backgroundColor: "rgba(255, 255, 255, 0.1)",
-            },
-          }}
-        >
-          <ListItemIcon sx={{ color: "inherit" }}>
-            <People />
-          </ListItemIcon>
-          <ListItemText primary="Users" />
-        </ListItemButton>
-
-        {/* Products */}
-        <ListItemButton
-          component={Link}
-          to="/products"
-          selected={location.pathname === "/products"}
-          sx={{
-            "&.Mui-selected": {
-              backgroundColor: "rgba(255,255,255,0.15)",
-            },
-            color: "white",
-            mb: 1.5,
-            borderRadius: 1,
-            paddingLeft: 2,
-            paddingRight: 2,
-            ":hover": {
-              backgroundColor: "rgba(255, 255, 255, 0.1)",
-            },
-          }}
-        >
-          <ListItemIcon sx={{ color: "inherit" }}>
-            <Inventory />
-          </ListItemIcon>
-          <ListItemText primary="Products" />
-        </ListItemButton>
-
-        {/* Suppliers */}
-        <ListItemButton
-          component={Link}
-          to="/rawmaterial-stock-view-admin"
-          selected={location.pathname === "/rawmaterial-stock-view-admin"}
-          sx={{
-            "&.Mui-selected": {
-              backgroundColor: "rgba(255,255,255,0.15)",
-            },
-            color: "white",
-            mb: 1.5,
-            borderRadius: 1,
-            paddingLeft: 2,
-            paddingRight: 2,
-            ":hover": {
-              backgroundColor: "rgba(255, 255, 255, 0.1)",
-            },
-          }}
-        >
-          <ListItemIcon sx={{ color: "inherit" }}>
-            <LocalShipping />
-          </ListItemIcon>
-          <ListItemText primary="Suppliers" />
-        </ListItemButton>
+        {navItems.map((item) => (
+          <ListItemButton
+            key={item.text}
+            component={Link}
+            to={item.path}
+            selected={location.pathname === item.path}
+            sx={{
+              "&.Mui-selected": {
+                backgroundColor: "rgba(255,255,255,0.2)",
+              },
+              color: "white",
+              mb: 2.5,
+              borderRadius: 2,
+              paddingLeft: 2,
+              paddingRight: 2,
+              paddingY: 1.2,
+              ":hover": {
+                backgroundColor: "rgba(255, 255, 255, 0.15)",
+              },
+            }}
+          >
+            <ListItemIcon sx={{ color: "inherit" }}>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.text} />
+          </ListItemButton>
+        ))}
       </List>
     </Box>
   );

@@ -5,16 +5,19 @@ const {
   createProduct,
   updateProduct,
   deleteProduct,
-  countTotalProducts,
+  getStockByCategory,
+  countTotalProducts, // Ensure this is imported
 } = require("../controllers/productController");
 
 const router = express.Router();
 
+// Define routes
 router.get("/", getAllProducts);
+router.get("/stock-by-category", getStockByCategory);
 router.get("/:id", getProductById);
+router.get("/count", countTotalProducts); // Added count route
 router.post("/", createProduct);
 router.put("/:id", updateProduct);
 router.delete("/:id", deleteProduct);
-router.get("/count", countTotalProducts);
 
 module.exports = router;

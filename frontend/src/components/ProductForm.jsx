@@ -155,7 +155,7 @@ const ProductForm = () => {
           align="center"
           gutterBottom
           sx={{
-            fontFamily: "'Roboto', sans-serif",
+            fontFamily: "'Poppins', sans-serif",
             fontSize: "2rem",
             fontWeight: "bold",
           }}
@@ -357,7 +357,7 @@ const ProductForm = () => {
               <Button
                 variant="outlined"
                 color="secondary"
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/viewProducts")}
               >
                 Cancel
               </Button>
