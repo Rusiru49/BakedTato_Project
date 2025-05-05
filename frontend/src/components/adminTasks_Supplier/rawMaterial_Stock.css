@@ -5,7 +5,10 @@
     text-align: center;
     font-family: Arial, sans-serif;
 }
-  
+
+.button-container{
+    font-size: 18px;
+}
 .button-wrapper1 {
     position:absolute;
     top: 100px;
@@ -24,11 +27,11 @@
 }
   
 .view-stock-btn {
-    background-color: #050505;
-    border: 3px solid #000000;
-    color: white;
+    background-color: #ffffff;
+    border: 3px solid #ff9501;
+    color: rgb(0, 0, 0);
     padding: 8px 16px;
-    font-size: 17px;
+    font-size: 20px;
     border-radius: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -36,11 +39,11 @@
 }
   
 .view-stock-btn:hover {
-    background-color: #908784;
+    background-color: #ffffff;
 }
   
 .raw-materials-table-admin{
-    width: 90%;
+    width: 100%;
     margin: 20px auto;
     border-collapse: separate;
     border-spacing: 0;
@@ -89,6 +92,33 @@
     color: #555;
 }
   
+.actionButtonsDel {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.actionButtonsDel:hover {
+    background-color: #cc0000;
+}
+  
+.actionButtonsUp {
+    background-color: #4caf50;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+}
+  
+.actionButtonsUp:hover {
+    background-color: #45a049;
+}
+  
 .chart-header {
     display: flex;
     justify-content: space-between;
@@ -101,9 +131,181 @@
     font-size: 24px;
     font-weight: 600;
     color: #000000;
-    padding-top: 15px;
+    padding-top: 60px;
     text-align: center;
-    margin-left: 90px;
+    margin-left: 10px;
     flex-grow: 1;
 }
   
+
+.stock-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+  
+.stock-card {
+    background-color: #ffffff;
+    border: 3px solid;
+    border-radius: 12px;
+    width: 180px;
+    height: 120px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 20px;
+    transition: transform 0.2s ease;
+}
+  
+.stock-card h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #090808;
+}
+  
+.stock-card p {
+    font-size: 22px;
+    font-weight: bold;
+    color: #000;
+}
+  
+.stock-card:hover {
+    transform: translateY(-5px);
+}
+
+.approval-btn-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+}
+
+.approval-btn {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.pending-count-label {
+    font-size: 18px;
+    color: #000000;
+    font-weight: bold;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.pending-count-number {
+    font-size: 25px;
+    font-weight: bold;
+    color: #ff5500;
+}
+
+
+.custom-dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .custom-dialog-box {
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 12px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    animation: slideDown 0.3s ease-out;
+  }
+  
+  @keyframes slideDown {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .custom-dialog-box h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #c91613;
+    text-align: center;
+  }
+  
+  .custom-dialog-box p {
+    margin: 5px 0;
+    font-size: 15px;
+    color: #333;
+  }
+  
+  .dialog-actions {
+    display:flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .cancel-btn,
+  .confirm-btn {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+  
+  .cancel-btn {
+    background-color: #e0e0e0;
+    color: #333;
+  }
+  
+  .cancel-btn:hover {
+    background-color: #bdbdbd;
+  }
+  
+  .confirm-btn {
+    background-color: #d32f2f;
+    color: white;
+  }
+  
+  .confirm-btn:hover {
+    background-color: #b71c1c;
+  }
+  
+  .form-group {
+    margin-top: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  .form-group select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
+
+  
+
+

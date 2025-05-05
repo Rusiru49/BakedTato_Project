@@ -24,6 +24,7 @@ import FastDelivery from "./components/FastDelivery";
 import BuyProductPage from "./components/BuyProduct"
 import UpdateStock from "./components/updateOperationsThiruni/updateStock";
 import AdminRawStockView from "./components/adminTasks_Supplier/rawMaterial_Stock";
+import RawMaterialsApprovals from "./components/adminTasks_Supplier/rawMaterial_Approvals";
 
 
 function App() {
@@ -112,6 +113,14 @@ function App() {
                   element={
                     <>
                       <AdminRawStockView/>
+                    </>
+                  }
+                />
+                <Route
+                  path="/rawmaterial-approve-reject-admin"
+                  element={
+                    <>
+                      <RawMaterialsApprovals/>
                     </>
                   }
                 />
