@@ -114,7 +114,7 @@ const AddStock = () => {
                     </Link>
                 </div>
 
-                <h3 className="h3">Add Stock</h3>
+                <h2 className="h2">Add Stock</h2>
 
                 <form className='createReviewForm' onSubmit={submitForm}>
                     <div className="formGroup">

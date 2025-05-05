@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../ViewOperationsThiruni/RawMaterials.css";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const ManageStock = () => {
   const [stock, setStock] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,33 +19,11 @@ const ManageStock = () => {
     fetchData();
   }, []);
 
-  const handleDelete = async (id) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this stock item?"
-    );
-    if (confirmDelete) {
-      try {
-        const deleteResponse = await axios.delete(
-          `http://localhost:5000/api/deleteStock/${id}`
-        );
-        toast.success(deleteResponse.data.msg, { position: "top-right" });
-
-        const response = await axios.get("http://localhost:5000/api/getStock");
-        setStock(response.data);
-
-        navigate("/manage-stock");
-      } catch (error) {
-        console.error("Error deleting stock:", error);
-        toast.error("Error deleting stock", { position: "top-right" });
-      }
-    }
-  };
-
   return (
     <div>
       <div className="add-stock-button-container">
         <Link to="/add-stock">
-          <button className="add-stock-button">Add Stock</button>
+          <button className="add-stock-button">Add a New Stock</button>
         </Link>
       </div>
 
@@ -79,17 +53,11 @@ const ManageStock = () => {
                   <td>{item.remainingStock}</td>
                   <td>{item.date}</td>
                   <td>
-                    <button
-                      onClick={() => handleDelete(item._id)}
-                      className="actionButtonsDel"
-                    >
-                      <FontAwesomeIcon icon={faTrash} />
-                    </button>
                     <Link
                       to={`/update-stock/${item._id}`}
                       className="actionButtonsUp"
                     >
-                      <FontAwesomeIcon icon={faEdit} />
+                     Add More
                     </Link>
                   </td>
                 </tr>

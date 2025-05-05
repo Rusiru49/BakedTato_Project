@@ -108,12 +108,12 @@ const AddRawMaterial = () => {
         <div className='createFormRaw'>
             <div className='formContainer'>
                 <div className='button-container'>
-                    <Link to="/home" className='backBtn'>
+                    <Link to="/supplierHome" className='backBtn'>
                         <FontAwesomeIcon icon={faArrowLeft} />
                     </Link>
                 </div>
 
-                <h3 className='h3'>Add a Raw Material</h3> 
+                <h2 className='h2'>Add a Raw Material</h2> 
 
                 <form className='createReviewForm' onSubmit={submitForm}>
                     <div className="formGroup">
@@ -164,7 +164,7 @@ const AddRawMaterial = () => {
                                 <label htmlFor="description">Description</label>
                                 <textarea
                                     onChange={inputHandler}
-                                    cols='10'
+                                    cols='100'
                                     rows='5'
                                     id="description"
                                     name="description"
