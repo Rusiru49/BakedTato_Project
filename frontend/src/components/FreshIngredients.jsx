@@ -1,55 +1,67 @@
 import React from "react";
-import { Box, Typography, Container } from "@mui/material";
+import { Box, Typography, Container, Divider } from "@mui/material";
+import SpaIcon from "@mui/icons-material/Spa";
 
 const FreshIngredients = () => {
-  //const theme = useTheme();
-
   return (
     <Box
       sx={{
-        py: 10,
+        py: { xs: 8, md: 12 },
         backgroundColor: "#f8f1e4",
       }}
     >
       <Container maxWidth="md">
         <Box textAlign="center" px={2}>
+          <SpaIcon sx={{ fontSize: 50, color: "#4caf50", mb: 1 }} />
           <Typography
-            variant="h3"
+            variant="h4"
             component="h2"
             gutterBottom
             sx={{
-              fontWeight: "bold",
+              fontWeight: 700,
               color: "#7b4f21",
             }}
           >
-            Fresh Ingredients
+            Farm-Fresh Ingredients
           </Typography>
+
+          <Divider
+            sx={{
+              width: 80,
+              height: 4,
+              backgroundColor: "#4caf50",
+              mx: "auto",
+              my: 2,
+              borderRadius: 2,
+            }}
+          />
+
           <Typography
-            variant="h6"
-            paragraph
+            variant="subtitle1"
             sx={{
               color: "#a66b2d",
-              mt: 2,
               fontStyle: "italic",
+              mb: 3,
             }}
           >
-            Where every bite starts with nature's best.
+            Where every bite begins with nature’s best. 🌱🥔
           </Typography>
+
           <Typography
             variant="body1"
             sx={{
               maxWidth: "700px",
               margin: "0 auto",
-              mt: 3,
               color: "#5c3d1e",
-              lineHeight: 1.8,
+              lineHeight: 1.75,
+              fontSize: "1.05rem",
             }}
           >
-            At BAKEDTATO, we believe that great taste begins with the finest ingredients.
-            Our premium potatoes and fresh toppings are carefully handpicked from
-            trusted local farms to deliver authentic flavor, rich nutrition, and wholesome goodness in every bite.
+            At <strong>BAKEDTATO</strong>, we believe the secret to unforgettable flavor
+            lies in the ingredients. That’s why we source our potatoes and toppings
+            directly from trusted local farms — ensuring maximum freshness, nutrition, and natural goodness in every serving.
             <br /><br />
-            From farm to table, experience the natural magic of BAKEDTATO. 🌱🥔
+            From soil to soul, experience what real freshness tastes like.
           </Typography>
         </Box>
       </Container>

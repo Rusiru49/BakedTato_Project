@@ -17,6 +17,7 @@ import React from "react";
 import Customize from "../assets/customize.jpg";
 import FastDel from "../assets/FastDel.jpg";
 import FreshIngrediants from "../assets/Ingredients.jpg";
+import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 
 const theme = createTheme({
@@ -188,6 +189,7 @@ const BakedTatoLandingPage = () => {
               </Grid>
             ))}
           </Grid>
+          <Footer />
         </Container>
       </Box>
     </ThemeProvider>
