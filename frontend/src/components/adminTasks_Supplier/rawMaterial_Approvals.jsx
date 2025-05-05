@@ -11,6 +11,7 @@ const RawMaterialsApprovals = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedApproval, setSelectedApproval] = useState(null);
   const [approvalStatus, setApprovalStatus] = useState("");
+  const [approvalDate, setApprovalDate] = useState("");
   const navigate = useNavigate();
 
   const fetchData = async () => {
@@ -52,15 +53,19 @@ const RawMaterialsApprovals = () => {
 
     try {
       const updateResponse = await axios.put(
-        `http://localhost:5000/api/updateRawMaterial/${selectedApproval._id}`,{
-        status: approvalStatus,
-        hidden:false
-      });
+        `http://localhost:5000/api/updateRawMaterial/${selectedApproval._id}`,
+        {
+          status: approvalStatus,
+          date: approvalDate,
+          hidden: false,
+        }
+      );
       toast.success(updateResponse.data.msg || "Material Approved!", {
-      position: "top-right",
+        position: "top-right",
       });
       setSelectedApproval(null);
       setApprovalStatus("");
+      setApprovalDate("");
       fetchData();
     } catch (error) {
       console.error("Error approving raw material:", error);
@@ -83,7 +88,7 @@ const RawMaterialsApprovals = () => {
             <th>Category</th>
             <th>Origin</th>
             <th>Description</th>
-            <th>Date</th>
+            <th>Date Added</th>
             <th>Status</th>
             <th>Actions</th>
           </tr>
@@ -107,7 +112,11 @@ const RawMaterialsApprovals = () => {
                   </button>
                   <button
                     className="actionButtonsUp"
-                    onClick={() => setSelectedApproval(material)}
+                    onClick={() => {
+                      setSelectedApproval(material);
+                      setApprovalStatus(material.status || "");
+                      setApprovalDate(material.date || "");
+                    }}
                   >
                     Approve
                   </button>
@@ -116,7 +125,7 @@ const RawMaterialsApprovals = () => {
             ))
           ) : (
             <tr>
-              <td colSpan="7">No Pending Raw materials found.</td>
+              <td colSpan="7">No Raw material Pending Approvals at the Moment</td>
             </tr>
           )}
         </tbody>
@@ -151,7 +160,7 @@ const RawMaterialsApprovals = () => {
             <p><strong>Name:</strong> {selectedApproval.name}</p>
             <p><strong>Category:</strong> {selectedApproval.category}</p>
             <p><strong>Description:</strong> {selectedApproval.description}</p>
-            <p><strong>Date:</strong> {selectedApproval.date}</p>
+
             <div className="form-group">
               <label htmlFor="statusDropdown"><strong>Status:</strong></label>
               <select
@@ -163,6 +172,17 @@ const RawMaterialsApprovals = () => {
                 <option value="Approved">Approved</option>
               </select>
             </div>
+
+            <div className="form-group">
+              <label htmlFor="datePicker"><strong>Date:</strong></label>
+              <input
+                type="date"
+                id="datePicker"
+                value={approvalDate}
+                onChange={(e) => setApprovalDate(e.target.value)}
+              />
+            </div>
+
             <div className="dialog-actions">
               <button className="cancel-btn" onClick={() => setSelectedApproval(null)}>
                 Cancel

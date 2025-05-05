@@ -76,7 +76,7 @@ const AdminRawStockView = () => {
               <span className="pending-count-number">{pendingCount}</span>
             </button>
           </Link>
-          <Link to="/rawmaterial-approve-reject-admin" className="approval-btn-wrapper">
+          <Link to="/manage-stock-admin" className="approval-btn-wrapper">
             <button className="view-stock-btn approval-btn">
               <span className="pending-count-label">Stock Updates</span>
             </button>
@@ -95,7 +95,7 @@ const AdminRawStockView = () => {
             <th>Category</th>
             <th>Origin</th>
             <th>Description</th>
-            <th>Date</th>
+            <th>Date Approved</th>
             <th>Status</th>
           </tr>
         </thead>
@@ -119,7 +119,7 @@ const AdminRawStockView = () => {
         </tbody>
       </table>
 
-      <div style={{ marginTop: "40px" }}>
+      <div style={{ marginTop: "1px" }}>
         <div className="chart-header">
           <h3 className="stock-overview-title-stock"> Remaining Stock Overview</h3>
         </div>

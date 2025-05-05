@@ -30,6 +30,10 @@ const stockSchemaSupplier = new mongoose.Schema({
     type: String,
     required: true,
   },
+  dateRemaining:{
+    type:String,
+    default:""
+  }
 });
 
 stockSchemaSupplier.plugin(AutoIncrement(mongoose), { inc_field: "stockID" });

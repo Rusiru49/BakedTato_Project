@@ -69,6 +69,7 @@ const PendingRawMaterials = () => {
 
   return (
     <div className="raw-materials-container">
+      <h3 className="h3">Pending Approvals - Raw Materials</h3>
       <table className="raw-materials-table">
         <thead>
           <tr>
@@ -76,7 +77,7 @@ const PendingRawMaterials = () => {
             <th>Category</th>
             <th>Origin</th>
             <th>Description</th>
-            <th>Date</th>
+            <th>Date Added</th>
             <th>Status</th>
             <th>Actions</th>
           </tr>

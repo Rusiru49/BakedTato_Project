@@ -25,6 +25,7 @@ import BuyProductPage from "./components/BuyProduct"
 import UpdateStock from "./components/updateOperationsThiruni/updateStock";
 import AdminRawStockView from "./components/adminTasks_Supplier/rawMaterial_Stock";
 import RawMaterialsApprovals from "./components/adminTasks_Supplier/rawMaterial_Approvals";
+import ManageStockAdmin from "./components/adminTasks_Supplier/stockUpdates_admin";
 
 
 function App() {
@@ -121,6 +122,14 @@ function App() {
                   element={
                     <>
                       <RawMaterialsApprovals/>
+                    </>
+                  }
+                />
+                <Route
+                  path="/manage-stock-admin"
+                  element={
+                    <>
+                      <ManageStockAdmin/>
                     </>
                   }
                 />

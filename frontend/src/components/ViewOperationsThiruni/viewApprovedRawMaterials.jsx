@@ -3,16 +3,14 @@ import axios from "axios";
 import "./RawMaterials.css";
 import {
   Chart as ChartJS,
-  BarElement,
-  CategoryScale,
-  LinearScale,
+  ArcElement,
   Tooltip,
   Legend,
 } from "chart.js";
-import { Bar } from "react-chartjs-2";
+import { Pie } from "react-chartjs-2";
 import { Link } from "react-router-dom";
 
-ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const ApprovedRawMaterials = () => {
   const [rawMaterials, setRawMaterials] = useState([]);
@@ -60,32 +58,29 @@ const ApprovedRawMaterials = () => {
     return acc;
   }, {});
 
-  const chartData = {
+  const pieChartData = {
     labels: Object.keys(stockByCategory),
     datasets: [
       {
-        label: "Remaining Stock",
         data: Object.values(stockByCategory),
         backgroundColor: Object.keys(stockByCategory).map(
           (cat) => categoryColors[cat] || "#ccc"
         ),
-        borderRadius: 4,
-        barThickness: 35, 
+        borderWidth: 1,
       },
     ],
   };
 
-  const chartOptions = {
+  const pieOptions = {
     plugins: {
       legend: {
-        display: false,
-      },
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
-        ticks: {
-          stepSize: 10,
+        position: "right",
+        labels:{
+          font:{
+            size:20,
+          },
+          boxWidth:20,
+          padding:15,
         },
       },
     },
@@ -95,7 +90,7 @@ const ApprovedRawMaterials = () => {
 
   return (
     <div className="raw-materials-container">
-      <h3 className="stock-overview-title">Availabe Raw Materials</h3>
+      <h3 className="stock-overview-title">Available Raw Materials</h3>
 
       <table className="raw-materials-table">
         <thead>
@@ -104,7 +99,7 @@ const ApprovedRawMaterials = () => {
             <th>Category</th>
             <th>Origin</th>
             <th>Description</th>
-            <th>Date</th>
+            <th>Approved Date</th>
             <th>Status</th>
           </tr>
         </thead>
@@ -122,23 +117,22 @@ const ApprovedRawMaterials = () => {
             ))
           ) : (
             <tr>
-              <td colSpan="7">No approved raw materials found.</td>
+              <td colSpan="7">No Approved Raw Materials Found</td>
             </tr>
           )}
         </tbody>
       </table>
 
       <div style={{ marginTop: "40px" }}>
-        
         <div className="chart-header">
-          <h3 className="stock-overview-title-Stock">Stock Overview</h3>
-            <Link to="/manage-stock">
-              <button className="view-stock-btn">View Detailed Stock</button>
-            </Link>
+          <h3 className="stock-overview-title-Stock">Remaining Stock Overview</h3>
+          <Link to="/manage-stock">
+            <button className="view-stock-btn">View Detailed Stock</button>
+          </Link>
         </div>
 
-        <div style={{ height: "300px", width: "60%", margin: "0 auto" }}>
-          <Bar data={chartData} options={chartOptions} />
+        <div style={{ height: "450px", width: "80%", margin: "0 auto" }}>
+          <Pie data={pieChartData} options={pieOptions} />
         </div>
       </div>
     </div>

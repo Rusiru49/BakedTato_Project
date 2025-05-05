@@ -8,16 +8,22 @@ exports.addStock = async (req, res) => {
   }
 
   try {
-    const stock = new StockSupplier(req.body);
+    const stock = new StockSupplier({
+      name:req.body.name,
+      category:req.body.category,
+      unit:req.body.unit,
+      currentStock:req.body.currentStock,
+      date:req.body.date,
+    });
+
     const savedData = await stock.save();
     res.status(201).json({ msg: "Stock Added Successfully", data: savedData });
   } catch (error) {
     console.error("Error saving stock:", error);
-    res
-      .status(500)
-      .json({ error: "An error occurred while adding the stock." });
+    res.status(500).json({ error: "An error occurred while adding the stock!" });
   }
 };
+
 
 exports.getStock = async (req, res) => {
   try {

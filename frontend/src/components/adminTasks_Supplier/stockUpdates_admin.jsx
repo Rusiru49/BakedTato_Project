@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../ViewOperationsThiruni/RawMaterials.css";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import "./rawMaterial_Stock.css";
+import { faArrowLeft, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
+import { toast } from "react-hot-toast"; 
 
-const ManageStock = () => {
+const ManageStockAdmin = () => {
   const [stock, setStock] = useState([]);
   const navigate = useNavigate();
 
@@ -23,7 +23,23 @@ const ManageStock = () => {
     fetchData();
   }, []);
 
-  const handleDelete = async (id) => {
+  const isDeletionAllowed = (dateCreated) => {
+    const now = new Date();
+    const creationTime = new Date(dateCreated);
+    const timeDifference = now - creationTime;
+    const hoursDifference = timeDifference / (1000 * 60 * 60);
+
+    return hoursDifference < 24;
+  };
+
+  const handleDelete = async (id, dateCreated) => {
+    if (!isDeletionAllowed(dateCreated)) {
+      toast.error("Deletion is only allowed within 24 hours of creation.", {
+        position: "top-right",
+      });
+      return;
+    }
+
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this stock item?"
     );
@@ -37,7 +53,7 @@ const ManageStock = () => {
         const response = await axios.get("http://localhost:5000/api/getStock");
         setStock(response.data);
 
-        navigate("/manage-stock");
+        navigate("/manage-stock"); 
       } catch (error) {
         console.error("Error deleting stock:", error);
         toast.error("Error deleting stock", { position: "top-right" });
@@ -47,23 +63,21 @@ const ManageStock = () => {
 
   return (
     <div>
-      <div className="add-stock-button-container">
-        <Link to="/add-stock">
-          <button className="add-stock-button">Add Stock</button>
-        </Link>
-      </div>
-
       <div className="raw-materials-container">
-        <table className="raw-materials-table">
+        <div className="button-container">
+            <Link to="/rawmaterial-stock-view-admin" className="backBtn">
+                <FontAwesomeIcon icon={faArrowLeft} />
+            </Link>
+        </div>
+        <table className="raw-materials-table-admin">
           <thead>
             <tr>
               <th>Name</th>
               <th>Category</th>
               <th>Unit</th>
               <th>Current Stock</th>
-              <th>Current Stock Added On</th>
+              <th>Date</th>
               <th>Remaining Stock</th>
-              <th>Remaining Stock On</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -77,14 +91,14 @@ const ManageStock = () => {
                   <td>{item.currentStock}</td>
                   <td>{item.date}</td>
                   <td>{item.remainingStock}</td>
-                  <td>{item.date}</td>
                   <td>
                     <button
-                      onClick={() => handleDelete(item._id)}
+                      onClick={() => handleDelete(item._id, item.date)}
                       className="actionButtonsDel"
                     >
                       <FontAwesomeIcon icon={faTrash} />
                     </button>
+
                     <Link
                       to={`/update-stock/${item._id}`}
                       className="actionButtonsUp"
@@ -96,7 +110,7 @@ const ManageStock = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="8">No Stock Added at the Moment</td>
+                <td colSpan="7">No Stock Found</td>
               </tr>
             )}
           </tbody>
@@ -106,4 +120,4 @@ const ManageStock = () => {
   );
 };
 
-export default ManageStock;
+export default ManageStockAdmin;

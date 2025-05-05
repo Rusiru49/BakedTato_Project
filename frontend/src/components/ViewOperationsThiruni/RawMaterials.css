@@ -130,16 +130,19 @@
   font-weight: 600;
   color: #000000;
   text-align: center;
-  margin-left: 150px;
+  margin-left: 170px;
   flex-grow: 1;
 }
 
+.h3{
+  margin-left: 150px;
+}
 .stock-overview-title-Stock {
   font-size: 24px;
   font-weight: 600;
   color: #000000;
   text-align: center;
-  margin-left: 400px;
+  margin-left: 500px;
   flex-grow: 1;
 }
 .view-stock-btn {
@@ -158,3 +161,4 @@
 .view-stock-btn:hover {
   background-color: #d1501f;
 }
+
