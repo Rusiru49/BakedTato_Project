@@ -11,6 +11,8 @@ import {
   CardContent,
   Grid,
   IconButton,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import {
   UploadFile,
@@ -25,6 +27,7 @@ import {
 const ProductForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
   const [product, setProduct] = useState({
     name: "",
     description: "",
@@ -37,6 +40,11 @@ const ProductForm = () => {
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
+
+  // Snackbar state
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   // Validation
   const [validation, setValidation] = useState({
@@ -129,21 +137,34 @@ const ProductForm = () => {
         const data = await response.json();
         imageUrl = data.imageUrl;
       } catch (error) {
-        setError("Failed to upload image.");
+        setSnackbarMessage("Failed to upload image.");
+        setSnackbarSeverity("error");
+        setOpenSnackbar(true);
         return;
       }
     } else if (id) {
       imageUrl = product.image;
     }
+
     try {
       if (id) {
         await updateProduct(id, { ...product, image: imageUrl });
+        setSnackbarMessage("Product updated successfully!");
       } else {
         await createProduct({ ...product, image: imageUrl });
+        setSnackbarMessage("Product created successfully!");
       }
-      navigate("/viewProducts");
+
+      setSnackbarSeverity("success");
+      setOpenSnackbar(true);
+
+      setTimeout(() => {
+        navigate("/viewProducts");
+      }, 1500);
     } catch (error) {
-      setError("Failed to save product.");
+      setSnackbarMessage("Failed to save product.");
+      setSnackbarSeverity("error");
+      setOpenSnackbar(true);
     }
   };
 
@@ -264,7 +285,6 @@ const ProductForm = () => {
                 />
               </Grid>
 
-              {/* Image uploading */}
               <Grid item xs={12}>
                 <input
                   type="file"
@@ -365,6 +385,23 @@ const ProductForm = () => {
           </Box>
         </CardContent>
       </Card>
+
+      {/* Snackbar Alert */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={2000}
+        onClose={() => setOpenSnackbar(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity={snackbarSeverity}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };
