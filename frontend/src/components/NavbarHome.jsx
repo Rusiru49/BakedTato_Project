@@ -176,24 +176,6 @@ const Navbar = () => {
         </Typography>
 
         <Box sx={{ display: "flex", gap: 2 }}>
-          {admin && (
-            <Link to="/showusers" style={{ textDecoration: "none" }}>
-              <Button
-                component={motion.button}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                startIcon={<FaUser />}
-                sx={{
-                  color: "black",
-                  fontWeight: 500,
-                  "&:hover": { backgroundColor: "rgba(255, 215, 0, 0.1)" },
-                }}
-              >
-                Manage users
-              </Button>
-            </Link>
-          )}
-
           {user ? (
             <Button
               component={motion.button}

@@ -1,24 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  Button,
-  Card,
-  CardContent,
+  Container,
+  Paper,
+  Avatar,
   Typography,
-  Box,
+  Stack,
+  Button,
   Dialog,
   DialogTitle,
-  IconButton,
   DialogContent,
-  TextField,
   DialogActions,
+  TextField,
+  IconButton,
+  Box,
 } from "@mui/material";
 import {
-  FaUserCircle,
+  FaEdit,
   FaSignOutAlt,
   FaTrash,
-  FaEdit,
   FaTimes,
+  FaUserCircle,
 } from "react-icons/fa";
 import Axios from "axios";
 import { signOut } from "firebase/auth";
@@ -27,19 +29,19 @@ import { auth } from "../services/firebase";
 const Profile = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
-  const userMail = user ? user.email : null;
-  const userId = user ? user.userId : null;
-  const userName = user ? user.username : null;
-  const [open, setopen] = useState(false);
-  const [username, setUusername] = useState(user.username);
-  const [email, setUemail] = useState(user.email);
+  const userMail = user?.email || "";
+  const userId = user?.userId || "";
+  const userName = user?.username || "";
+
+  const [open, setOpen] = useState(false);
+  const [username, setUsername] = useState(userName);
+  const [email, setEmail] = useState(userMail);
 
   const signOutUser = async () => {
     try {
-      if (window.confirm("Are you sure ?")) {
+      if (window.confirm("Are you sure you want to sign out?")) {
         await signOut(auth);
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+        localStorage.clear();
         navigate("/");
         window.location.reload();
       }
@@ -50,160 +52,127 @@ const Profile = () => {
 
   const deleteUser = async () => {
     try {
-      if (window.confirm("Are you sure to delete your account ?")) {
+      if (window.confirm("Are you sure you want to delete your account?")) {
         await Axios.post("http://localhost:5000/api/deleteUser", {
           _id: userId,
         });
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+        localStorage.clear();
         window.location.reload();
         console.log("User deleted successfully");
       }
     } catch (error) {
-      console.error("Error deleting User:", error);
+      console.error("Error deleting user:", error);
     }
   };
 
   const updateUser = async () => {
     try {
-      if (
-        window.confirm(
-          "You need to re-login when updating your profile details.. Ok ?",
-        )
-      ) {
-        const response = await Axios.post(
-          "http://localhost:5000/api/updateuser",
-          {
-            _id: userId,
-            username,
-            email,
-          },
-        );
-        console.log("User update is successful", response.data);
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+      if (window.confirm("You will need to log in again after update. Continue?")) {
+        const response = await Axios.post("http://localhost:5000/api/updateuser", {
+          _id: userId,
+          username,
+          email,
+        });
+        console.log("User update successful", response.data);
+        localStorage.clear();
         window.location.reload();
       }
     } catch (error) {
-      console.error("Error deleting User:", error);
+      console.error("Error updating user:", error);
     }
   };
+
   return (
-    <>
-      <Card
+    <Container maxWidth="sm" sx={{ mt: 6 }}>
+      <Paper
+        elevation={5}
         sx={{
-          maxWidth: 400,
-          margin: "auto",
+          borderRadius: 3,
+          padding: 4,
+          backgroundColor: "#fefefe",
           textAlign: "center",
-          borderRadius: "15px",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
-          padding: 3,
-          background: "linear-gradient(135deg, #8B4513, #D2691E)",
-          color: "#fff",
         }}
       >
-        <CardContent>
-          {user.photoURL ? (
-            <img
-              src={user.photoURL}
-              width={50}
-              height={50}
-              style={{ borderRadius: "50" }}
-            />
+        <Stack spacing={2} alignItems="center">
+          {user?.photoURL ? (
+            <Avatar src={user.photoURL} sx={{ width: 80, height: 80 }} />
           ) : (
-            <FaUserCircle size={60} style={{ marginBottom: 10 }} />
+            <Avatar sx={{ width: 80, height: 80 }}>
+              <FaUserCircle size={40} />
+            </Avatar>
           )}
-
-          <Typography variant="h5" sx={{ fontWeight: 600 }}>
+          <Typography variant="h5" fontWeight={600}>
             {userName}
           </Typography>
-          <Typography variant="body1" sx={{ color: "#FFD700" }}>
+          <Typography variant="body2" color="text.secondary">
             {userMail}
           </Typography>
 
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 3 }}>
+          <Stack spacing={2} sx={{ width: "100%", mt: 3 }}>
             <Button
-              variant="contained"
+              variant="outlined"
               startIcon={<FaEdit />}
-              onClick={() => setopen(true)}
+              onClick={() => setOpen(true)}
               disabled={!!user.displayName}
-              sx={{
-                backgroundColor: "#FFD700",
-                color: "#000",
-                fontWeight: 600,
-              }}
             >
               Update Account
             </Button>
 
             <Button
-              variant="contained"
+              variant="outlined"
+              color="error"
               startIcon={<FaTrash />}
               onClick={deleteUser}
               disabled={!!user.displayName}
-              sx={{ backgroundColor: "red", color: "#fff", fontWeight: 600 }}
             >
               Delete Account
             </Button>
 
             <Button
               variant="contained"
+              color="primary"
               startIcon={<FaSignOutAlt />}
               onClick={signOutUser}
-              sx={{
-                backgroundColor: "#000",
-                color: "#FFD700",
-                fontWeight: 600,
-              }}
+              sx={{ fontWeight: 600 }}
             >
               Logout
             </Button>
-          </Box>
-        </CardContent>
-      </Card>
-      <Dialog open={open}>
-        <DialogTitle
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          Update details
-          <IconButton onClick={() => setopen(false)}>
+          </Stack>
+        </Stack>
+      </Paper>
+
+      {/* Update Dialog */}
+      <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm">
+        <DialogTitle sx={{ display: "flex", justifyContent: "space-between" }}>
+          Update Account
+          <IconButton onClick={() => setOpen(false)}>
             <FaTimes />
           </IconButton>
         </DialogTitle>
-        <DialogContent>
-          <Box sx={{ mt: 2 }}>
+        <DialogContent dividers>
+          <Stack spacing={2}>
             <TextField
-              fullWidth
               label="Username"
-              variant="outlined"
-              name="username"
+              fullWidth
               value={username}
-              onChange={(e) => setUusername(e.target.value)}
-              sx={{ mb: 2 }}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <TextField
-              fullWidth
               label="Email"
-              variant="outlined"
-              name="email"
               type="email"
+              fullWidth
               value={email}
-              onChange={(e) => setUemail(e.target.value)}
-              sx={{ mb: 2 }}
+              onChange={(e) => setEmail(e.target.value)}
             />
-          </Box>
+          </Stack>
         </DialogContent>
         <DialogActions>
           <Button variant="contained" color="primary" onClick={updateUser}>
-            Update
+            Save Changes
           </Button>
         </DialogActions>
       </Dialog>
-    </>
+    </Container>
   );
 };
 
