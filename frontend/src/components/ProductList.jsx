@@ -13,18 +13,13 @@ import {
   Paper,
   Button,
   IconButton,
-  Typography,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Box,
-  Card,
-  CardContent,
 } from "@mui/material";
 import { Edit, Delete, PictureAsPdf } from "@mui/icons-material";
-import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -113,33 +108,6 @@ const ProductList = () => {
       >
         Download
       </Button>
-
-      <Card sx={{ mb: 3, backgroundColor: "#FFCC80", borderRadius: 2 }}>
-        <CardContent>
-          <Box display="flex" alignItems="center" gap={1}>
-            <Inventory2OutlinedIcon sx={{ color: 'primary.main' }} />
-            <Typography
-              variant="h6"
-              sx={{
-                fontFamily: "'Roboto', sans-serif",
-                fontWeight: 600,
-                color: 'text.secondary',
-              }}
-            >
-              Total Products:&nbsp;
-              <Typography
-                component="span"
-                sx={{
-                  fontWeight: 'bold',
-                  color: 'text.primary',
-                }}
-              >
-                {products.length}
-              </Typography>
-            </Typography>
-          </Box>
-        </CardContent>
-      </Card>
 
       <TableContainer component={Paper} sx={{ boxShadow: 3, borderRadius: 2 }}>
         <Table>
