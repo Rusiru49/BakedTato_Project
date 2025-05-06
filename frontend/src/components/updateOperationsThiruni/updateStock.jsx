@@ -16,17 +16,15 @@ const UpdateRemainingStock = () => {
 
   const [currentStock, setCurrentStock] = useState('');
   const [remainingStock, setRemainingStock] = useState(0);
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(null);
 
   useEffect(() => {
     axios.get(`http://localhost:5000/api/getOneStock/${id}`)
       .then(res => {
         const data = res.data;
-        setCurrentStock('');
         setRemainingStock(data.remainingStock || 0);
-
-        const parsedDate = new Date(data.date);
-        setDate(!isNaN(parsedDate) ? parsedDate : new Date());
+        setCurrentStock('');
+        setDate(null); 
       })
       .catch(err => {
         console.error(err);
@@ -37,32 +35,43 @@ const UpdateRemainingStock = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const addedStock = parseInt(currentStock, 10);
+    const parsedStock = Number(currentStock);
 
-    if (isNaN(addedStock) || addedStock < 0) {
-      toast.error("Please enter a valid stock Amount!");
+    if (isNaN(parsedStock) || parsedStock <= 0) {
+      toast.error("Please enter a valid stock amount!");
       return;
     }
 
-    const updatedRemainingStock = remainingStock + addedStock;
+    if (!date) {
+      toast.error("Please select today's Date");
+      return;
+    }
 
     try {
+      const updatedStock = remainingStock + parsedStock;
+
+      console.log("Sending:", {
+        currentStock: updatedStock,
+        date: new Date(date).toLocaleDateString('en-US'),
+      });
+
       await axios.put(`http://localhost:5000/api/updateStock/${id}`, {
-        currentStock: addedStock,
-        remainingStock: updatedRemainingStock,
+        currentStock: updatedStock,
         date: date.toISOString().split('T')[0],
       });
-      toast.success("Stock Updated Successfully!");
+
+      toast.success("Stock Added Successfully!");
       navigate('/manage-stock');
     } catch (error) {
+      console.error("Update Error:", error);
       toast.error("Error updating stock");
     }
   };
 
+  
   return (
     <div className="createFormRaw">
       <div className="formContainer">
-
         <div className='button-container'>
           <Link to="/manage-stock" className='backBtn'>
             <FontAwesomeIcon icon={faArrowLeft} />
@@ -72,7 +81,6 @@ const UpdateRemainingStock = () => {
         <h2 className='h2'>Update Stock</h2>
 
         <form onSubmit={handleSubmit}>
-
           <div className="inputGroup">
             <label htmlFor="currentStock">Add Current Stock</label>
             <input
@@ -83,7 +91,6 @@ const UpdateRemainingStock = () => {
               required
               placeholder="Enter Stock to Add"
             />
-            {/* ✅ Live Display of New Remaining Stock */}
             {currentStock && !isNaN(currentStock) && (
               <p style={{ color: '#333', marginTop: '8px' }}>
                 New Remaining Stock: <strong>{remainingStock + Number(currentStock)}</strong>
@@ -98,8 +105,11 @@ const UpdateRemainingStock = () => {
               value={date}
               onChange={setDate}
               maxDate={new Date()}
+              minDate={new Date()}
               clearIcon={null}
               required
+              format="y-MM-dd"
+              placeholderText="Select today's date"
             />
           </div>
 

@@ -20,7 +20,7 @@ const stockSchemaSupplier = new mongoose.Schema({
   },
   currentStock: {
     type: Number,
-    default: 0,
+    required:true,
   },
   remainingStock: {
     type: Number,

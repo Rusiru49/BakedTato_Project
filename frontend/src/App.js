@@ -26,6 +26,7 @@ import UpdateStock from "./components/updateOperationsThiruni/updateStock";
 import AdminRawStockView from "./components/adminTasks_Supplier/rawMaterial_Stock";
 import RawMaterialsApprovals from "./components/adminTasks_Supplier/rawMaterial_Approvals";
 import ManageStockAdmin from "./components/adminTasks_Supplier/stockUpdates_admin";
+import UpdateStockWithDetails from "./components/updateOperationsThiruni/updateStock";
 
 
 function App() {
@@ -198,7 +199,7 @@ function App() {
                   path="/update-stock/:id"
                   element={
                     <>
-                      <UpdateStock />
+                      <UpdateStockWithDetails />
                       <NavbarThiruni />
                     </>
                   }

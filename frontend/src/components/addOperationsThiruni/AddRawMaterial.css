@@ -18,6 +18,18 @@
   box-sizing: border-box;
 }
 
+.createFormRaw-sup {
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start;
+  width: 50%;
+}
+
+.formContainer-sup {
+  width: 50%;
+  margin-left: 650px;
+}
+
 .createReviewForm {
   display: flex;
   flex-direction: column;

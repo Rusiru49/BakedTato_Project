@@ -111,7 +111,7 @@ const PendingRawMaterials = () => {
             ))
           ) : (
             <tr>
-              <td colSpan="7">No Pending Raw materials found.</td>
+              <td colSpan="7">No Pending Raw Material Approvals Found.</td>
             </tr>
           )}
         </tbody>
