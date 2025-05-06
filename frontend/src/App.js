@@ -22,12 +22,10 @@ import FreshIngredients from "./components/FreshIngredients";
 import CustomizeOptions from "./components/CustomizeOptions";
 import FastDelivery from "./components/FastDelivery";
 import BuyProductPage from "./components/BuyProduct"
-import UpdateStock from "./components/updateOperationsThiruni/updateStock";
 import AdminRawStockView from "./components/adminTasks_Supplier/rawMaterial_Stock";
 import RawMaterialsApprovals from "./components/adminTasks_Supplier/rawMaterial_Approvals";
 import ManageStockAdmin from "./components/adminTasks_Supplier/stockUpdates_admin";
-import UpdateStockWithDetails from "./components/updateOperationsThiruni/updateStock";
-
+import UpdateRemainingStock from "./components/updateOperationsThiruni/updateStock";
 
 function App() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -199,11 +197,12 @@ function App() {
                   path="/update-stock/:id"
                   element={
                     <>
-                      <UpdateStockWithDetails />
+                      <UpdateRemainingStock />
                       <NavbarThiruni />
                     </>
                   }
                 />
+        
               </>
             )}
 

@@ -7,6 +7,7 @@ const {
   updateStock,
 } = require("../controllers/stockController");
 
+
 const route = express.Router();
 
 route.post("/addStock", addStock);

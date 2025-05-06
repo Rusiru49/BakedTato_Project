@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-date-picker';
-import 'react-date-picker/dist/DatePicker.css';
-import 'react-calendar/dist/Calendar.css';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import HistoryTable from '../updateOperationsThiruni/historyTable'; 
 import '../addOperationsThiruni/AddRawMaterial.css';
+import '../ViewOperationsThiruni/RawMaterials.css'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const UpdateRemainingStock = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const [currentStock, setCurrentStock] = useState('');
   const [remainingStock, setRemainingStock] = useState(0);
   const [date, setDate] = useState(null);
+  const [history, setHistory] = useState([]);
+  const [loadingHistory, setLoadingHistory] = useState(false);
 
   useEffect(() => {
     axios.get(`http://localhost:5000/api/getOneStock/${id}`)
@@ -24,17 +24,32 @@ const UpdateRemainingStock = () => {
         const data = res.data;
         setRemainingStock(data.remainingStock || 0);
         setCurrentStock('');
-        setDate(null); 
+        setDate(null);
       })
       .catch(err => {
         console.error(err);
         toast.error("Failed to fetch stock data");
       });
+
+    fetchStockHistory();
   }, [id]);
+
+  const fetchStockHistory = async () => {
+    setLoadingHistory(true);
+
+    try {
+      const response = await axios.get(`http://localhost:5000/api/getStockHistory/${id}`);
+      setHistory(response.data);
+    } catch (error) {
+      toast.error("Error fetching stock history");
+      console.error(error);
+    } finally {
+      setLoadingHistory(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const parsedStock = Number(currentStock);
 
     if (isNaN(parsedStock) || parsedStock <= 0) {
@@ -49,29 +64,24 @@ const UpdateRemainingStock = () => {
 
     try {
       const updatedStock = remainingStock + parsedStock;
-
-      console.log("Sending:", {
-        currentStock: updatedStock,
-        date: new Date(date).toLocaleDateString('en-US'),
-      });
-
       await axios.put(`http://localhost:5000/api/updateStock/${id}`, {
         currentStock: updatedStock,
         date: date.toISOString().split('T')[0],
       });
 
       toast.success("Stock Added Successfully!");
-      navigate('/manage-stock');
+      fetchStockHistory();  
     } catch (error) {
       console.error("Update Error:", error);
       toast.error("Error updating stock");
     }
   };
 
-  
   return (
-    <div className="createFormRaw">
-      <div className="formContainer">
+    <div className="createFormRaw-sup">
+
+      <div className="formContainer-sup">
+
         <div className='button-container'>
           <Link to="/manage-stock" className='backBtn'>
             <FontAwesomeIcon icon={faArrowLeft} />
@@ -113,10 +123,19 @@ const UpdateRemainingStock = () => {
             />
           </div>
 
-          <br />
-
           <button type="submit" className="Submitbutton">Update Stock</button>
         </form>
+      </div>
+
+      
+      <div className="raw-materials-container-sup">
+
+        {loadingHistory ? (
+          <p>Loading Stock History...</p>
+        ) : (
+          <HistoryTable history={history} />
+        )},
+
       </div>
     </div>
   );

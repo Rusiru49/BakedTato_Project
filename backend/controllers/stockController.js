@@ -1,4 +1,5 @@
 const StockSupplier = require("../models/stockModel");
+const StockHistory = require("../models/stockHistoryModel");
 
 exports.addStock = async (req, res) => {
   const { name, category, unit, currentStock, date } = req.body;
@@ -77,15 +78,27 @@ exports.updateStock = async (req, res) => {
 
     const updated = await stock.save();
 
+    const history = new StockHistory({
+      id:stock._id,
+      name: stock.name,
+      category: stock.category,
+      unit: stock.unit,
+      currentStock: parsedStock,
+      date: req.body.date,
+      remainingStock: newRemaining,
+      dateRemaining: req.body.date
+    });
+
+    await history.save();
+
     console.log("Updated stock:", stock); 
 
-    res.status(200).json({ msg: "Stock updated successfully!", updated });
+    res.status(200).json({ msg: "Stock Added Successfully!", updated });
   } catch (error) {
     console.error("Error in updateStock:", error);
     res.status(500).json({ error: error.message });
   }
 };
-
 
 exports.deleteStock = async (req, res) => {
   try {
