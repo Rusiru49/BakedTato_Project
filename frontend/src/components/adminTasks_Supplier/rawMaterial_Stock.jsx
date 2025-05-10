@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./rawMaterial_Stock.css";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AdminRawStockView = () => {
   const [rawMaterials, setRawMaterials] = useState([]);
   const [stock, setStock] = useState([]);
   const [pendingCount, setPendingCount] = useState(0);
+  const [selectedItem, setSelectedItem] = useState(null);
+  
 
   useEffect(() => {
     const fetchRawMaterials = async () => {
@@ -66,6 +69,33 @@ const AdminRawStockView = () => {
     color: categoryColors[category],
   }));
 
+  const handleDelete = async () => {
+    if (!selectedItem) return;
+  
+    try {
+      const deleteResponse = await axios.delete(
+        `http://localhost:5000/api/deleteRawMaterialForever/${selectedItem._id}`
+      );
+  
+      setRawMaterials((prev) =>
+        prev.filter((item) => item._id !== selectedItem._id)
+      );
+  
+      toast.success(deleteResponse.data.msg ,{
+        position: "top-right",
+        autoClose: 3000,
+      });
+  
+      setSelectedItem(null);
+    } catch (error) {
+      console.error("Error deleting raw material:", error);
+      toast.error("Error deleting raw material", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    }
+  };
+
   return (
     <div className="raw-materials-container">
       <div className="button-wrapper1">
@@ -97,6 +127,7 @@ const AdminRawStockView = () => {
             <th>Description</th>
             <th>Date Approved</th>
             <th>Status</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -109,6 +140,14 @@ const AdminRawStockView = () => {
                 <td>{material.description}</td>
                 <td>{material.date}</td>
                 <td>{material.status}</td>
+                <td>
+                  <button
+                    onClick={() => setSelectedItem(material)}
+                    className="actionButtonsDel"
+                  >
+                    Delete 
+                  </button>
+                </td>
               </tr>
             ))
           ) : (
@@ -137,6 +176,29 @@ const AdminRawStockView = () => {
           ))}
         </div>
       </div>
+
+
+      {/* Delete Forever */}
+      {selectedItem && (
+        <div className="custom-dialog-overlay">
+          <div className="custom-dialog-box">
+            <h3> Delete Raw Material Permanently</h3>
+            <p><strong>Name:</strong> {selectedItem.name}</p>
+            <p><strong>Category:</strong> {selectedItem.category}</p>
+            <p><strong>Description:</strong> {selectedItem.description}</p>
+            <p><strong>Date:</strong> {selectedItem.date}</p>
+            <div className="dialog-actions">
+              <button className="cancel-btn" onClick={() => setSelectedItem(null)}>
+                Cancel
+              </button>
+              <button className="confirm-btn" onClick={handleDelete}>
+                Delete from System
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };

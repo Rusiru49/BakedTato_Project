@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { FaHome, FaPlusCircle, FaBoxes, FaTasks, FaBell } from "react-icons/fa";
+import { FaHome, FaPlusCircle, FaBoxes, FaTasks } from "react-icons/fa";
 import "./navbar.css";
 
 const Navbar = () => {
@@ -32,12 +32,8 @@ const Navbar = () => {
               Manage Stock
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/notifications" activeClassName="active">
-              <FaBell className="icon" />
-              Notifications
-            </NavLink>
-          </li>
+
+          
         </ul>
       </div>
     </div>

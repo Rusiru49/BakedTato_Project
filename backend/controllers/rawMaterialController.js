@@ -1,5 +1,5 @@
 const RawMaterials = require("../models/rawMaterialModel");
-
+const sendEmailSupplier = require("../utils/sendEmailSupplier");
 exports.createRawMaterial = async (req, res) => {
   const { name, category, quantity, description, date } = req.body;
 
@@ -99,6 +99,37 @@ exports.updateRawMaterial = async (req, res) => {
   }
 };
 
+
+exports.updateRawMaterialAdmin = async (req, res) => {
+  try {
+    const rawMaterialID = req.params.id;
+    const rawMaterialExists = await RawMaterials.findById(rawMaterialID);
+
+    if (!rawMaterialExists) {
+      return res.status(401).json({ msg: "No such Raw Material found to update" });
+    }
+
+    const updatedRawMaterial = await RawMaterials.findByIdAndUpdate(
+      rawMaterialID,
+      req.body,
+      { new: true }
+    );
+
+    if (req.body.status === "Approved") {
+      const supplierEmail = process.env.EMAIL_USER;
+      const materialName = rawMaterialExists.name;
+
+      if (supplierEmail) {
+        await sendEmailSupplier(supplierEmail, materialName, "Approved");
+      }
+    }
+
+    res.status(200).json({ msg: "Raw Material Approved Successfully and Email Sent!" });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+};
+
 exports.deleteRawMaterial = async (req, res) => {
   try {
     const rawMaterialID = req.params.id;
@@ -111,8 +142,56 @@ exports.deleteRawMaterial = async (req, res) => {
     }
 
     await RawMaterials.findByIdAndDelete(rawMaterialID);
-    res.status(200).json({ msg: "Raw Material Deleted Successfully" });
+    res.status(200).json({ msg: "Raw Material Deleted Successfully!" });
   } catch (error) {
     res.status(500).json({ error: error });
+  }
+};
+
+exports.deleteRawMaterialAdmin = async (req, res) => {
+  try {
+    const rawMaterialID = req.params.id;
+    const rawMaterialExists = await RawMaterials.findById(rawMaterialID);
+
+    if (!rawMaterialExists) {
+      return res.status(401).json({ msg: "No such Raw Material found to delete" });
+    }
+
+    const supplierEmail = process.env.EMAIL_USER;
+    const materialName = rawMaterialExists.name;
+
+    await RawMaterials.findByIdAndDelete(rawMaterialID);
+
+    if (supplierEmail) {
+      await sendEmailSupplier(supplierEmail, materialName, "Rejected");
+    }
+
+    res.status(200).json({ msg: "Raw Material Rejected Successfully and Email Sent!" });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+};
+
+exports.deleteRawMaterialForever = async (req, res) => {
+  try {
+    const rawMaterialID = req.params.id;
+    const rawMaterialExists = await RawMaterials.findById(rawMaterialID);
+
+    if (!rawMaterialExists) {
+      return res.status(401).json({ msg: "No such Raw Material found to delete" });
+    }
+
+    const supplierEmail = process.env.EMAIL_USER; 
+    const materialName = rawMaterialExists.name;
+
+    await RawMaterials.findByIdAndDelete(rawMaterialID);
+
+    if (supplierEmail) {
+      await sendEmailSupplier(supplierEmail, materialName, "Deleted");
+    }
+
+    res.status(200).json({ msg: "Raw Material Deleted Permanently and Email Sent!" });
+  } catch (error) {
+    res.status(500).json({ error });
   }
 };

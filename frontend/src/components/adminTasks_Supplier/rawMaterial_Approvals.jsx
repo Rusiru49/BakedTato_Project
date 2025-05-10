@@ -3,7 +3,7 @@ import axios from "axios";
 import "./rawMaterial_Stock.css";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 const RawMaterialsApprovals = () => {
@@ -12,7 +12,7 @@ const RawMaterialsApprovals = () => {
   const [selectedApproval, setSelectedApproval] = useState(null);
   const [approvalStatus, setApprovalStatus] = useState("");
   const [approvalDate, setApprovalDate] = useState("");
-  const navigate = useNavigate();
+ 
 
   const fetchData = async () => {
     try {
@@ -34,7 +34,7 @@ const RawMaterialsApprovals = () => {
 
     try {
       const deleteResponse = await axios.delete(
-        `http://localhost:5000/api/deleteRawMaterial/${selectedItem._id}`
+        `http://localhost:5000/api/deleteRawMaterialAdmin/${selectedItem._id}`
       );
       toast.success(deleteResponse.data.msg, { position: "top-right" });
       setSelectedItem(null);
@@ -53,7 +53,7 @@ const RawMaterialsApprovals = () => {
 
     try {
       const updateResponse = await axios.put(
-        `http://localhost:5000/api/updateRawMaterial/${selectedApproval._id}`,
+        `http://localhost:5000/api/updateRawMaterialAdmin/${selectedApproval._id}`,
         {
           status: approvalStatus,
           date: approvalDate,
