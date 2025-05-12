@@ -59,18 +59,18 @@ function Orders() {
 
   const AVAILABLE_TOPPINGS = useMemo(
     () => [
-      { id: 1, name: "Cheese", price: 1.5 },
-      { id: 2, name: "Baked Beans", price: 1.0 },
-      { id: 3, name: "Tuna Mayo", price: 2.0 },
-      { id: 4, name: "Coleslaw", price: 1.0 },
-      { id: 5, name: "Chili Con Carne", price: 2.5 },
-      { id: 6, name: "Bacon Bits", price: 1.5 },
-      { id: 7, name: "Sour Cream", price: 0.75 },
-      { id: 8, name: "Green Onions", price: 0.5 },
-      { id: 9, name: "Butter", price: 0.5 },
-      { id: 10, name: "Garlic Butter", price: 0.75 },
-      { id: 11, name: "Mushrooms", price: 1.0 },
-      { id: 12, name: "Sweet Corn", price: 0.75 },
+      { id: 1, name: "Cheese", price: 150.0 },
+      { id: 2, name: "Baked Beans", price: 100.0 },
+      { id: 3, name: "Tuna Mayo", price: 200.0 },
+      { id: 4, name: "Coleslaw", price: 100.0 },
+      { id: 5, name: "Chili Con Carne", price: 250.0 },
+      { id: 6, name: "Bacon Bits", price: 150.0 },
+      { id: 7, name: "Sour Cream", price: 75.0 },
+      { id: 8, name: "Green Onions", price: 50.0 },
+      { id: 9, name: "Butter", price: 50.0 },
+      { id: 10, name: "Garlic Butter", price: 75.0 },
+      { id: 11, name: "Mushrooms", price: 100.0 },
+      { id: 12, name: "Sweet Corn", price: 75.0 },
     ],
     [],
   );
@@ -346,7 +346,7 @@ function Orders() {
                               {product.description}
                             </Typography>
                             <Typography variant="subtitle1" color="primary">
-                              ${product.price.toFixed(2)}
+                              LKR {product.price.toFixed(2)}
                             </Typography>
                             <Typography variant="body2" color="textSecondary">
                               Stock: {product.stock}
@@ -430,7 +430,7 @@ function Orders() {
                                   {AVAILABLE_TOPPINGS.map((topping) => (
                                     <Chip
                                       key={topping.id}
-                                      label={`${topping.name} (+$${topping.price.toFixed(2)})`}
+                                      label={`${topping.name} (+LKR ${topping.price.toFixed(2)})`}
                                       onClick={() =>
                                         handleToppingsChange(index, topping.id)
                                       }
@@ -469,7 +469,7 @@ function Orders() {
                                 Remove Item
                               </Button>
                               <Typography variant="subtitle1">
-                                Item Total: ${getItemTotal(item).toFixed(2)}
+                                Item Total: LKR {getItemTotal(item).toFixed(2)}
                               </Typography>
                             </Box>
                           </CardContent>
@@ -542,7 +542,7 @@ function Orders() {
                     disabled={!isFormValid()}
                     sx={{ mt: 2 }}
                   >
-                    {isPreOrder ? "Place Pre-order" : "Place Order"} ($
+                    {isPreOrder ? "Place Pre-order" : "Place Order"} (LKR
                     {totalAmount.toFixed(2)})
                   </Button>
                 </Grid>

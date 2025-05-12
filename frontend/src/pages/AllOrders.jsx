@@ -83,6 +83,10 @@ function AllOrders() {
     }
   };
 
+  const formatCurrency = (amount) => {
+    return `LKR ${amount.toFixed(2)}`;
+  };
+
   const calculateItemTotal = (item) => {
     const product = productDetails[item.productId];
     if (!product) return 0;
@@ -410,10 +414,9 @@ function AllOrders() {
                                                 x {item.quantity}
                                               </Typography>
                                               <Typography>
-                                                $
-                                                {calculateItemTotal(
-                                                  item,
-                                                ).toFixed(2)}
+                                                {formatCurrency(
+                                                  calculateItemTotal(item),
+                                                )}
                                               </Typography>
                                             </Box>
                                           }
@@ -460,7 +463,8 @@ function AllOrders() {
                             }}
                           >
                             <Typography variant="h6">
-                              Total: ${calculateOrderTotal(order).toFixed(2)}
+                              Total:{" "}
+                              {formatCurrency(calculateOrderTotal(order))}
                             </Typography>
                           </Box>
                         </Box>
