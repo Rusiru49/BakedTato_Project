@@ -20,12 +20,20 @@ import {
   CardMedia,
   Menu,
   MenuItem,
+  Tooltip,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getOrders, getProductById, updateOrderStatus } from "../services/api";
+import {
+  getOrders,
+  getProductById,
+  updateOrderStatus,
+  updatePreOrderStatus,
+} from "../services/api";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import EventIcon from "@mui/icons-material/Event";
 
 function AllOrders() {
   const navigate = useNavigate();
@@ -34,6 +42,8 @@ function AllOrders() {
   const [productDetails, setProductDetails] = useState({});
   const [statusMenuAnchor, setStatusMenuAnchor] = useState(null);
   const [selectedOrderId, setSelectedOrderId] = useState(null);
+  const [preOrderStatusMenuAnchor, setPreOrderStatusMenuAnchor] =
+    useState(null);
 
   useEffect(() => {
     try {
@@ -149,6 +159,7 @@ function AllOrders() {
   };
 
   const getNextPossibleStatuses = (currentStatus) => {
+    if (!currentStatus) return [];
     switch (currentStatus.toLowerCase()) {
       case "pending":
         return ["Completed", "Cancelled"];
@@ -162,6 +173,7 @@ function AllOrders() {
   };
 
   const getStatusColor = (status) => {
+    if (!status) return "default";
     switch (status.toLowerCase()) {
       case "pending":
         return "warning";
@@ -171,6 +183,56 @@ function AllOrders() {
         return "error";
       default:
         return "default";
+    }
+  };
+
+  const formatDateTime = (date) => {
+    if (!date) return "";
+    return new Date(date).toLocaleString("en-US", {
+      dateStyle: "full",
+      timeStyle: "medium",
+    });
+  };
+
+  const getPreOrderStatusColor = (status) => {
+    if (!status) return "default";
+    switch (status.toLowerCase()) {
+      case "pending":
+        return "warning";
+      case "ready":
+        return "success";
+      case "cancelled":
+        return "error";
+      default:
+        return "default";
+    }
+  };
+
+  const handlePreOrderStatusClick = (event, orderId) => {
+    setPreOrderStatusMenuAnchor(event.currentTarget);
+    setSelectedOrderId(orderId);
+  };
+
+  const handlePreOrderStatusClose = () => {
+    setPreOrderStatusMenuAnchor(null);
+    setSelectedOrderId(null);
+  };
+
+  const handlePreOrderStatusUpdate = async (newStatus) => {
+    try {
+      await updatePreOrderStatus(selectedOrderId, newStatus);
+      // Update local state
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order._id === selectedOrderId
+            ? { ...order, preOrderStatus: newStatus }
+            : order,
+        ),
+      );
+
+      handlePreOrderStatusClose();
+    } catch (error) {
+      console.error("Error updating pre-order status:", error);
     }
   };
 
@@ -223,6 +285,14 @@ function AllOrders() {
                         >
                           <Typography variant="h6">
                             Order #{order.orderId}
+                            {order.isPreOrder && (
+                              <Chip
+                                label="Pre-order"
+                                color="info"
+                                size="small"
+                                sx={{ ml: 1 }}
+                              />
+                            )}
                           </Typography>
                           <IconButton
                             onClick={() => handleExpandClick(order._id)}
@@ -238,50 +308,51 @@ function AllOrders() {
                         <Box
                           sx={{ display: "flex", alignItems: "center", gap: 1 }}
                         >
-                          <Chip
-                            label={order.status}
-                            color={getStatusColor(order.status)}
-                            variant="outlined"
-                            onClick={(e) => handleStatusClick(e, order._id)}
-                            sx={{ cursor: "pointer" }}
-                          />
+                          {order.isPreOrder && (
+                            <>
+                              <Tooltip title="Pre-order Date & Time">
+                                <Chip
+                                  icon={<EventIcon />}
+                                  label={formatDateTime(order.preOrderDateTime)}
+                                  color="info"
+                                  variant="outlined"
+                                />
+                              </Tooltip>
+                              <Tooltip title="Click to update pre-order status">
+                                <Chip
+                                  label={order.preOrderStatus}
+                                  color={getPreOrderStatusColor(
+                                    order.preOrderStatus,
+                                  )}
+                                  variant="outlined"
+                                  onClick={(e) =>
+                                    handlePreOrderStatusClick(e, order._id)
+                                  }
+                                  sx={{ cursor: "pointer" }}
+                                />
+                              </Tooltip>
+                            </>
+                          )}
+                          <Tooltip title="Click to update order status">
+                            <Chip
+                              label={order.status}
+                              color={getStatusColor(order.status)}
+                              variant="outlined"
+                              onClick={(e) => handleStatusClick(e, order._id)}
+                              sx={{ cursor: "pointer" }}
+                            />
+                          </Tooltip>
                         </Box>
                       </Box>
-
-                      {/* Status Update Menu */}
-                      <Menu
-                        anchorEl={statusMenuAnchor}
-                        open={Boolean(statusMenuAnchor)}
-                        onClose={handleStatusClose}
-                      >
-                        {selectedOrderId &&
-                          getNextPossibleStatuses(
-                            orders.find((o) => o._id === selectedOrderId)
-                              ?.status,
-                          ).map((status) => (
-                            <MenuItem
-                              key={status}
-                              onClick={() => handleStatusUpdate(status)}
-                              sx={{
-                                color: getStatusColor(status),
-                                "&:hover": {
-                                  backgroundColor: `${getStatusColor(status)}20`,
-                                },
-                              }}
-                            >
-                              Change to {status}
-                            </MenuItem>
-                          ))}
-                      </Menu>
 
                       <Typography
                         variant="body2"
                         color="textSecondary"
                         gutterBottom
                       >
-                        Ordered on:{" "}
-                        {new Date(order.orderDateTime).toLocaleString()}
+                        Ordered on: {formatDateTime(order.orderDateTime)}
                       </Typography>
+
                       {order.specialInstructions && (
                         <Typography
                           variant="body2"
@@ -402,6 +473,37 @@ function AllOrders() {
           </Paper>
         </Container>
       </Box>
+
+      {/* Regular Order Status Menu */}
+      <Menu
+        anchorEl={statusMenuAnchor}
+        open={Boolean(statusMenuAnchor)}
+        onClose={handleStatusClose}
+      >
+        {getNextPossibleStatuses(
+          orders.find((o) => o._id === selectedOrderId)?.status,
+        ).map((status) => (
+          <MenuItem key={status} onClick={() => handleStatusUpdate(status)}>
+            {status}
+          </MenuItem>
+        ))}
+      </Menu>
+
+      {/* Pre-order Status Menu */}
+      <Menu
+        anchorEl={preOrderStatusMenuAnchor}
+        open={Boolean(preOrderStatusMenuAnchor)}
+        onClose={handlePreOrderStatusClose}
+      >
+        {["Pending", "Ready", "Cancelled"].map((status) => (
+          <MenuItem
+            key={status}
+            onClick={() => handlePreOrderStatusUpdate(status)}
+          >
+            {status}
+          </MenuItem>
+        ))}
+      </Menu>
     </ThemeProvider>
   );
 }

@@ -5,6 +5,7 @@ const {
   createOrder,
   updateOrder,
   updateOrderStatus,
+  updatePreOrderStatus,
   deleteOrder,
 } = require("../controllers/orderController");
 
@@ -20,6 +21,8 @@ router.post("/", createOrder);
 router.put("/:id", updateOrder);
 // Update order status
 router.patch("/:id/status", updateOrderStatus);
+// Update pre-order status
+router.patch("/:id/pre-order-status", updatePreOrderStatus);
 // Delete an order
 router.delete("/:id", deleteOrder);
 

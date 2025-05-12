@@ -67,6 +67,19 @@ const orderSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  isPreOrder: {
+    type: Boolean,
+    default: false,
+  },
+  preOrderDateTime: {
+    type: Date,
+    default: null,
+  },
+  preOrderStatus: {
+    type: String,
+    enum: ["Pending", "Ready", "Cancelled"],
+    default: "Pending",
+  },
 });
 
 orderSchema.plugin(AutoIncrement(mongoose), { inc_field: "orderId" });

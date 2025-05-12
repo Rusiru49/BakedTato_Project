@@ -128,3 +128,22 @@ export const updateOrderStatus = async (orderId, newStatus) => {
 
   return response.json();
 };
+
+export const updatePreOrderStatus = async (orderId, newStatus) => {
+  const response = await fetch(
+    `${BASE_URL}/orders/${orderId}/pre-order-status`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ preOrderStatus: newStatus }),
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to update pre-order status");
+  }
+
+  return response.json();
+};

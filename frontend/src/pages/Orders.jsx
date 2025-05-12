@@ -18,6 +18,8 @@ import {
   TextField,
   ThemeProvider,
   Typography,
+  FormControlLabel,
+  Switch,
 } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
 import { createOrder, getAllProducts } from "../services/api";
@@ -78,6 +80,9 @@ function Orders() {
   const [orderItems, setOrderItems] = useState([]);
   const [specialInstructions, setSpecialInstructions] = useState("");
   const [totalAmount, setTotalAmount] = useState(0);
+  const [isPreOrder, setIsPreOrder] = useState(false);
+  const [preOrderDate, setPreOrderDate] = useState("");
+  const [preOrderTime, setPreOrderTime] = useState("");
 
   useEffect(() => {
     getAllProducts().then((data) => {
@@ -208,10 +213,52 @@ function Orders() {
       });
       return;
     }
+
+    // Validate pre-order date if it's a pre-order
+    if (isPreOrder && (!preOrderDate || !preOrderTime)) {
+      setSnackbar({
+        open: true,
+        message: "Please select a pre-order date and time",
+        severity: "error",
+      });
+      return;
+    }
+
+    // Combine date and time and validate that it's in the future
+    if (isPreOrder) {
+      const preOrderDateTime = new Date(`${preOrderDate}T${preOrderTime}`);
+      if (preOrderDateTime <= new Date()) {
+        setSnackbar({
+          open: true,
+          message: "Pre-order date must be in the future",
+          severity: "error",
+        });
+        return;
+      }
+    }
+
     try {
       await createOrder({
         products: orderItems,
         specialInstructions: specialInstructions,
+        isPreOrder: isPreOrder,
+        preOrderDateTime: isPreOrder ? `${preOrderDate}T${preOrderTime}` : null,
+      });
+      setSnackbar({
+        open: true,
+        message: "Order placed successfully!",
+        severity: "success",
+      });
+      setOrderItems([]);
+      setSpecialInstructions("");
+      setTotalAmount(0);
+      setIsPreOrder(false);
+      setPreOrderDate("");
+      setPreOrderTime("");
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
       });
     } catch (error) {
       console.error("Error creating order:", error);
@@ -221,19 +268,6 @@ function Orders() {
         severity: "error",
       });
     }
-    setSnackbar({
-      open: true,
-      message: "Order placed successfully!",
-      severity: "success",
-    });
-    setOrderItems([]);
-    setSpecialInstructions("");
-    setTotalAmount(0);
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
   };
 
   const handleCloseSnackbar = () => {
@@ -446,6 +480,47 @@ function Orders() {
                 )}
 
                 <Grid item xs={12}>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={isPreOrder}
+                        onChange={(e) => setIsPreOrder(e.target.checked)}
+                        color="primary"
+                      />
+                    }
+                    label="This is a pre-order"
+                  />
+                </Grid>
+
+                {isPreOrder && (
+                  <>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        fullWidth
+                        type="date"
+                        label="Pre-order Date"
+                        value={preOrderDate}
+                        onChange={(e) => setPreOrderDate(e.target.value)}
+                        InputLabelProps={{ shrink: true }}
+                        inputProps={{
+                          min: new Date().toISOString().split("T")[0],
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        fullWidth
+                        type="time"
+                        label="Pre-order Time"
+                        value={preOrderTime}
+                        onChange={(e) => setPreOrderTime(e.target.value)}
+                        InputLabelProps={{ shrink: true }}
+                      />
+                    </Grid>
+                  </>
+                )}
+
+                <Grid item xs={12}>
                   <TextField
                     fullWidth
                     multiline
@@ -467,7 +542,8 @@ function Orders() {
                     disabled={!isFormValid()}
                     sx={{ mt: 2 }}
                   >
-                    Place Order (${totalAmount.toFixed(2)})
+                    {isPreOrder ? "Place Pre-order" : "Place Order"} ($
+                    {totalAmount.toFixed(2)})
                   </Button>
                 </Grid>
               </Grid>
