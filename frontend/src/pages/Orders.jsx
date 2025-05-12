@@ -20,7 +20,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
-import { getAllProducts } from "../services/api";
+import { createOrder, getAllProducts } from "../services/api";
 
 function Orders() {
   // const user = JSON.parse(localStorage.getItem("user"));
@@ -96,8 +96,7 @@ function Orders() {
     const total = orderItems.reduce((sum, item) => {
       const product = products.find((p) => p._id === item.productId);
       const toppingsTotal = item.toppings.reduce(
-        (tSum, t) =>
-          tSum + (AVAILABLE_TOPPINGS.find((at) => at.id === t)?.price || 0),
+        (tSum, t) => tSum + (t.price || 0),
         0,
       );
       return (
@@ -162,13 +161,15 @@ function Orders() {
   const handleToppingsChange = (index, toppingId) => {
     const updatedItems = [...orderItems];
     const item = updatedItems[index];
+    const toppingObj = AVAILABLE_TOPPINGS.find((t) => t.id === toppingId);
+    if (!toppingObj) return;
 
-    if (item.toppings.includes(toppingId)) {
-      item.toppings = item.toppings.filter((t) => t !== toppingId);
+    const exists = item.toppings.some((t) => t.id === toppingId);
+    if (exists) {
+      item.toppings = item.toppings.filter((t) => t.id !== toppingId);
     } else {
-      item.toppings = [...item.toppings, toppingId];
+      item.toppings = [...item.toppings, toppingObj];
     }
-
     setOrderItems(updatedItems);
   };
 
@@ -182,8 +183,8 @@ function Orders() {
     return orderItems.length > 0;
   };
 
-  const getToppingPrice = (toppingId) => {
-    return AVAILABLE_TOPPINGS.find((t) => t.id === toppingId)?.price || 0;
+  const getToppingPrice = (topping) => {
+    return topping?.price || 0;
   };
 
   const getItemTotal = (item) => {
@@ -195,7 +196,7 @@ function Orders() {
     return ((product?.price || 0) + toppingsTotal) * item.quantity;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (!isFormValid()) {
       setSnackbar({
@@ -205,11 +206,31 @@ function Orders() {
       });
       return;
     }
-    // TODO: Implement order submission logic here
+    try {
+      await createOrder({
+        products: orderItems,
+        specialInstructions: specialInstructions,
+      });
+    } catch (error) {
+      console.error("Error creating order:", error);
+      setSnackbar({
+        open: true,
+        message: "Error placing order",
+        severity: "error",
+      });
+    }
     setSnackbar({
       open: true,
       message: "Order placed successfully!",
       severity: "success",
+    });
+    setOrderItems([]);
+    setSpecialInstructions("");
+    setTotalAmount(0);
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
     });
   };
 
@@ -359,12 +380,16 @@ function Orders() {
                                         handleToppingsChange(index, topping.id)
                                       }
                                       color={
-                                        item.toppings.includes(topping.id)
+                                        item.toppings.some(
+                                          (t) => t.id === topping.id,
+                                        )
                                           ? "primary"
                                           : "default"
                                       }
                                       variant={
-                                        item.toppings.includes(topping.id)
+                                        item.toppings.some(
+                                          (t) => t.id === topping.id,
+                                        )
                                           ? "filled"
                                           : "outlined"
                                       }
