@@ -82,7 +82,7 @@ exports.updateOrderStatus = async (req, res) => {
     return res.status(400).json({ error: "Invalid status value" });
   }
   try {
-    const order = await Order.findOne({ orderId: req.params.id });
+    const order = await Order.findOne({ _id: req.params.id });
     if (!order) {
       return res.status(404).json({ error: "Order not found" });
     }

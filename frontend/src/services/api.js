@@ -112,3 +112,19 @@ export const getOrders = async () => {
   const response = await axios.get(`${BASE_URL}/orders`);
   return response.data;
 };
+
+export const updateOrderStatus = async (orderId, newStatus) => {
+  const response = await fetch(`${BASE_URL}/orders/${orderId}/status`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ status: newStatus }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update order status");
+  }
+
+  return response.json();
+};
