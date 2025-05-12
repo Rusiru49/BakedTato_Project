@@ -26,7 +26,6 @@ import { useNavigate } from "react-router-dom";
 import { getOrders, getProductById, updateOrderStatus } from "../services/api";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 function AllOrders() {
   const navigate = useNavigate();
@@ -246,12 +245,6 @@ function AllOrders() {
                             onClick={(e) => handleStatusClick(e, order._id)}
                             sx={{ cursor: "pointer" }}
                           />
-                          <IconButton
-                            size="small"
-                            onClick={(e) => handleStatusClick(e, order._id)}
-                          >
-                            <MoreVertIcon />
-                          </IconButton>
                         </Box>
                       </Box>
 
