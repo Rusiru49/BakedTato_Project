@@ -16,8 +16,8 @@ const productRoutes = require("./routes/productRoutes");
 const route = require("./routes/rawMaterialRoute.js");
 const stockSupplierRoute = require("./routes/stockSupplierRoute.js");
 const adminRoutes = require("./routes/adminRoutes");
-const StockHistoryRoute = require("./routes/stockHistoryRoute"); 
-
+const StockHistoryRoute = require("./routes/stockHistoryRoute");
+const orderRoutes = require("./routes/orderRoutes");
 
 dotenv.config();
 
@@ -34,7 +34,7 @@ const upload = multer({ dest: uploadDir });
 app.use(
   cors({
     origin: "http://localhost:3000",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true,
   }),
 );
@@ -78,7 +78,7 @@ app.post("/api/createRawMaterial", async (req, res) => {
       .json({ msg: "Failed to add raw material", error: error.message });
   }
 });
- 
+
 app.post("/api/addStock", async (req, res) => {
   try {
     const { name, category, unit, currentStock, date } = req.body;
@@ -131,8 +131,6 @@ app.put("/api/updateStock/:id", async (req, res) => {
   }
 });
 
-
-
 // Routes
 app.use("/api/products", productRoutes);
 app.use(express.json());
@@ -140,7 +138,8 @@ app.use("/uploads", express.static(uploadDir));
 app.use("/api", routerL);
 app.use("/api", route);
 app.use("/api", stockSupplierRoute);
-app.use("/api",StockHistoryRoute);
+app.use("/api", StockHistoryRoute);
+app.use("/api/orders", orderRoutes);
 
 // DB Connections
 mongoose

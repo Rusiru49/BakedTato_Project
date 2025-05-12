@@ -18,11 +18,15 @@ import {
   TextField,
   ThemeProvider,
   Typography,
+  FormControlLabel,
+  Switch,
 } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
-import { getAllProducts } from "../services/api";
+import { createOrder, getAllProducts } from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 function Orders() {
+  const navigate = useNavigate();
   // const user = JSON.parse(localStorage.getItem("user"));
 
   const theme = createTheme({
@@ -76,6 +80,9 @@ function Orders() {
   const [orderItems, setOrderItems] = useState([]);
   const [specialInstructions, setSpecialInstructions] = useState("");
   const [totalAmount, setTotalAmount] = useState(0);
+  const [isPreOrder, setIsPreOrder] = useState(false);
+  const [preOrderDate, setPreOrderDate] = useState("");
+  const [preOrderTime, setPreOrderTime] = useState("");
 
   useEffect(() => {
     getAllProducts().then((data) => {
@@ -96,8 +103,7 @@ function Orders() {
     const total = orderItems.reduce((sum, item) => {
       const product = products.find((p) => p._id === item.productId);
       const toppingsTotal = item.toppings.reduce(
-        (tSum, t) =>
-          tSum + (AVAILABLE_TOPPINGS.find((at) => at.id === t)?.price || 0),
+        (tSum, t) => tSum + (t.price || 0),
         0,
       );
       return (
@@ -162,13 +168,15 @@ function Orders() {
   const handleToppingsChange = (index, toppingId) => {
     const updatedItems = [...orderItems];
     const item = updatedItems[index];
+    const toppingObj = AVAILABLE_TOPPINGS.find((t) => t.id === toppingId);
+    if (!toppingObj) return;
 
-    if (item.toppings.includes(toppingId)) {
-      item.toppings = item.toppings.filter((t) => t !== toppingId);
+    const exists = item.toppings.some((t) => t.id === toppingId);
+    if (exists) {
+      item.toppings = item.toppings.filter((t) => t.id !== toppingId);
     } else {
-      item.toppings = [...item.toppings, toppingId];
+      item.toppings = [...item.toppings, toppingObj];
     }
-
     setOrderItems(updatedItems);
   };
 
@@ -182,8 +190,8 @@ function Orders() {
     return orderItems.length > 0;
   };
 
-  const getToppingPrice = (toppingId) => {
-    return AVAILABLE_TOPPINGS.find((t) => t.id === toppingId)?.price || 0;
+  const getToppingPrice = (topping) => {
+    return topping?.price || 0;
   };
 
   const getItemTotal = (item) => {
@@ -195,7 +203,7 @@ function Orders() {
     return ((product?.price || 0) + toppingsTotal) * item.quantity;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (!isFormValid()) {
       setSnackbar({
@@ -205,12 +213,61 @@ function Orders() {
       });
       return;
     }
-    // TODO: Implement order submission logic here
-    setSnackbar({
-      open: true,
-      message: "Order placed successfully!",
-      severity: "success",
-    });
+
+    // Validate pre-order date if it's a pre-order
+    if (isPreOrder && (!preOrderDate || !preOrderTime)) {
+      setSnackbar({
+        open: true,
+        message: "Please select a pre-order date and time",
+        severity: "error",
+      });
+      return;
+    }
+
+    // Combine date and time and validate that it's in the future
+    if (isPreOrder) {
+      const preOrderDateTime = new Date(`${preOrderDate}T${preOrderTime}`);
+      if (preOrderDateTime <= new Date()) {
+        setSnackbar({
+          open: true,
+          message: "Pre-order date must be in the future",
+          severity: "error",
+        });
+        return;
+      }
+    }
+
+    try {
+      await createOrder({
+        products: orderItems,
+        specialInstructions: specialInstructions,
+        isPreOrder: isPreOrder,
+        preOrderDateTime: isPreOrder ? `${preOrderDate}T${preOrderTime}` : null,
+      });
+      setSnackbar({
+        open: true,
+        message: "Order placed successfully!",
+        severity: "success",
+      });
+      setOrderItems([]);
+      setSpecialInstructions("");
+      setTotalAmount(0);
+      setIsPreOrder(false);
+      setPreOrderDate("");
+      setPreOrderTime("");
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    } catch (error) {
+      console.error("Error creating order:", error);
+      setSnackbar({
+        open: true,
+        message: "Error placing order",
+        severity: "error",
+      });
+    }
   };
 
   const handleCloseSnackbar = () => {
@@ -228,6 +285,25 @@ function Orders() {
         }}
       >
         <Container maxWidth="lg">
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mb: 4,
+            }}
+          >
+            <Typography variant="h4" gutterBottom>
+              Create Your Order
+            </Typography>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => navigate("/all-orders")}
+            >
+              View All Orders
+            </Button>
+          </Box>
           <Paper elevation={3} sx={{ p: 4 }}>
             <Typography variant="h4" gutterBottom sx={{ mb: 2 }}>
               Create Your Order
@@ -359,12 +435,16 @@ function Orders() {
                                         handleToppingsChange(index, topping.id)
                                       }
                                       color={
-                                        item.toppings.includes(topping.id)
+                                        item.toppings.some(
+                                          (t) => t.id === topping.id,
+                                        )
                                           ? "primary"
                                           : "default"
                                       }
                                       variant={
-                                        item.toppings.includes(topping.id)
+                                        item.toppings.some(
+                                          (t) => t.id === topping.id,
+                                        )
                                           ? "filled"
                                           : "outlined"
                                       }
@@ -400,6 +480,47 @@ function Orders() {
                 )}
 
                 <Grid item xs={12}>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={isPreOrder}
+                        onChange={(e) => setIsPreOrder(e.target.checked)}
+                        color="primary"
+                      />
+                    }
+                    label="This is a pre-order"
+                  />
+                </Grid>
+
+                {isPreOrder && (
+                  <>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        fullWidth
+                        type="date"
+                        label="Pre-order Date"
+                        value={preOrderDate}
+                        onChange={(e) => setPreOrderDate(e.target.value)}
+                        InputLabelProps={{ shrink: true }}
+                        inputProps={{
+                          min: new Date().toISOString().split("T")[0],
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        fullWidth
+                        type="time"
+                        label="Pre-order Time"
+                        value={preOrderTime}
+                        onChange={(e) => setPreOrderTime(e.target.value)}
+                        InputLabelProps={{ shrink: true }}
+                      />
+                    </Grid>
+                  </>
+                )}
+
+                <Grid item xs={12}>
                   <TextField
                     fullWidth
                     multiline
@@ -421,7 +542,8 @@ function Orders() {
                     disabled={!isFormValid()}
                     sx={{ mt: 2 }}
                   >
-                    Place Order (${totalAmount.toFixed(2)})
+                    {isPreOrder ? "Place Pre-order" : "Place Order"} ($
+                    {totalAmount.toFixed(2)})
                   </Button>
                 </Grid>
               </Grid>
