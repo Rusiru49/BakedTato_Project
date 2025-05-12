@@ -107,3 +107,8 @@ export const createOrder = async (order) => {
   const response = await axios.post(`${BASE_URL}/orders`, order);
   return response.data;
 };
+
+export const getOrders = async () => {
+  const response = await axios.get(`${BASE_URL}/orders`);
+  return response.data;
+};

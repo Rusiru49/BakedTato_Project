@@ -21,8 +21,10 @@ import {
 } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
 import { createOrder, getAllProducts } from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 function Orders() {
+  const navigate = useNavigate();
   // const user = JSON.parse(localStorage.getItem("user"));
 
   const theme = createTheme({
@@ -249,6 +251,25 @@ function Orders() {
         }}
       >
         <Container maxWidth="lg">
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mb: 4,
+            }}
+          >
+            <Typography variant="h4" gutterBottom>
+              Create Your Order
+            </Typography>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => navigate("/all-orders")}
+            >
+              View All Orders
+            </Button>
+          </Box>
           <Paper elevation={3} sx={{ p: 4 }}>
             <Typography variant="h4" gutterBottom sx={{ mb: 2 }}>
               Create Your Order

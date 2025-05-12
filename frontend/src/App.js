@@ -18,10 +18,11 @@ import UpdateRawMaterials from "./components/updateOperationsThiruni/updateRawMa
 import ApprovedRawMaterials from "./components/ViewOperationsThiruni/viewApprovedRawMaterials";
 import PendingRawMaterials from "./components/ViewOperationsThiruni/viewPendingRawMaterials";
 import Orders from "./pages/Orders";
+import AllOrders from "./pages/AllOrders";
 import FreshIngredients from "./components/FreshIngredients";
 import CustomizeOptions from "./components/CustomizeOptions";
 import FastDelivery from "./components/FastDelivery";
-import BuyProductPage from "./components/BuyProduct"
+import BuyProductPage from "./components/BuyProduct";
 import AdminRawStockView from "./components/adminTasks_Supplier/rawMaterial_Stock";
 import RawMaterialsApprovals from "./components/adminTasks_Supplier/rawMaterial_Approvals";
 import ManageStockAdmin from "./components/adminTasks_Supplier/stockUpdates_admin";
@@ -47,7 +48,7 @@ function App() {
         <div style={{ flex: 1 }}>
           <Routes>
             <Route path="/users" element={<UsersPage />} />
-            <Route path="/products" element={< ProductAnalysis/>} />
+            <Route path="/products" element={<ProductAnalysis />} />
 
             {/* Admin Routes */}
             {admin && (
@@ -112,7 +113,7 @@ function App() {
                   path="/rawmaterial-stock-view-admin"
                   element={
                     <>
-                      <AdminRawStockView/>
+                      <AdminRawStockView />
                     </>
                   }
                 />
@@ -120,7 +121,7 @@ function App() {
                   path="/rawmaterial-approve-reject-admin"
                   element={
                     <>
-                      <RawMaterialsApprovals/>
+                      <RawMaterialsApprovals />
                     </>
                   }
                 />
@@ -128,11 +129,10 @@ function App() {
                   path="/manage-stock-admin"
                   element={
                     <>
-                      <ManageStockAdmin/>
+                      <ManageStockAdmin />
                     </>
                   }
                 />
-
               </>
             )}
 
@@ -202,12 +202,16 @@ function App() {
                     </>
                   }
                 />
-        
               </>
             )}
 
             {(user || admin) && <Route path="/orders" element={<Orders />} />}
-            {(user || admin) && <Route path="/buyproducts" element={<BuyProductPage />} />}
+            {(user || admin) && (
+              <Route path="/all-orders" element={<AllOrders />} />
+            )}
+            {(user || admin) && (
+              <Route path="/buyproducts" element={<BuyProductPage />} />
+            )}
 
             <Route path="/fresh-ingredients" element={<FreshIngredients />} />
             <Route path="/customize-options" element={<CustomizeOptions />} />
