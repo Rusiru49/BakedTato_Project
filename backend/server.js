@@ -18,6 +18,8 @@ const stockSupplierRoute = require("./routes/stockSupplierRoute.js");
 const adminRoutes = require("./routes/adminRoutes");
 const StockHistoryRoute = require("./routes/stockHistoryRoute");
 const orderRoutes = require("./routes/orderRoutes");
+//Evan
+const router = require("./routes/DeliveryRoute");
 
 dotenv.config();
 
@@ -41,6 +43,9 @@ app.use(
 app.use(bodyParser.json());
 app.use(express.json());
 app.use("/api/admin", adminRoutes);
+
+
+
 
 app.post("/upload", upload.single("image"), (req, res) => {
   if (!req.file) {
@@ -140,6 +145,8 @@ app.use("/api", route);
 app.use("/api", stockSupplierRoute);
 app.use("/api", StockHistoryRoute);
 app.use("/api/orders", orderRoutes);
+//evan
+app.use("/delivery",router);
 
 // DB Connections
 mongoose.connect(process.env.MONGO_URI)

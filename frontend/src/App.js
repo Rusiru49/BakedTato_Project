@@ -27,6 +27,10 @@ import AdminRawStockView from "./components/adminTasks_Supplier/rawMaterial_Stoc
 import RawMaterialsApprovals from "./components/adminTasks_Supplier/rawMaterial_Approvals";
 import ManageStockAdmin from "./components/adminTasks_Supplier/stockUpdates_admin";
 import UpdateRemainingStock from "./components/updateOperationsThiruni/updateStock";
+//Evan
+import AddDelivery from "./pages/AddDelivery/AddDelivery";
+import Deliveries from "./pages/Delivery Details/Deliveries.js";
+import UpdateUser from "./pages/UpdateDelivery/UpdateDelivery.js";
 
 function App() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -49,6 +53,11 @@ function App() {
           <Routes>
             <Route path="/users" element={<UsersPage />} />
             <Route path="/products" element={<ProductAnalysis />} />
+
+           {/* Evan */}
+          <Route path="/adddelivery" element={<AddDelivery/>} />
+          <Route path="/deliverydetails" element={<Deliveries/>} />
+          <Route path="/deliverydetails/:id" element={<UpdateUser/>} />
 
             {/* Admin Routes */}
             {admin && (

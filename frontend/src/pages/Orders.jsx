@@ -27,8 +27,6 @@ import { useNavigate } from "react-router-dom";
 
 function Orders() {
   const navigate = useNavigate();
-  // const user = JSON.parse(localStorage.getItem("user"));
-
   const theme = createTheme({
     palette: {
       mode: "dark",
@@ -255,7 +253,7 @@ function Orders() {
       setIsPreOrder(false);
       setPreOrderDate("");
       setPreOrderTime("");
-
+      navigate("/adddelivery", { state: { totalAmount } });//navigate to Delivery form after confirmation
       window.scrollTo({
         top: 0,
         behavior: "smooth",

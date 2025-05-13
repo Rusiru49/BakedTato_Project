@@ -13,6 +13,7 @@ import {
   People,
   Inventory,
   LocalShipping,
+  DeliveryDining,
 } from "@mui/icons-material";
 
 const Sidebar = () => {
@@ -23,6 +24,7 @@ const Sidebar = () => {
     { text: "Users", icon: <People />, path: "/showUsers" },
     { text: "Products", icon: <Inventory />, path: "/products" },
     { text: "Suppliers", icon: <LocalShipping />, path: "/rawmaterial-stock-view-admin" },
+    { text: "Deliveries", icon: <DeliveryDining />, path: "/deliverydetails" }, // Route path to Delivery.js
   ];
 
   return (

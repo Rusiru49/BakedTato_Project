@@ -1,0 +1,102 @@
+.delivery-container {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  width: 350px;
+  text-align: left;
+}
+
+.delivery-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.delivery-container p {
+  font-size: 16px;
+  color: #555;
+  margin: 5px 0;
+}
+
+.delivery-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.update-link {
+  color: #4CAF50;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.update-link:hover {
+  text-decoration: underline;
+}
+
+.delete-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  width: 85px;
+}
+
+.delete-button:hover {
+  background-color: #d32f2f;
+}
+
+.update-link {
+  display: inline-block;
+  background-color: #2196F3; /* Blue background */
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-align: center;
+}
+
+.update-link:hover {
+  background-color: #1976D2; /* Darker blue on hover */
+  transform: scale(1.05);
+}
+
+.update-link:active {
+  background-color: #1565C0; /* Even darker blue when clicked */
+  transform: scale(0.98);
+}
+
+.payment-section {
+  margin-top: 20px;
+}
+
+.payment-button {
+  padding: 8px 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.payment-button:disabled {
+  background-color: #888;
+  cursor: not-allowed;
+}
+
+.payment-status {
+  margin-top: 10px;
+  color: green;
+  font-weight: bold;
+}
+
