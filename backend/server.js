@@ -142,14 +142,10 @@ app.use("/api", StockHistoryRoute);
 app.use("/api/orders", orderRoutes);
 
 // DB Connections
-mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch((error) => console.log("MongoDB connection error:", error));
 
 // Server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
