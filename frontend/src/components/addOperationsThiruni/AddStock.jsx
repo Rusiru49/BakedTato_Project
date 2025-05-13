@@ -56,9 +56,7 @@ const AddStock = () => {
     const submitForm = async (e) => {
         e.preventDefault();
 
-        // Run final validations
         let isValid = true;
-        const newErrors = {};
 
         Object.entries(stock).forEach(([field, value]) => {
             validateField(field, value);

@@ -34,7 +34,18 @@ const sendEmailSupplier = async (to, subject, type = "Approved") => {
         <br/>
         <p style="font-size: 0.9em; color: #777;">– BakedTato Food Ordering System</p>
       </div>`;
-  } else {
+  }else if (type === "StockAlert") {
+  emailSubject = "⚠️ Low Stock Alert";
+  html = `
+    <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+      <h2 style="color: #f44336;">Low Stock Alert</h2>
+      <p>Hello,</p>
+      <p>This is to notify that your stock for <strong>${subject}</strong> has dropped to <strong>5 units(g/bottles)</strong>.</p>
+      <p>Please take necessary action to restock as soon as possible to ensure uninterrupted supply.</p>
+      <br/>
+      <p style="font-size: 0.9em; color: #777;">– BakedTato Food Ordering System</p>
+    </div>`;
+}else {
     emailSubject = "Raw Material Approval ✅";
     html = `
       <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">

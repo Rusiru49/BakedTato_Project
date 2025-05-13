@@ -461,3 +461,13 @@
   color: #888;
   margin-top: 20px;
 }
+
+
+.stock-cards-wrapper-admin {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+  margin-top: 50px;
+  margin-left: 100px;
+}

@@ -27,6 +27,7 @@ import AdminRawStockView from "./components/adminTasks_Supplier/rawMaterial_Stoc
 import RawMaterialsApprovals from "./components/adminTasks_Supplier/rawMaterial_Approvals";
 import ManageStockAdmin from "./components/adminTasks_Supplier/stockUpdates_admin";
 import UpdateRemainingStock from "./components/updateOperationsThiruni/updateStock";
+import UpdateRemainingStockAdmin from "./components/adminTasks_Supplier/updateStockAdmin";
 
 function App() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -130,6 +131,14 @@ function App() {
                   element={
                     <>
                       <ManageStockAdmin />
+                    </>
+                  }
+                />
+                <Route
+                  path="/update-stock-admin/:id"
+                  element={
+                    <>
+                      <UpdateRemainingStockAdmin />
                     </>
                   }
                 />

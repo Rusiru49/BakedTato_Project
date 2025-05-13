@@ -58,10 +58,11 @@ const AdminRawStockView = () => {
 
   const stockByCategory = stock.reduce((acc, item) => {
     const category = item.category;
-    const amount = parseFloat(item.remainingStock) || 0;
+    const amount = parseFloat(item.currentStock.replace(/[^\d.-]/g, '')) || 0; 
     acc[category] = (acc[category] || 0) + amount;
     return acc;
   }, {});
+
 
   const stockCards = allCategories.map((category) => ({
     name: category,

@@ -5,6 +5,7 @@ const {
   getOneStock,
   getStock,
   updateStock,
+  updateStockAdmin,
 } = require("../controllers/stockController");
 
 
@@ -15,5 +16,6 @@ route.get("/getStock", getStock);
 route.get("/getOneStock/:id", getOneStock);
 route.put("/updateStock/:id", updateStock);
 route.delete("/deleteStock/:id", deleteStock);
+route.put("/update-stock-admin/:id",updateStockAdmin);
 
 module.exports = route;

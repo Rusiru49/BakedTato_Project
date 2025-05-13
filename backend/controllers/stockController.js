@@ -26,6 +26,35 @@ exports.updateStock = async (req, res) => {
   }
 };
 
+exports.updateStockAdmin = async (req, res) => {
+  try {
+    const stockID = req.params.id;
+    const { currentStock } = req.body;
+
+    const stockEntry = await StockSupplier.findById(stockID);
+
+    if (!stockEntry) {
+      return res.status(401).json({ msg: "No such Stock Entry found to update" });
+    }
+
+    stockEntry.currentStock = currentStock;
+    stockEntry.date = Date.now();
+    await stockEntry.save();
+
+    const supplierEmail = process.env.EMAIL_USER; 
+    const materialName = stockEntry.name || "Raw Material";
+
+    if (parseInt(currentStock) <= 10 && supplierEmail) {
+      await sendEmailSupplier(supplierEmail, materialName, "StockAlert");
+    }
+
+    res.status(200).json({ msg: "Stock Updated Successfully!" });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+};
+
+
 exports.deleteStock = async (req, res) => {
   try {
     const { id } = req.params;
