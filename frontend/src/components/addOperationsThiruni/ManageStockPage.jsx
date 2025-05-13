@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../ViewOperationsThiruni/RawMaterials.css";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 const ManageStock = () => {
   const [stock, setStock] = useState([]);
@@ -19,6 +21,26 @@ const ManageStock = () => {
     fetchData();
   }, []);
 
+  const deleteStock = async (id) => {
+    const isConfirmed = window.confirm("Are you sure you want to delete this stock?");
+
+    if (isConfirmed) {
+      try {
+        await axios.delete(`http://localhost:5000/api/deleteStock/${id}`);
+        setStock(stock.filter(item => item._id !== id));
+      } catch (error) {
+        console.error("Error deleting stock:", error);
+      }
+    }
+  };
+
+
+  const getCategoryClass = (category) => {
+    const base = "stock-card-small";
+    const border = `border-category-${category?.toLowerCase().replace(/\s+/g, '-')}`;
+    return `${base} ${border}`;
+  };
+
   return (
     <div>
       <div className="add-stock-button-container">
@@ -26,49 +48,29 @@ const ManageStock = () => {
           <button className="add-stock-button">Add a New Stock</button>
         </Link>
       </div>
-
-      <div className="raw-materials-container">
-        <table className="raw-materials-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Unit</th>
-              <th>Current Stock</th>
-              <th>Current Stock Added On</th>
-              <th>Remaining Stock</th>
-              <th>Remaining Stock On</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {stock.length > 0 ? (
-              stock.map((item) => (
-                <tr key={item.stockID}>
-                  <td>{item.name}</td>
-                  <td>{item.category}</td>
-                  <td>{item.unit}</td>
-                  <td>{item.currentStock}</td>
-                  <td>{item.date}</td>
-                  <td>{item.remainingStock}</td>
-                  <td>{item.date}</td>
-                  <td>
-                    <Link
-                      to={`/update-stock/${item._id}`}
-                      className="actionButtonsUp"
-                    >
-                     Add More
-                    </Link>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="8">No Stock Added at the Moment</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+      <br></br>
+      <div className="stock-cards-wrapper">
+        {stock.length > 0 ? (
+          stock.map((item) => (
+            <div key={item._id} className={getCategoryClass(item.category)}>
+              <div className="card-icons">
+                <Link to={`/update-stock/${item._id}`}>
+                  <button className="icon-btn">
+                    <FontAwesomeIcon icon={faEdit} />
+                  </button>
+                </Link>
+                <button className="icon-btn" onClick={() => deleteStock(item._id)}>
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+              </div>
+              <h4>{item.name}</h4>
+              <p><strong>Stock:</strong> {item.currentStock}</p>
+              <p><strong>Date:</strong> {new Date(item.date).toLocaleDateString()}</p>
+            </div>
+          ))
+        ) : (
+          <p className="no-stock-message">No Stock Added at the Moment</p>
+        )}
       </div>
     </div>
   );

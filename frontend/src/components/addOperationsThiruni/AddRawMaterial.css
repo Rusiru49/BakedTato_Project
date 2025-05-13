@@ -28,6 +28,7 @@
 .formContainer-sup {
   width: 50%;
   margin-left: 650px;
+  margin-top: 30px;
 }
 
 .createReviewForm {
@@ -107,9 +108,10 @@
   background-color: #e0e0e0;
 }
 
-.Submitbutton {
+.Submitbutton{
   padding: 10px 20px;
   background-color: #ec5725;
+  margin-top: 10px;
   color: #ffffff;
   border: none;
   font-size: 16px;
@@ -123,6 +125,14 @@
 }
 
 .h2{
+  text-align: center;
+  color: #000000;
+  margin-bottom: 30px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.h3{
   text-align: center;
   color: #000000;
   margin-bottom: 30px;

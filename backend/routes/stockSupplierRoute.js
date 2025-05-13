@@ -8,7 +8,7 @@ const {
 } = require("../controllers/stockController");
 
 
-const route = express.Router();
+const route = express.Router(); 
 
 route.post("/addStock", addStock);
 route.get("/getStock", getStock);

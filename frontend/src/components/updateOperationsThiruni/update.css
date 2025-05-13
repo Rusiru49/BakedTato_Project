@@ -91,3 +91,200 @@ h3 {
   font-size: 24px;
   font-weight: 600;
 }
+
+.createFormRaw {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background-color: #ffffff;
+  padding-top: 40px;
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 800px;
+  padding: 40px 50px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-left: 200px;
+  box-sizing: border-box;
+}
+
+.createFormRaw-sup {
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start;
+  width: 50%;
+}
+
+.formContainer-sup {
+  width: 50%;
+  margin-left: 650px;
+}
+
+.createReviewForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formGroup {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.left-side,
+.right-side {
+  flex: 1;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputGroup label {
+  font-weight: 600;
+  font-family: sans-serif;
+  font-size: 16px;
+  color: #111;
+}
+
+.inputGroup input,
+.inputGroup select,
+.inputGroup textarea {
+  padding: 10px 14px;
+  border: 1px solid #ec5725;
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  margin-bottom: 15px;
+}
+
+.inputGroup textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.inputGroup input:focus,
+.inputGroup select:focus,
+.inputGroup textarea:focus {
+  border-color: #ec5725;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.backBtn {
+  text-decoration: none;
+  color: #040404;
+  font-size: 16px;
+  padding: 10px 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f5f5f5;
+  transition: background-color 0.2s ease;
+}
+
+.backBtn:hover {
+  background-color: #e0e0e0;
+}
+
+.submit{
+  padding: 10px 20px;
+  background-color: #ec5725;
+  color: #ffffff;
+  border: none;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  padding-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.submit:hover {
+  background-color: #d44e20;
+}
+
+.h2{
+  text-align: center;
+  color: #000000;
+  margin-bottom: 30px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* --- Date Picker --- */
+.react-date-picker {
+  width: 80%;
+}
+
+.react-date-picker__wrapper {
+  padding: 10px 14px;
+  border: 1px solid #ec5725;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  transition: border-color 0.3s;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 30px;
+}
+
+.react-date-picker__wrapper:focus-within {
+  border-color: #ec5725;
+}
+
+.react-date-picker__inputGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.react-date-picker__inputGroup input {
+  padding: 6px 5px;
+  font-size: 16px;
+  width: auto; 
+  flex: 1;      
+  min-width: 0;   
+}
+
+.react-date-picker__inputGroup input:invalid {
+  box-shadow: none;
+}
+
+.react-date-picker__inputGroup input:empty::before {
+  content: 'dd/mm/yyyy';
+  color: #888;
+}
+
+.react-date-picker__calendar-button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  margin-left: 8px;
+}
+
+.react-date-picker__calendar-button svg {
+  height: 18px;
+  width: 18px;
+  color: #555;
+}
+
+.react-date-picker__clear-button {
+  display: none !important;
+}

@@ -45,15 +45,13 @@ const ApprovedRawMaterials = () => {
     Vegetables: "#FFA726",
     Dairy: "#FFEB3B",
     Meat: "#EF5350",
-    Sauces: "#AB47BC",
-    "Spices and Seasonings": "#26C6DA",
-    Toppings: "#66BB6A",
-    Other: "#8D6E63",
+    "Toppings and Seasonings": "#26C6DA",
   };
 
   const stockByCategory = stock.reduce((acc, item) => {
     const category = item.category;
-    const amount = parseFloat(item.remainingStock) || 0;
+    
+    const amount = parseFloat(item.currentStock.replace(/[^\d.-]/g, '')) || 0; 
     acc[category] = (acc[category] || 0) + amount;
     return acc;
   }, {});
@@ -75,12 +73,12 @@ const ApprovedRawMaterials = () => {
     plugins: {
       legend: {
         position: "right",
-        labels:{
-          font:{
-            size:20,
+        labels: {
+          font: {
+            size: 20,
           },
-          boxWidth:20,
-          padding:15,
+          boxWidth: 20,
+          padding: 15,
         },
       },
     },
@@ -131,8 +129,10 @@ const ApprovedRawMaterials = () => {
           </Link>
         </div>
 
-        <div style={{ height: "450px", width: "80%", margin: "0 auto" }}>
-          <Pie data={pieChartData} options={pieOptions} />
+        <div className="chart-container">
+          <div style={{ height: "450px", width: "80%", margin: "0 auto" }}>
+            <Pie data={pieChartData} options={pieOptions} />
+          </div>
         </div>
       </div>
     </div>
