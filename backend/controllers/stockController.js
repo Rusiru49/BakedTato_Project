@@ -1,4 +1,5 @@
 const StockSupplier = require("../models/stockModel");
+const sendEmailSupplier = require("../utils/sendEmailSupplier");
 
 exports.addStock = async (req, res) => {
   try {
@@ -31,26 +32,30 @@ exports.updateStockAdmin = async (req, res) => {
     const stockID = req.params.id;
     const { currentStock } = req.body;
 
-    const stockEntry = await StockSupplier.findById(stockID);
+    const updatedStock = await StockSupplier.findByIdAndUpdate(
+      stockID,
+      {
+        currentStock,
+        date: Date.now()
+      },
+      { new: true } 
+    );
 
-    if (!stockEntry) {
+    if (!updatedStock) {
       return res.status(401).json({ msg: "No such Stock Entry found to update" });
     }
 
-    stockEntry.currentStock = currentStock;
-    stockEntry.date = Date.now();
-    await stockEntry.save();
+    const supplierEmail = process.env.EMAIL_USER;
+    const materialName = updatedStock.name || "Raw Material";
 
-    const supplierEmail = process.env.EMAIL_USER; 
-    const materialName = stockEntry.name || "Raw Material";
-
-    if (parseInt(currentStock) <= 10 && supplierEmail) {
+    if (parseInt(currentStock) <= 5 && supplierEmail) {
       await sendEmailSupplier(supplierEmail, materialName, "StockAlert");
     }
 
-    res.status(200).json({ msg: "Stock Updated Successfully!" });
+    res.status(200).json({ msg: "Stock Updated Successfully and Email Sent!" });
   } catch (error) {
-    res.status(500).json({ error });
+    console.error("Error in updateStockAdmin:", error);
+    res.status(500).json({ error: error.message });
   }
 };
 

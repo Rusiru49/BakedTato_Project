@@ -403,13 +403,20 @@
 }
 
 .stock-card-small h4 {
-  font-size: 18px;
+  font-size: 19px;
   margin-bottom: 5px;
   color: #333;
 }
 
 .stock-card-small p {
-  font-size: 14px;
+  font-size: 16px;
+  margin: 5px 0;
+  color: #555;
+}
+
+.stock{
+  font-size: 18px;
+  font-weight: bold;
   margin: 5px 0;
   color: #555;
 }

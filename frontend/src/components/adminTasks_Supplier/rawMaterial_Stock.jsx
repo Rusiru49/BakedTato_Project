@@ -45,13 +45,10 @@ const AdminRawStockView = () => {
   }, []);
 
   const categoryColors = {
-    Vegetables: "#FFA726",
-    Dairy: "#FFEB3B",
-    Meat: "#EF5350",
-    Sauces: "#AB47BC",
-    "Spices and Seasonings": "#26C6DA",
-    Toppings: "#66BB6A",
-    Other: "#8D6E63",
+    Vegetables: "#FF9800",
+    Dairy: "#f3db21",
+    Meat: "#f44336",
+    "Toppings and Seasonings": "#9c27b0",
   };
 
   const allCategories = Object.keys(categoryColors);
