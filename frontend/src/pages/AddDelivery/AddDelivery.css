@@ -5,7 +5,7 @@ div {
   }
   
   /* Form Styling */
-  form {
+  form1 {
     background-color: rgba(249, 249, 249, 0.8); /* 0.0 = fully transparent, 1.0 = opaque */
     padding: 20px;
     border-radius: 8px;
@@ -21,12 +21,12 @@ div {
     font-weight: bold;
     display: block;
     margin-bottom: 5px;
-    text-align: left;
+    
   }
   
   /* Input Fields */
   input {
-    width: 90%;
+    width: 40%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;

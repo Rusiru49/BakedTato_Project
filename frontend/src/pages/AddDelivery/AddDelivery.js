@@ -75,7 +75,7 @@ function AddDelivery() {
     <div>
       <h1>Add Delivery</h1>
       <h1>YOU CAN PAY AT YOUR DOORSTEP!</h1>
-      <form onSubmit={handleSubmit}>
+      <form className='form1' onSubmit={handleSubmit}>
         <label>Name</label>
         <br />
         <input type="text" name="name" onChange={handleChange} value={inputs.name} required />
